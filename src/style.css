@@ -1,0 +1,30 @@
+
+
+.test {
+  background-color: gold;
+}
+
+div :not(#root) {
+  border: 0.5px solid gray;
+}
+
+.calendar {
+  width: 700px;
+}
+
+.nameDays {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gridDays {
+  display: flex;
+  flex-wrap: wrap;
+}
+.day {
+  flex-grow: 1;
+  min-width: 98px;
+  text-align: center;
+}
