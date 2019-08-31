@@ -1,11 +1,9 @@
-
-
 .test {
   background-color: gold;
 }
 
 div :not(#root) {
-  border: 0.5px solid gray;
+  outline : 0.5px solid gray;
 }
 
 .calendar {
@@ -23,8 +21,16 @@ div :not(#root) {
   display: flex;
   flex-wrap: wrap;
 }
-.day {
+.another,
+.current {
   flex-grow: 1;
   min-width: 98px;
   text-align: center;
+}
+.another {
+  color: lightgrey;
+}
+
+.current {
+  color: black;
 }
