@@ -3,7 +3,7 @@
 }
 
 div :not(#root) {
-  outline : 0.5px solid gray;
+  outline: 0.5px solid gray;
 }
 
 .calendar {
@@ -33,4 +33,19 @@ div :not(#root) {
 
 .current {
   color: black;
+}
+
+.nav {
+  display: flex;
+  width: 100%;
+}
+
+.arrow {
+  width: 20%;
+  text-align: center;
+  cursor: pointer;
+}
+.month {
+  width: 100%;
+  text-align: center;
 }
