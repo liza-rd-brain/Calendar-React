@@ -27,12 +27,14 @@ div :not(#root) {
   min-width: 98px;
   text-align: center;
 }
-.another {
-  color: lightgrey;
-}
-
 .current {
   color: black;
+}
+.current.today {
+  color: red;
+}
+.another {
+  color: lightgrey;
 }
 
 .nav {

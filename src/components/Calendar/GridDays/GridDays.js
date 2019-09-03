@@ -7,9 +7,13 @@ class GridDays extends React.Component {
   // сегодняшний день только для добавления класса-?!
   render() {
     // пока забью на сегодняшний день
-    // const today = this.props.today;
-    // const currMonth = today.getMonth();
+    const todayDay = this.props.today.getDate();
+    const todayMonth = this.props.today.getMonth();
+    const todayYear = this.props.today.getFullYear();
+
+    const currYear = this.props.year;
     const currMonth = this.props.month;
+
     const firstDay = new Date(2019, currMonth, 1);
     //последний день месяца
     const lastDay = new Date(2019, currMonth + 1, 0).getDate();
@@ -19,7 +23,13 @@ class GridDays extends React.Component {
     let i = firstDay.getDate();
 
     while (i < lastDay + 1) {
-      arrayMonth.push({ number: i, class: "current" });
+      let className = "current";
+      debugger;
+      todayDay === i && todayMonth === currMonth && todayYear === currYear
+        ? (className += " today")
+        : "";
+      console.log(className);
+      arrayMonth.push({ number: i, class: className });
       i++;
     }
 
@@ -36,7 +46,6 @@ class GridDays extends React.Component {
         break;
       default:
         amountPrevMohthDays = firstDayOfWeek - 1;
-
         break;
     }
 

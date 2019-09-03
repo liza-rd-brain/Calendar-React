@@ -45,7 +45,11 @@ export default class Calendar extends React.Component {
           onClick={data => this.handleClick(data)}
         />
         <NameDays />
-        <GridDays month={this.state.month} />
+        <GridDays
+          today={this.state.today}
+          month={this.state.month}
+          year={this.state.year}
+        />
       </div>
     );
   }
