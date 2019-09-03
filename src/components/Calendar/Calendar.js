@@ -11,8 +11,16 @@ export default class Calendar extends React.Component {
       month: new Date().getMonth(),
       year: new Date().getFullYear()
     };
+    this.updateSystemDate = this.updateSystemDate.bind(this);
+    this.update = setInterval(this.updateSystemDate, 1000);
   }
 
+  updateSystemDate() {
+    if (new Date().getDate() != this.state.today.getDate()) {
+      this.setState({ today: new Date() });
+      console.log("обновление");
+    }
+  }
   handleClick(data) {
     if (data === "right") {
       this.setState({
@@ -40,6 +48,5 @@ export default class Calendar extends React.Component {
         <GridDays month={this.state.month} />
       </div>
     );
-    console.log("нарисовался новый месяц!");
   }
 }
