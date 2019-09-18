@@ -3,9 +3,10 @@ import Month from "./Month/Month";
 import Arrow from "./Arrow/Arrow";
 
 class Nav extends React.Component {
-  renderArrow(data) {
-    return <Arrow onClick={() => this.props.onClick(data)} />;
+  renderArrow(direction) {
+    return <Arrow onClick={() => this.props.onClick(direction)} />;
   }
+  
   render() {
     return (
       <div className="nav">

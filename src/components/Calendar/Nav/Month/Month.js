@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Month extends Component {
+export default class Month extends React.Component {
   render() {
     const monthsName = [
       "Январь",
@@ -17,18 +17,16 @@ class Month extends Component {
       "Декабрь"
     ];
 
-    const month = this.props.month;
-    /*  const monthNumber = today.getMonth(); */
+    const monthNumber = this.props.month;
 
-    const currentMonthName = monthsName.find((item, index) => {
-      if (index === month) {
-        return item;
+    const currentMonthName = monthsName.find((nameMonth, index) => {
+      if (index === monthNumber) {
+        return nameMonth;
       }
     });
+
     return (
       <div className="month">{`${currentMonthName}, ${this.props.year}`}</div>
     );
   }
 }
-
-export default Month;

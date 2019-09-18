@@ -1,12 +1,8 @@
 import React from "react";
 import Day from "../Day/Day";
-import DayAnotherMonth from "../DayAnotherMonth/DayAnotherMonth";
 
-class GridDays extends React.Component {
-  //построение сетки дней зависит от того,какой пришел месяц
-  // сегодняшний день только для добавления класса-?!
+export default class GridDays extends React.Component {
   render() {
-    // пока забью на сегодняшний день
     const todayDay = this.props.today.getDate();
     const todayMonth = this.props.today.getMonth();
     const todayYear = this.props.today.getFullYear();
@@ -14,68 +10,60 @@ class GridDays extends React.Component {
     const currYear = this.props.year;
     const currMonth = this.props.month;
 
-    const firstDay = new Date(2019, currMonth, 1);
-    //последний день месяца
-    const lastDay = new Date(2019, currMonth + 1, 0).getDate();
+    const firstDayCurrMonth = new Date(2019, currMonth, 1);
+    const lastDayCurrMonth = new Date(2019, currMonth + 1, 0).getDate();
 
-    //массив с днями месяца
-    let arrayMonth = [];
-    let i = firstDay.getDate();
+    let listCurrMonth = [];
+    let dayNumber = 1;
 
-    while (i < lastDay + 1) {
+    while (dayNumber <= lastDayCurrMonth) {
       let className = "current";
-      debugger;
-      todayDay === i && todayMonth === currMonth && todayYear === currYear
+      todayDay === dayNumber &&
+      todayMonth === currMonth &&
+      todayYear === currYear
         ? (className += " today")
         : "";
-      console.log(className);
-      arrayMonth.push({ number: i, class: className });
-      i++;
+      listCurrMonth.push({ number: dayNumber, class: className });
+      dayNumber++;
     }
 
-    //день недели первого дня
-    const firstDayOfWeek = firstDay.getDay();
+    const firstDayCurrMonthOfWeek = firstDayCurrMonth.getDay();
 
     let amountPrevMohthDays;
-    switch (firstDayOfWeek) {
+    switch (firstDayCurrMonthOfWeek) {
       case 1:
         break;
       case 0:
         amountPrevMohthDays = 6;
-        //добавим 6 элементов до!
         break;
       default:
-        amountPrevMohthDays = firstDayOfWeek - 1;
+        amountPrevMohthDays = firstDayCurrMonthOfWeek - 1;
         break;
     }
 
-    //теперь нужно отсчитать  currDayOfWeek дней от конца месяца предыдущего
+    const lastDayPrevMonth = new Date(2019, currMonth, 0).getDate();
+    const firstDayPrevMonth = lastDayPrevMonth - amountPrevMohthDays + 1;
+    let dayNumberPrevMonth = firstDayPrevMonth;
+    let listPrevMonth = [];
 
-    const lastDayPreMonth = new Date(2019, currMonth, 0).getDate();
-    //первый день в строке от последнего месяца
-    let j = lastDayPreMonth - amountPrevMohthDays + 1;
-    //получили массив от предыдущих дней
-    let arrayDaysPrevMonth = [];
-    while (j < lastDayPreMonth + 1) {
-      arrayDaysPrevMonth.push({ number: j, class: "another" });
-      j++;
+    while (dayNumberPrevMonth <= lastDayPrevMonth) {
+      listPrevMonth.push({ number: dayNumberPrevMonth, class: "another" });
+      dayNumberPrevMonth++;
     }
 
-    let arrayPrevAndCurrent = arrayDaysPrevMonth.concat(arrayMonth);
+    const listPrevCurrentMonth = listPrevMonth.concat(listCurrMonth);
+    const amountNextMohthDays = 42 - listPrevCurrentMonth.length;
 
-    let amountNextMohthDays = 42 - arrayPrevAndCurrent.length;
+    let listNextMonth = [];
+    let dayNumberNextMonth = 1;
 
-    let arrayDaysNextMonth = [];
-    let k = 1;
-    while (k < amountNextMohthDays + 1) {
-      arrayDaysNextMonth.push({ number: k, class: "another" });
-      k++;
+    while (dayNumberNextMonth < amountNextMohthDays + 1) {
+      listNextMonth.push({ number: dayNumberNextMonth, class: "another" });
+      dayNumberNextMonth++;
     }
 
-    let arrayAllMonth = arrayPrevAndCurrent.concat(arrayDaysNextMonth);
-
-    //ИТОГОВАЯ СЕТКА
-    const arrayGrid = arrayAllMonth.map(item => {
+    const listAllMonth = listPrevCurrentMonth.concat(listNextMonth);
+    const arrayGrid =listAllMonth.map(item => {
       return (
         <Day
           key={item.number + item.class}
@@ -88,5 +76,3 @@ class GridDays extends React.Component {
     return <div className="gridDays">{arrayGrid}</div>;
   }
 }
-
-export default GridDays;

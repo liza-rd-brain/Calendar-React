@@ -1,13 +1,13 @@
 import React from "react";
 
-class NameDays extends React.Component {
+export default class NameDays extends React.Component {
   render() {
     const week = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
 
-    const day = week.map(item => {
+    const day = week.map(name => {
       return (
-        <div key={item} className="nameDays">
-          {item}
+        <div key={name} className="nameDays">
+          {name}
         </div>
       );
     });
@@ -15,5 +15,3 @@ class NameDays extends React.Component {
     return <div className="nameDays">{day}</div>;
   }
 }
-
-export default NameDays;

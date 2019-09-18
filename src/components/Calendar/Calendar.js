@@ -16,13 +16,15 @@ export default class Calendar extends React.Component {
   }
 
   updateSystemDate() {
-    if (new Date().getDate() != this.state.today.getDate()) {
+    const numberDayTomorrow = new Date().getDate();
+    const numberDayToday = this.state.today.getDate();
+    if (numberDayTomorrow !== numberDayToday) {
       this.setState({ today: new Date() });
-      console.log("обновление");
     }
   }
-  handleClick(data) {
-    if (data === "right") {
+
+  handleClick(direction) {
+    if (direction === "right") {
       this.setState({
         month: new Date(this.state.year, this.state.month + 1).getMonth(),
         year: new Date(this.state.year, this.state.month + 1).getFullYear()
@@ -42,7 +44,7 @@ export default class Calendar extends React.Component {
           className="nav"
           month={this.state.month}
           year={this.state.year}
-          onClick={data => this.handleClick(data)}
+          onClick={this.handleClick}
         />
         <NameDays />
         <GridDays
