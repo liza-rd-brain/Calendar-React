@@ -1,5 +1,5 @@
 import React from "react";
-import Day from "../Day/Day";
+import Day from "./Day/Day";
 
 export default class GridDays extends React.Component {
   render() {
@@ -75,4 +75,5 @@ export default class GridDays extends React.Component {
 
     return <div className="gridDays">{arrayGrid}</div>;
   }
+  
 }

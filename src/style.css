@@ -8,6 +8,7 @@ div :not(#root) {
 
 .calendar {
   width: 700px;
+  height: 300px;
 }
 
 .nameDays {
@@ -17,12 +18,22 @@ div :not(#root) {
   justify-content: center;
 }
 
-.gridDays {
+.gridDays,
+.gridMonths {
   display: flex;
   flex-wrap: wrap;
 }
+
+.gridDays {
+  height: 77%;
+}
+
+.gridMonths {
+  height: 83%;
+}
 .another,
-.current {
+.current,
+.today {
   flex-grow: 1;
   min-width: 98px;
   text-align: center;
@@ -30,7 +41,7 @@ div :not(#root) {
 .current {
   color: black;
 }
-.current.today {
+.today {
   color: red;
 }
 .another {
@@ -40,14 +51,29 @@ div :not(#root) {
 .nav {
   display: flex;
   width: 100%;
+  height: 50px;
 }
 
 .arrow {
-  width: 20%;
+  width: 14.3%;
   text-align: center;
   cursor: pointer;
+  flex-shrink: 0;
 }
+
 .month {
   width: 100%;
   text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 100%;
+}
+
+.nameMonth {
+  flex-grow: 1;
+  min-width: 25%;
+  text-align: center;
+}
+.currMonth {
+  background-color: red;
 }
