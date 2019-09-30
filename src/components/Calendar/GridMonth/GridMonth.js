@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class GridMonth extends Component {
   render() {
@@ -20,19 +21,28 @@ class GridMonth extends Component {
       "ноя",
       "дек"
     ];
-    debugger;
-    const monts = monthsList.map((name,i) => {
+
+    const monts = monthsList.map((name, i) => {
       let nameMonth = "nameMonth";
       todayMonth === i && todayYear === currYear
         ? (nameMonth += " currMonth")
         : "";
       return (
-        <div key={name} className={nameMonth}>
+        <div
+          key={name}
+          id={name}
+          className={nameMonth}
+          onClick={() => this.props.onClick(i)}
+        >
           {name}
         </div>
       );
     });
-    return <div className="gridMonths">{monts}</div>;
+    return (
+      <Link className="nameMonth" to="/calendar">
+        <div className="gridMonths">{monts}</div>
+      </Link>
+    );
   }
 }
 

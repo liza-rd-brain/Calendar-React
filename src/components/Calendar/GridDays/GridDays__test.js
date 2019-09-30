@@ -20,7 +20,7 @@ export default class GridDays extends React.Component {
     }
 
     const numberFirstDayCurrMonth = firstDayCurrMonth.getDay();
-    debugger;
+
     let amountPrevMohthDays = 0;
     switch (numberFirstDayCurrMonth) {
       case 1:

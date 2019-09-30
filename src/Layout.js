@@ -11,7 +11,7 @@ export default class Layout extends React.Component {
         <Link className="nav-link" to="/calendar">
           Календарь
         </Link>
-        <Link className="nav-link" to="/test">
+        <Link className="nav-link" to="/monthSelection">
           Test
         </Link>
         <>

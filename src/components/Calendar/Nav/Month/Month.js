@@ -18,9 +18,6 @@ export default class Month extends React.Component {
     ];
 
     const monthNumber = this.props.month;
-    debugger;
-
-   
     const currentMonthName = monthsName.find((nameMonth, index) => {
       if (index === monthNumber) {
         return nameMonth;
@@ -33,7 +30,7 @@ export default class Month extends React.Component {
         onClick={() => {
           console.log("click");
         }}
-      >{`${currentMonthName||""} ${this.props.year} `}</div>
+      >{`${currentMonthName || ""} ${this.props.year} `}</div>
     );
   }
 }

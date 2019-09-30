@@ -12,7 +12,7 @@ class Nav extends React.Component {
     return (
       <div className="nav">
         {this.renderArrow("left")}
-        <Link className="month" to="/test">
+        <Link className="month" to="/monthSelection">
           <Month month={this.props.month} year={this.props.year} />
         </Link>
 
