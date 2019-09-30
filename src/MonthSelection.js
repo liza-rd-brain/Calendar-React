@@ -26,9 +26,7 @@ class MonthSelection extends Component {
     }
   }
   handleClickMonth(month) {
-    debugger;
-    console.log("test");
-    this.props.onchangeDate(month);
+    this.props.onchangeDate(month,this.props.year);
   }
   render() {
     return (

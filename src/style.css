@@ -68,11 +68,33 @@ div :not(#root) {
   cursor: pointer;
   height: 100%;
 }
+.month:hover {
+  color: gray;
+}
+.month:active {
+  color: rgb(53, 48, 48);
+}
 
 .nameMonth {
   flex-grow: 1;
   min-width: 25%;
   text-align: center;
+  /*  border: 1px solid #000; */
+}
+
+.nameMonth:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+.nameMonth:active {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.link {
+  text-decoration: none;
+  color: initial;
+}
+.link:focus {
+  color: initial;
 }
 .currMonth {
   background-color: red;

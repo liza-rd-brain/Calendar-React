@@ -39,7 +39,7 @@ class GridMonth extends Component {
       );
     });
     return (
-      <Link className="nameMonth" to="/calendar">
+      <Link className="link" to="/calendar">
         <div className="gridMonths">{monts}</div>
       </Link>
     );

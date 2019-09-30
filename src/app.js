@@ -23,9 +23,10 @@ export default class App extends React.Component {
   }
 
   handleChangeDate(month, year) {
+    debugger;
     this.setState({
-      month: month || this.state.month,
-      year: year || this.state.year
+      month: month /*|| this.state.month, */,
+      year: year /*|| this.state.year */
     });
   }
 
