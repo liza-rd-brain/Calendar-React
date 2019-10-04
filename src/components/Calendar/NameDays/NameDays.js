@@ -6,12 +6,12 @@ export default class NameDays extends React.Component {
 
     const day = week.map(name => {
       return (
-        <div key={name} className="nameDays">
+        <div key={name} className="nameDay">
           {name}
         </div>
       );
     });
 
-    return <div className="nameDays">{day}</div>;
+    return <div className="nameDaysList">{day}</div>;
   }
 }

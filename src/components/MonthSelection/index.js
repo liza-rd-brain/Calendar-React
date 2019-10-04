@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Nav from "./components/Calendar/Nav/Nav";
-import GridMonths from "./components/Calendar/GridMonth/GridMonth";
+import Nav from "../Nav/Nav";
+import GridMonths from "./GridMonth/GridMonth";
 
 class MonthSelection extends Component {
   constructor(props) {
@@ -36,6 +36,7 @@ class MonthSelection extends Component {
           month={false}
           year={this.props.year}
           onClick={this.handleClickNav}
+          href={this.props.href}
         />
         {/* <Link className="nameMonth" to="/calendar"> */}
         <GridMonths

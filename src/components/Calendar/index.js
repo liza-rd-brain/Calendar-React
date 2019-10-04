@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "./Nav/Nav";
+import Nav from "../Nav/Nav";
 import NameDays from "./NameDays/NameDays";
 import GridDays from "./GridDays/GridDays";
 
@@ -34,6 +34,7 @@ export default class Calendar extends React.Component {
           month={this.props.month}
           year={this.props.year}
           onClick={this.handleClick}
+          href={this.props.href}
         />
         <NameDays />
         <GridDays

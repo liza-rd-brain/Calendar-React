@@ -39,8 +39,8 @@ class GridMonth extends Component {
       );
     });
     return (
-      <Link className="link" to="/calendar">
-        <div className="gridMonths">{monts}</div>
+      <Link className="link" to="/">
+        <div className="grid">{monts}</div>
       </Link>
     );
   }

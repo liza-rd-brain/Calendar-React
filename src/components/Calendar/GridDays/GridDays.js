@@ -17,7 +17,7 @@ export default class GridDays extends React.Component {
     let dayNumber = 1;
 
     while (dayNumber <= lastDayCurrMonth) {
-      let className = "current";
+      let className = "current day";
       todayDay === dayNumber &&
       todayMonth === currMonth &&
       todayYear === currYear
@@ -47,7 +47,7 @@ export default class GridDays extends React.Component {
     let listPrevMonth = [];
 
     while (dayNumberPrevMonth <= lastDayPrevMonth) {
-      listPrevMonth.push({ number: dayNumberPrevMonth, class: "another" });
+      listPrevMonth.push({ number: dayNumberPrevMonth, class: "another day" });
       dayNumberPrevMonth++;
     }
 
@@ -58,12 +58,12 @@ export default class GridDays extends React.Component {
     let dayNumberNextMonth = 1;
 
     while (dayNumberNextMonth < amountNextMohthDays + 1) {
-      listNextMonth.push({ number: dayNumberNextMonth, class: "another" });
+      listNextMonth.push({ number: dayNumberNextMonth, class: "another day" });
       dayNumberNextMonth++;
     }
 
     const listAllMonth = listPrevCurrentMonth.concat(listNextMonth);
-    const arrayGrid =listAllMonth.map(item => {
+    const arrayGrid = listAllMonth.map(item => {
       return (
         <Day
           key={item.number + item.class}
@@ -73,7 +73,6 @@ export default class GridDays extends React.Component {
       );
     });
 
-    return <div className="gridDays">{arrayGrid}</div>;
+    return <div className="grid">{arrayGrid}</div>;
   }
-  
 }

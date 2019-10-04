@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Calendar from "./components/Calendar";
-// import Layout from "./Layout";
-import MonthSelection from "./MonthSelection";
-import Main from "./Main";
+import MonthSelection from "./components/MonthSelection";
+import YearSelection from "./components/YearSelection";
 
 import "./style.css";
 
@@ -16,6 +15,7 @@ export default class App extends React.Component {
       month: new Date().getMonth(),
       year: new Date().getFullYear()
     };
+    this.startYear = 2010;
     this.handleChangeDate = this.handleChangeDate.bind(this);
 
     this.updateSystemDate = this.updateSystemDate.bind(this);
@@ -23,7 +23,7 @@ export default class App extends React.Component {
   }
 
   handleChangeDate(month, year) {
-    debugger;
+    /* debugger; */
     this.setState({
       month: month /*|| this.state.month, */,
       year: year /*|| this.state.year */
@@ -39,16 +39,16 @@ export default class App extends React.Component {
   }
 
   render() {
-    debugger;
+    /*     debugger; */
     return (
       <Router>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/calendar" component={Calendar}>
+        <Route exact path="/" component={Calendar}>
           <Calendar
             today={this.state.today}
             month={this.state.month}
             year={this.state.year}
             onchangeDate={this.handleChangeDate}
+            href="/monthSelection"
           />
         </Route>
         <Route exact path="/monthSelection" component={MonthSelection}>
@@ -57,7 +57,16 @@ export default class App extends React.Component {
             month={this.state.month}
             year={this.state.year}
             onchangeDate={this.handleChangeDate}
+            href="/yearSelection"
           />
+        </Route>
+        <Route exact path="/yearSelection" component={YearSelection}>
+          <YearSelection
+            today={this.state.today}
+            month={this.state.month}
+            year={this.state.year}
+            startYear={this.startYear}
+          ></YearSelection>
         </Route>
       </Router>
     );
