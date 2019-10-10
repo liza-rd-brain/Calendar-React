@@ -21,16 +21,21 @@ export default class GridYears extends React.Component {
 
     console.log(yersList);
 
-    const years = yersList.map(item => {
+    const years = yersList.map((item, i) => {
       return (
-        <div key={item.number} id={item.number} className={item.class}>
+        <div
+          key={`${item.number}-${i}}`}
+          /* id={item.number} */
+          className={item.class}
+          onClick={() => this.props.onClick(item.number)}
+        >
           {item.number}
         </div>
       );
     });
 
     return (
-      <Link className="link" to="/mohths">
+      <Link className="link" to="/monthSelection">
         <div className="grid">{years}</div>
       </Link>
     );

@@ -2,14 +2,10 @@
   background-color: gold;
 }
 
-/* div :not(#root) {
-  border: 0.5px solid gray;
-}
- */
 .calendar {
   border: 0.5px solid gray;
   width: 700px;
-  height: 300px;
+  /* height: 300px; */
   margin: 30px auto;
   display: flex;
   flex-direction: column;
@@ -138,4 +134,8 @@
 
 .numberYear:nth-child(4n) {
   border-right: none;
+}
+
+.currYear {
+  background-color: red;
 }

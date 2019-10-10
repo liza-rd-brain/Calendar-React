@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Nav from "../Nav/Nav";
+import Nav from "../Nav";
 import GridMonths from "./GridMonth/GridMonth";
 
 class MonthSelection extends Component {
@@ -15,6 +15,7 @@ class MonthSelection extends Component {
     this.handleClickMonth = this.handleClickMonth.bind(this);
   }
   handleClickNav(direction) {
+    debugger;
     if (direction === "right") {
       let month = new Date(this.props.year + 1, this.props.month).getMonth();
       let year = new Date(this.props.year + 1, this.props.month).getFullYear();
@@ -26,7 +27,8 @@ class MonthSelection extends Component {
     }
   }
   handleClickMonth(month) {
-    this.props.onchangeDate(month,this.props.year);
+    debugger;
+    this.props.onchangeDate(month, this.props.year);
   }
   render() {
     return (

@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../Nav/Nav";
+import Nav from "../Nav";
 import NameDays from "./NameDays/NameDays";
 import GridDays from "./GridDays/GridDays";
 
@@ -15,6 +15,7 @@ export default class Calendar extends React.Component {
   }
 
   handleClick(direction) {
+    debugger;
     if (direction === "right") {
       let month = new Date(this.props.year, this.props.month + 1).getMonth();
       let year = new Date(this.props.year, this.props.month + 1).getFullYear();

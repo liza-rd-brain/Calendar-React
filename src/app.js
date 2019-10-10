@@ -15,19 +15,22 @@ export default class App extends React.Component {
       month: new Date().getMonth(),
       year: new Date().getFullYear()
     };
+    //  не влияет на отрисовку state
     this.startYear = 2010;
+    this.endYear = this.startYear + 15;
     this.handleChangeDate = this.handleChangeDate.bind(this);
 
     this.updateSystemDate = this.updateSystemDate.bind(this);
     this.update = setInterval(this.updateSystemDate, 1000);
   }
 
-  handleChangeDate(month, year) {
-    /* debugger; */
+  handleChangeDate(month, year, startYear) {
+    debugger;
     this.setState({
-      month: month /*|| this.state.month, */,
-      year: year /*|| this.state.year */
+      month: month /* || this.state.month */,
+      year: year /* || this.state.year */
     });
+    this.startYear = startYear || this.startYear;
   }
 
   updateSystemDate() {
@@ -39,7 +42,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    /*     debugger; */
     return (
       <Router>
         <Route exact path="/" component={Calendar}>
@@ -56,6 +58,7 @@ export default class App extends React.Component {
             today={this.state.today}
             month={this.state.month}
             year={this.state.year}
+            startYear={this.startYear}
             onchangeDate={this.handleChangeDate}
             href="/yearSelection"
           />
@@ -66,6 +69,7 @@ export default class App extends React.Component {
             month={this.state.month}
             year={this.state.year}
             startYear={this.startYear}
+            onchangeDate={this.handleChangeDate}
           ></YearSelection>
         </Route>
       </Router>
