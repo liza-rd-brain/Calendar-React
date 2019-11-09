@@ -25,9 +25,10 @@ export default class Month extends React.Component {
     });
 
     return (
-      <div className="month" onClick={() => {}}>{`${currentMonthName || ""} ${
-        this.props.year
-      } `}</div>
+      <div
+        className="month"
+        onClick={this.props.onLinkClick}
+      >{`${currentMonthName || ""} ${this.props.year} `}</div>
     );
   }
 }

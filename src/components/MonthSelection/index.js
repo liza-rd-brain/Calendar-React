@@ -6,16 +6,12 @@ import GridMonths from "./GridMonth/GridMonth";
 class MonthSelection extends Component {
   constructor(props) {
     super(props);
-    /*    this.state = {
-      today: this.props.today,
-      month: this.props.month,
-      year: this.props.year
-    }; */
+
     this.handleClickNav = this.handleClickNav.bind(this);
     this.handleClickMonth = this.handleClickMonth.bind(this);
   }
   handleClickNav(direction) {
-    debugger;
+    /*  debugger; */
     if (direction === "right") {
       let month = new Date(this.props.year + 1, this.props.month).getMonth();
       let year = new Date(this.props.year + 1, this.props.month).getFullYear();
@@ -27,7 +23,6 @@ class MonthSelection extends Component {
     }
   }
   handleClickMonth(month) {
-    debugger;
     this.props.onchangeDate(month, this.props.year);
   }
   render() {
@@ -38,9 +33,9 @@ class MonthSelection extends Component {
           month={false}
           year={this.props.year}
           onClick={this.handleClickNav}
-          href={this.props.href}
+          onLinkClick={this.props.onLinkClick}
         />
-        {/* <Link className="nameMonth" to="/calendar"> */}
+
         <GridMonths
           className="gridMonths "
           today={this.props.today}
@@ -48,7 +43,6 @@ class MonthSelection extends Component {
           year={this.props.year}
           onClick={this.handleClickMonth}
         />
-        {/* </Link> */}
       </div>
     );
   }

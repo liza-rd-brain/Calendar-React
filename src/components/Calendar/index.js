@@ -1,21 +1,16 @@
+import { withRouter } from "react-router-dom";
 import React from "react";
 import Nav from "../Nav";
 import NameDays from "./NameDays/NameDays";
 import GridDays from "./GridDays/GridDays";
 
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    /*  this.state = {
-      today: this.props.today,
-      month: this.props.month,
-      year: this.props.year
-    }; */
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(direction) {
-    debugger;
     if (direction === "right") {
       let month = new Date(this.props.year, this.props.month + 1).getMonth();
       let year = new Date(this.props.year, this.props.month + 1).getFullYear();
@@ -35,7 +30,7 @@ export default class Calendar extends React.Component {
           month={this.props.month}
           year={this.props.year}
           onClick={this.handleClick}
-          href={this.props.href}
+          onLinkClick={this.props.onLinkClick}
         />
         <NameDays />
         <GridDays
@@ -47,3 +42,5 @@ export default class Calendar extends React.Component {
     );
   }
 }
+
+export default withRouter(Calendar);

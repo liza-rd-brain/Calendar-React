@@ -1,80 +1,106 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  withRouter
+} from "react-router-dom";
 import Calendar from "./components/Calendar";
 import MonthSelection from "./components/MonthSelection";
 import YearSelection from "./components/YearSelection";
 
 import "./style.css";
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      today: new Date(),
-      month: new Date().getMonth(),
-      year: new Date().getFullYear()
-    };
-    //  не влияет на отрисовку state
-    this.startYear = 2010;
-    this.endYear = this.startYear + 15;
-    this.handleChangeDate = this.handleChangeDate.bind(this);
+const App = withRouter(
+  class _App extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        today: new Date(),
+        month: new Date().getMonth(),
+        year: new Date().getFullYear()
+      };
+      //  не влияет на отрисовку state
+      this.startYear = 2010;
+      this.endYear = this.startYear + 15;
+      this.handleChangeDate = this.handleChangeDate.bind(this);
+      this.handleCalendarClick = this.handleCalendarClick.bind(this);
+      this.handleMonthSelectionClick = this.handleMonthSelectionClick.bind(
+        this
+      );
+      this.updateSystemDate = this.updateSystemDate.bind(this);
+      this.update = setInterval(this.updateSystemDate, 1000);
+    }
 
-    this.updateSystemDate = this.updateSystemDate.bind(this);
-    this.update = setInterval(this.updateSystemDate, 1000);
-  }
+    handleChangeDate(month, year, startYear) {
+      this.setState({
+        month: month,
+        year: year
+      });
+      this.startYear = startYear || this.startYear;
+    }
 
-  handleChangeDate(month, year, startYear) {
-    debugger;
-    this.setState({
-      month: month /* || this.state.month */,
-      year: year /* || this.state.year */
-    });
-    this.startYear = startYear || this.startYear;
-  }
+    updateSystemDate() {
+      const numberDayTomorrow = new Date().getDate();
+      const numberDayToday = this.state.today.getDate();
+      if (numberDayTomorrow !== numberDayToday) {
+        this.setState({ today: new Date() });
+      }
+    }
+    handleCalendarClick() {
+      console.log("click");
+      this.props.history.push("/monthSelection");
+    }
+    handleMonthSelectionClick() {
+      this.props.history.push("/yearSelection");
+    }
 
-  updateSystemDate() {
-    const numberDayTomorrow = new Date().getDate();
-    const numberDayToday = this.state.today.getDate();
-    if (numberDayTomorrow !== numberDayToday) {
-      this.setState({ today: new Date() });
+    render() {
+      return (
+        <>
+          <Route exact path="/" component={Calendar}>
+            <Calendar
+              today={this.state.today}
+              month={this.state.month}
+              year={this.state.year}
+              onchangeDate={this.handleChangeDate}
+              onLinkClick={this.handleCalendarClick}
+            />
+          </Route>
+          <Route exact path="/monthSelection" component={MonthSelection}>
+            <MonthSelection
+              today={this.state.today}
+              month={this.state.month}
+              year={this.state.year}
+              startYear={this.startYear}
+              onchangeDate={this.handleChangeDate}
+              onLinkClick={this.handleMonthSelectionClick}
+              /* href="/yearSelection" */
+            />
+          </Route>
+          <Route exact path="/yearSelection" component={YearSelection}>
+            <YearSelection
+              today={this.state.today}
+              month={this.state.month}
+              year={this.state.year}
+              startYear={this.startYear}
+              onchangeDate={this.handleChangeDate}
+            ></YearSelection>
+          </Route>
+        </>
+      );
     }
   }
+);
 
-  render() {
-    return (
-      <Router>
-        <Route exact path="/" component={Calendar}>
-          <Calendar
-            today={this.state.today}
-            month={this.state.month}
-            year={this.state.year}
-            onchangeDate={this.handleChangeDate}
-            href="/monthSelection"
-          />
-        </Route>
-        <Route exact path="/monthSelection" component={MonthSelection}>
-          <MonthSelection
-            today={this.state.today}
-            month={this.state.month}
-            year={this.state.year}
-            startYear={this.startYear}
-            onchangeDate={this.handleChangeDate}
-            href="/yearSelection"
-          />
-        </Route>
-        <Route exact path="/yearSelection" component={YearSelection}>
-          <YearSelection
-            today={this.state.today}
-            month={this.state.month}
-            year={this.state.year}
-            startYear={this.startYear}
-            onchangeDate={this.handleChangeDate}
-          ></YearSelection>
-        </Route>
-      </Router>
-    );
-  }
-}
+/* export default withRouter(App); */
+/* const ShowTheLocation = withRouter(App); */
 
-ReactDOM.render(<App />, document.querySelector("#root"));
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.querySelector("#root")
+);

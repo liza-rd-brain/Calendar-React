@@ -70,7 +70,7 @@ export default class GridDays extends React.Component {
       return item;
     });
 
-    console.log(result);
+    /* console.log(result); */
 
     const arrayGrid = result.map(item => {
       return (

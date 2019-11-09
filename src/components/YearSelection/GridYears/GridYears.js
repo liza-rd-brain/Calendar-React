@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default class GridYears extends React.Component {
   render() {
     const startYear = this.props.startYear;
-    console.log(startYear);
+    /* console.log(startYear); */
     const todayYear = this.props.today.getFullYear();
     const currYear = this.props.year;
     const currMonth = this.props.month;
@@ -19,7 +19,7 @@ export default class GridYears extends React.Component {
       yearStart++;
     }
 
-    console.log(yersList);
+/*     console.log(yersList); */
 
     const years = yersList.map((item, i) => {
       return (
