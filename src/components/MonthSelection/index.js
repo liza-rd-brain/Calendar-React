@@ -29,7 +29,7 @@ class MonthSelection extends Component {
   
   render() {
     return (
-      <div className="calendar">
+      <div className="monthSelecion calendar">
         <Nav
           className="nav"
           month={false}

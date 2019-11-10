@@ -36,7 +36,7 @@ export default class YearSelection extends React.Component {
   render() {
     let yearsString = `${this.props.startYear}-${this.props.startYear + 15}`;
     return (
-      <div className="calendar">
+      <div className="yearSelection calendar">
         <Nav
           className="nav"
           month={false}

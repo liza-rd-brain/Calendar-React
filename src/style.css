@@ -2,10 +2,11 @@
   background-color: gold;
 }
 
-.calendar {
+.calendar,
+.taskList {
   border: 0.5px solid gray;
   width: 700px;
-  /* height: 300px; */
+  max-height: 300px;
   margin: 30px auto;
   display: flex;
   flex-direction: column;
@@ -146,4 +147,8 @@
 
 .currYear {
   background-color: red;
+}
+
+.taskList{
+  min-height: 200px;
 }
