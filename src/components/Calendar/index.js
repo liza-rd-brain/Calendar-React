@@ -23,6 +23,7 @@ class Calendar extends React.Component {
   handleToCalendar() {
     this.props.history.push("/");
   }
+
   handleToMonthSelection() {
     console.log("click");
     this.props.history.push("/monthSelection");
@@ -41,7 +42,9 @@ class Calendar extends React.Component {
               today={this.props.today}
               month={this.props.month}
               year={this.props.year}
-              onChangeDate={this.props.onChangeDate}
+              onChangeSelectDate={this.props.onChangeSelectDate}
+              onChangeMonth={this.props.onChangeMonth}
+              onChangeYear={this.props.onChangeYear}
               onTitleClick={this.handleToMonthSelection}
             />
           </>

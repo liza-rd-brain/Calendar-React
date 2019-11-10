@@ -17,7 +17,7 @@ export default class GridDays extends React.Component {
     let dayNumber = 1;
 
     while (dayNumber <= lastDayCurrMonth) {
-      let className = "current day";
+      let className = "dayCurrentMonth day";
       todayDay === dayNumber &&
       todayMonth === currMonth &&
       todayYear === currYear
@@ -69,6 +69,7 @@ export default class GridDays extends React.Component {
           key={item.number + item.class}
           item={item.number}
           class={item.class}
+          onItemClick={this.props.onItemClick}
         />
       );
     });

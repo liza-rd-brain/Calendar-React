@@ -7,17 +7,21 @@ export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.handleArrowClick = this.handleArrowClick.bind(this);
+    /*    this.handleItemClick = this.handleItemClick.bind(this); */
   }
+  /*  handleItemClick() {} */
 
   handleArrowClick(direction) {
     if (direction === "right") {
       let month = new Date(this.props.year, this.props.month + 1).getMonth();
       let year = new Date(this.props.year, this.props.month + 1).getFullYear();
-      this.props.onChangeDate(month, year);
+      this.props.onChangeMonth(month);
+      this.props.onChangeYear(year);
     } else {
       let month = new Date(this.props.year, this.props.month - 1).getMonth();
       let year = new Date(this.props.year, this.props.month - 1).getFullYear();
-      this.props.onChangeDate(month, year);
+      this.props.onChangeMonth(month);
+      this.props.onChangeYear(year);
     }
   }
 
@@ -36,6 +40,7 @@ export default class Calendar extends React.Component {
           today={this.props.today}
           month={this.props.month}
           year={this.props.year}
+          onItemClick={this.props.onChangeSelectDate}
         />
       </div>
     );
