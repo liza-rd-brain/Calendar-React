@@ -10,41 +10,14 @@ import {
 import DaySelection from "../DaySelection";
 import MonthSelection from "../MonthSelection";
 import YearSelection from "../YearSelection";
-/* import TaskList from "../TaskList/TaskList"; */
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      today: new Date(),
-      month: new Date().getMonth(),
-      year: new Date().getFullYear()
-    };
-    //  не влияет на отрисовку state
-    this.startYear = 2010;
-    this.endYear = this.startYear + 15;
-    this.handleChangeDate = this.handleChangeDate.bind(this);
+
     this.handleToCalendar = this.handleToCalendar.bind(this);
     this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
     this.handleToYearSelection = this.handleToYearSelection.bind(this);
-    this.updateSystemDate = this.updateSystemDate.bind(this);
-    this.update = setInterval(this.updateSystemDate, 1000);
-  }
-
-  handleChangeDate(month, year, startYear) {
-    this.setState({
-      month: month,
-      year: year
-    });
-    this.startYear = startYear || this.startYear;
-  }
-
-  updateSystemDate() {
-    const numberDayTomorrow = new Date().getDate();
-    const numberDayToday = this.state.today.getDate();
-    if (numberDayTomorrow !== numberDayToday) {
-      this.setState({ today: new Date() });
-    }
   }
 
   handleToCalendar() {
@@ -65,32 +38,32 @@ class Calendar extends React.Component {
         <Route exact path="/" component={DaySelection}>
           <>
             <DaySelection
-              today={this.state.today}
-              month={this.state.month}
-              year={this.state.year}
-              onChangeDate={this.handleChangeDate}
+              today={this.props.today}
+              month={this.props.month}
+              year={this.props.year}
+              onChangeDate={this.props.onChangeDate}
               onTitleClick={this.handleToMonthSelection}
             />
           </>
         </Route>
         <Route path="/monthSelection" component={MonthSelection}>
           <MonthSelection
-            today={this.state.today}
-            month={this.state.month}
-            year={this.state.year}
-            startYear={this.startYear}
-            onChangeDate={this.handleChangeDate}
+            today={this.props.today}
+            month={this.props.month}
+            year={this.props.year}
+            startYear={this.props.startYear}
+            onChangeDate={this.props.onChangeDate}
             onTitleClick={this.handleToYearSelection}
             onChangeRoute={this.handleToCalendar}
           />
         </Route>
         <Route path="/yearSelection" component={YearSelection}>
           <YearSelection
-            today={this.state.today}
-            month={this.state.month}
-            year={this.state.year}
-            startYear={this.startYear}
-            onChangeDate={this.handleChangeDate}
+            today={this.props.today}
+            month={this.props.month}
+            year={this.props.year}
+            startYear={this.props.startYear}
+            onChangeDate={this.props.onChangeDate}
             onChangeRoute={this.handleToMonthSelection}
           ></YearSelection>
         </Route>
@@ -100,4 +73,3 @@ class Calendar extends React.Component {
 }
 
 export default withRouter(Calendar);
-/* const ShowTheLocation = withRouter(App); */
