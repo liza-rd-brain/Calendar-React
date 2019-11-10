@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Nav from "../Nav";
 import GridMonths from "./GridMonth/GridMonth";
 
@@ -7,24 +6,27 @@ class MonthSelection extends Component {
   constructor(props) {
     super(props);
 
-    this.handleClickNav = this.handleClickNav.bind(this);
+    this.handleArrowClick = this.handleArrowClick.bind(this);
     this.handleClickMonth = this.handleClickMonth.bind(this);
   }
-  handleClickNav(direction) {
-    /*  debugger; */
+
+  handleArrowClick(direction) {
     if (direction === "right") {
       let month = new Date(this.props.year + 1, this.props.month).getMonth();
       let year = new Date(this.props.year + 1, this.props.month).getFullYear();
-      this.props.onchangeDate(month, year);
+      this.props.onChangeDate(month, year);
     } else {
       let month = new Date(this.props.year - 1, this.props.month).getMonth();
       let year = new Date(this.props.year - 1, this.props.month).getFullYear();
-      this.props.onchangeDate(month, year);
+      this.props.onChangeDate(month, year);
     }
   }
+
   handleClickMonth(month) {
-    this.props.onchangeDate(month, this.props.year);
+    this.props.onChangeDate(month, this.props.year);
+    this.props.onChangeRoute();
   }
+  
   render() {
     return (
       <div className="calendar">
@@ -32,8 +34,8 @@ class MonthSelection extends Component {
           className="nav"
           month={false}
           year={this.props.year}
-          onClick={this.handleClickNav}
-          onLinkClick={this.props.onLinkClick}
+          onArrowClick={this.handleArrowClick}
+          onTitleClick={this.props.onTitleClick}
         />
 
         <GridMonths
@@ -41,7 +43,7 @@ class MonthSelection extends Component {
           today={this.props.today}
           month={this.props.month}
           year={this.props.year}
-          onClick={this.handleClickMonth}
+          onItemClick={this.handleClickMonth}
         />
       </div>
     );

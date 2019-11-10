@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export default class GridYears extends React.Component {
   render() {
     const startYear = this.props.startYear;
-    /* console.log(startYear); */
     const todayYear = this.props.today.getFullYear();
     const currYear = this.props.year;
     const currMonth = this.props.month;
@@ -19,25 +18,18 @@ export default class GridYears extends React.Component {
       yearStart++;
     }
 
-/*     console.log(yersList); */
-
     const years = yersList.map((item, i) => {
       return (
         <div
           key={`${item.number}-${i}}`}
-          /* id={item.number} */
           className={item.class}
-          onClick={() => this.props.onClick(item.number)}
+          onClick={() => this.props.onItemClick(item.number)}
         >
           {item.number}
         </div>
       );
     });
 
-    return (
-      <Link className="link" to="/monthSelection">
-        <div className="grid">{years}</div>
-      </Link>
-    );
+    return <div className="grid">{years}</div>;
   }
 }

@@ -26,10 +26,9 @@ const App = withRouter(
       this.startYear = 2010;
       this.endYear = this.startYear + 15;
       this.handleChangeDate = this.handleChangeDate.bind(this);
-      this.handleCalendarClick = this.handleCalendarClick.bind(this);
-      this.handleMonthSelectionClick = this.handleMonthSelectionClick.bind(
-        this
-      );
+      this.handleToCalendar = this.handleToCalendar.bind(this);
+      this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
+      this.handleToYearSelection = this.handleToYearSelection.bind(this);
       this.updateSystemDate = this.updateSystemDate.bind(this);
       this.update = setInterval(this.updateSystemDate, 1000);
     }
@@ -49,11 +48,16 @@ const App = withRouter(
         this.setState({ today: new Date() });
       }
     }
-    handleCalendarClick() {
+
+    handleToCalendar() {
+      this.props.history.push("/");
+    }
+    handleToMonthSelection() {
       console.log("click");
       this.props.history.push("/monthSelection");
     }
-    handleMonthSelectionClick() {
+
+    handleToYearSelection() {
       this.props.history.push("/yearSelection");
     }
 
@@ -65,8 +69,8 @@ const App = withRouter(
               today={this.state.today}
               month={this.state.month}
               year={this.state.year}
-              onchangeDate={this.handleChangeDate}
-              onLinkClick={this.handleCalendarClick}
+              onChangeDate={this.handleChangeDate}
+              onTitleClick={this.handleToMonthSelection}
             />
           </Route>
           <Route exact path="/monthSelection" component={MonthSelection}>
@@ -75,9 +79,9 @@ const App = withRouter(
               month={this.state.month}
               year={this.state.year}
               startYear={this.startYear}
-              onchangeDate={this.handleChangeDate}
-              onLinkClick={this.handleMonthSelectionClick}
-              /* href="/yearSelection" */
+              onChangeDate={this.handleChangeDate}
+              onTitleClick={this.handleToYearSelection}
+              onChangeRoute={this.handleToCalendar}
             />
           </Route>
           <Route exact path="/yearSelection" component={YearSelection}>
@@ -86,7 +90,8 @@ const App = withRouter(
               month={this.state.month}
               year={this.state.year}
               startYear={this.startYear}
-              onchangeDate={this.handleChangeDate}
+              onChangeDate={this.handleChangeDate}
+              onChangeRoute={this.handleToMonthSelection}
             ></YearSelection>
           </Route>
         </>

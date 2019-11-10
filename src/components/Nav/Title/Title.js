@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Month extends React.Component {
+export default class Title extends React.Component {
   render() {
     const monthsName = [
       "Январь",
@@ -27,7 +27,7 @@ export default class Month extends React.Component {
     return (
       <div
         className="month"
-        onClick={this.props.onLinkClick}
+        onClick={this.props.onTitleClick}
       >{`${currentMonthName || ""} ${this.props.year} `}</div>
     );
   }

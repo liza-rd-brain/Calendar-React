@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 class GridMonth extends Component {
   render() {
@@ -32,17 +31,13 @@ class GridMonth extends Component {
           key={name}
           id={name}
           className={nameMonth}
-          onClick={() => this.props.onClick(i)}
+          onClick={() => this.props.onItemClick(i)}
         >
           {name}
         </div>
       );
     });
-    return (
-      <Link className="link" to="/">
-        <div className="grid">{monts}</div>
-      </Link>
-    );
+    return <div className="grid">{monts}</div>;
   }
 }
 

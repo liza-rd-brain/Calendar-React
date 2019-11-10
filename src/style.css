@@ -93,6 +93,7 @@
   border-right: 0.5px solid gray;
   border-top: 0.5px solid gray;
   padding: 30px 0;
+  cursor: pointer;
 }
 .nameMonth:nth-child(4n) {
   border-right: none;
@@ -130,6 +131,13 @@
   padding: 20px 0;
   border-right: 0.5px solid gray;
   border-top: 0.5px solid gray;
+  cursor: pointer;
+}
+.numberYear:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+.numberYear:active {
+  background-color: rgba(255, 0, 0, 0.2);
 }
 
 .numberYear:nth-child(4n) {
