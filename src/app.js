@@ -20,43 +20,62 @@ class App extends React.Component {
       today: new Date(),
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
-      selectDay: new Date().getDate()
+      selectDay: new Date().getDate(),
+      startYear: 2010
     };
-    this.startYear = 2010;
-    this.endYear = this.startYear + 15;
-    this.handleChangeDate = this.handleChangeDate.bind(this);
+
+    this.endYear = this.state.startYear + 15;
+    console.log(this.endYear);
+
     this.handleChangeMonth = this.handleChangeMonth.bind(this);
     this.handleChangeYear = this.handleChangeYear.bind(this);
-
+    this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
+    this.handleIncStartYear = this.handleIncStartYear.bind(this);
+    this.handleDecStartYear = this.handleDecStartYear.bind(this);
     this.updateSystemDate = this.updateSystemDate.bind(this);
-    this.hahdleChangeSelectDate = this.hahdleChangeSelectDate.bind(this);
+    this.hahdleChangeSelectDay = this.hahdleChangeSelectDay.bind(this);
     this.update = setInterval(this.updateSystemDate, 1000);
-  }
-
-  handleChangeDate(month, year, startYear) {
-    this.setState({
-      month: month,
-      year: year
-    });
-    this.startYear = startYear || this.startYear;
   }
 
   handleChangeMonth(month) {
     this.setState({
-      month: month
+      month
+      /*    month: month */
     });
   }
 
   handleChangeYear(year) {
     this.setState({
-      year: year
+      year
+      /* year: year */
     });
   }
 
-  hahdleChangeSelectDate(selectDay) {
+  handleChangeStartYear(year) {
     debugger;
+    if (year < this.state.startYear) {
+      this.handleDecStartYear();
+    } else if (year > this.endYear) {
+      this.handleIncStartYear();
+    }
+  }
+
+  handleIncStartYear() {
     this.setState({
-      selectDay: selectDay
+      startYear: this.state.startYear + 16
+    });
+  }
+
+  handleDecStartYear() {
+    this.setState({
+      startYear: this.state.startYear - 16
+    });
+  }
+
+  hahdleChangeSelectDay(selectDay) {
+    this.setState({
+      selectDay
+      /*   selectDay: selectDay */
     });
   }
 
@@ -75,14 +94,15 @@ class App extends React.Component {
           today={this.state.today}
           month={this.state.month}
           year={this.state.year}
-          onChangeSelectDate={this.hahdleChangeSelectDate}
-          
-          
+          onChangeSelectDay={this.hahdleChangeSelectDay}
           onChangeMonth={this.handleChangeMonth}
           onChangeYear={this.handleChangeYear}
-
           onChangeDate={this.handleChangeDate}
-          startYear={this.startYear}
+          onChangeStartYear={this.handleChangeStartYear}
+          onIncStartYear={this.handleIncStartYear}
+          onDecStartYear={this.handleDecStartYear}
+          startYear={this.state.startYear}
+          endYear={this.endYear}
         />
         <TaskList
           today={this.state.today}

@@ -17,11 +17,13 @@ export default class Calendar extends React.Component {
       let year = new Date(this.props.year, this.props.month + 1).getFullYear();
       this.props.onChangeMonth(month);
       this.props.onChangeYear(year);
+      this.props.onChangeStartYear(year);
     } else {
       let month = new Date(this.props.year, this.props.month - 1).getMonth();
       let year = new Date(this.props.year, this.props.month - 1).getFullYear();
       this.props.onChangeMonth(month);
       this.props.onChangeYear(year);
+      this.props.onChangeStartYear(year);
     }
   }
 
@@ -40,7 +42,7 @@ export default class Calendar extends React.Component {
           today={this.props.today}
           month={this.props.month}
           year={this.props.year}
-          onItemClick={this.props.onChangeSelectDate}
+          onItemClick={this.props.onChangeSelectDay}
         />
       </div>
     );

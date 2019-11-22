@@ -14,19 +14,24 @@ class MonthSelection extends Component {
     if (direction === "right") {
       let month = new Date(this.props.year + 1, this.props.month).getMonth();
       let year = new Date(this.props.year + 1, this.props.month).getFullYear();
-      this.props.onChangeDate(month, year);
+      this.props.onChangeMonth(month);
+      this.props.onChangeYear(year);
+      this.props.onChangeStartYear(year);
     } else {
       let month = new Date(this.props.year - 1, this.props.month).getMonth();
       let year = new Date(this.props.year - 1, this.props.month).getFullYear();
-      this.props.onChangeDate(month, year);
+      this.props.onChangeMonth(month);
+      this.props.onChangeYear(year);
+      this.props.onChangeStartYear(year);
     }
   }
 
   handleClickMonth(month) {
-    this.props.onChangeDate(month, this.props.year);
+    debugger;
+    this.props.onChangeMonth(month);
     this.props.onChangeRoute();
   }
-  
+
   render() {
     return (
       <div className="monthSelecion calendar">

@@ -25,7 +25,6 @@ class Calendar extends React.Component {
   }
 
   handleToMonthSelection() {
-    console.log("click");
     this.props.history.push("/monthSelection");
   }
 
@@ -42,9 +41,10 @@ class Calendar extends React.Component {
               today={this.props.today}
               month={this.props.month}
               year={this.props.year}
-              onChangeSelectDate={this.props.onChangeSelectDate}
+              onChangeSelectDay={this.props.onChangeSelectDay}
               onChangeMonth={this.props.onChangeMonth}
               onChangeYear={this.props.onChangeYear}
+              onChangeStartYear={this.props.onChangeStartYear}
               onTitleClick={this.handleToMonthSelection}
             />
           </>
@@ -55,7 +55,9 @@ class Calendar extends React.Component {
             month={this.props.month}
             year={this.props.year}
             startYear={this.props.startYear}
-            onChangeDate={this.props.onChangeDate}
+            onChangeMonth={this.props.onChangeMonth}
+            onChangeYear={this.props.onChangeYear}
+            onChangeStartYear={this.props.onChangeStartYear}
             onTitleClick={this.handleToYearSelection}
             onChangeRoute={this.handleToCalendar}
           />
@@ -66,7 +68,12 @@ class Calendar extends React.Component {
             month={this.props.month}
             year={this.props.year}
             startYear={this.props.startYear}
-            onChangeDate={this.props.onChangeDate}
+            endYear={this.props.endYear}
+            onChangeMonth={this.props.onChangeMonth}
+            onChangeYear={this.props.onChangeYear}
+            /*  onChangeStartYear={this.props.onChangeStartYear} */
+            onIncStartYear={this.props.onIncStartYear}
+            onDecStartYear={this.props.onDecStartYear}
             onChangeRoute={this.handleToMonthSelection}
           ></YearSelection>
         </Route>
