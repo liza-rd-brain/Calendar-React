@@ -1,0 +1,30 @@
+.main {
+  width: 700px;
+  /*   height: 700px; */
+  border: 1px solid #000;
+}
+
+.top-block {
+  width: 90%;
+  height: 200px;
+  border: 1px solid red;
+  margin: 50px auto;
+}
+.top-block > * {
+  display: flex;
+  justify-content: space-between;
+}
+.constant-block {
+  width: 90%;
+  height: 200px;
+  border: 1px solid green;
+  margin: 0 auto 50px auto;
+}
+
+.nav {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+  background-color: gold;
+  margin-bottom: 0;
+}
