@@ -12,7 +12,7 @@ export default class TaskTitle extends React.Component {
       "пятница",
       "суббота"
     ];
-    debugger;
+   /*  debugger; */
     const numberDay = new Date(
       this.props.year,
       this.props.month,

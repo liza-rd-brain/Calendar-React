@@ -11,15 +11,9 @@ export default class YearSelection extends React.Component {
   handleArrowClick(direction) {
     if (direction === "right") {
       this.props.onIncStartYear();
-      /*  let month = new Date(this.props.year, this.props.month).getMonth();
-      let year = new Date(this.props.year, this.props.month).getFullYear();
-
-      this.props.onChangeStartYear(this.props.endYear + 1); */
     } else {
+      debugger;
       this.props.onDecStartYear();
-      /* let month = new Date(this.props.startYear, this.props.month).getMonth();
-      let year = new Date(this.props.year, this.props.month).getFullYear();
-      this.props.onChangeStartYear(this.props.startYear - 1); */
     }
   }
 

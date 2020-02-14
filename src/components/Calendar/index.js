@@ -1,71 +1,52 @@
 import React from "react";
-/* import ReactDOM from "react-dom"; */
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  withRouter
-} from "react-router-dom";
-import DaySelection from "../DaySelection";
-import MonthSelection from "../MonthSelection";
-import YearSelection from "../YearSelection";
+import Nav from "../Nav";
+import NameDays from "./NameDays/NameDays";
+import GridDays from "./GridDays/GridDays";
 
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
-
+    this.handleArrowClick = this.handleArrowClick.bind(this);
+    /*    this.handleItemClick = this.handleItemClick.bind(this); */
   }
+  /*  handleItemClick() {} */
 
+  handleArrowClick(direction) {
+    if (direction === "right") {
+      let month = new Date(this.props.year, this.props.month + 1).getMonth();
+      let year = new Date(this.props.year, this.props.month + 1).getFullYear();
+      this.props.onChangeMonth(month);
+      this.props.onChangeYear(year);
+      this.props.onChangeStartYear(year);
+    } else {
+      let month = new Date(this.props.year, this.props.month - 1).getMonth();
+      let year = new Date(this.props.year, this.props.month - 1).getFullYear();
+      this.props.onChangeMonth(month);
+      this.props.onChangeYear(year);
+      this.props.onChangeStartYear(year);
+    }
+  }
 
   render() {
     return (
-      <>
-        {/* <Switch> */}
-          <Route exact path="/">
-            <DaySelection
-              today={this.props.today}
-              month={this.props.month}
-              year={this.props.year}
-              onChangeSelectDay={this.props.onChangeSelectDay}
-              onChangeMonth={this.props.onChangeMonth}
-              onChangeYear={this.props.onChangeYear}
-              onChangeStartYear={this.props.onChangeStartYear}
-              onTitleClick={this.props.onRouteToMonth}
-            />
-          </Route>
-
-          <Route exact path="/monthSelection">
-            <MonthSelection
-              today={this.props.today}
-              month={this.props.month}
-              year={this.props.year}
-              startYear={this.props.startYear}
-              onChangeMonth={this.props.onChangeMonth}
-              onChangeYear={this.props.onChangeYear}
-              onChangeStartYear={this.props.onChangeStartYear}
-              onTitleClick={this.props.onRouteToYearh}
-              onChangeRoute={this.props.onRouteToCalendar}
-            />
-          </Route>
-          <Route exact path="/yearSelection">
-            <YearSelection
-              today={this.props.today}
-              month={this.props.month}
-              year={this.props.year}
-              startYear={this.props.startYear}
-              endYear={this.props.endYear}
-              onChangeMonth={this.props.onChangeMonth}
-              onChangeYear={this.props.onChangeYear}
-              onIncStartYear={this.props.onIncStartYear}
-              onDecStartYear={this.props.onDecStartYear}
-              onChangeRoute={this.props.onRouteToMonth}
-            ></YearSelection>
-          </Route>
-        {/* </Switch> */}
-      </>
+      <div className="daySelection calendar">
+        <Nav
+          className="nav"
+          month={this.props.month}
+          year={this.props.year}
+          onArrowClick={this.handleArrowClick}
+          onTitleClick={this.props.onTitleClick}
+        />
+        <NameDays />
+        <GridDays
+          today={this.props.today}
+          month={this.props.month}
+          year={this.props.year}
+          onItemClick={this.props.onChangeSelectDay}
+        />
+      </div>
     );
   }
 }
 
-export default withRouter(Calendar);
+export default Calendar;

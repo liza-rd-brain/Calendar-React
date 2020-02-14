@@ -1,3 +1,12 @@
+/*
+import Timer from "./components/Timer";
+import Calendar from "./components/Calendar";
+import MonthSelection from "./components/MonthSelection";
+import YearSelection from "./components/YearSelection";
+import TaskList from "./components/TaskList/TaskList";
+import NewTask from "./components/TaskList/NewTask/NewTask";
+import "./style.css";*/
+
 import React from "react";
 import ReactDOM from "react-dom";
 import {
@@ -8,30 +17,13 @@ import {
   withRouter
 } from "react-router-dom";
 
-import Main from "./pages/Main";
-import Calendar from "./components/Calendar";
-import MonthSelection from "./components/MonthSelection";
-import YearSelection from "./components/YearSelection";
-import TaskList from "./components/TaskList/TaskList";
-import NewTask from "./components/TaskList/NewTask/NewTask";
-import "./style.css";
+import Main from "./pages/Main/Main";
+import MonthSelectionPage from "./pages/MonthSelectionPage/MonthSelectionPage";
+import YearSelectionPage from "./pages/YearSelectionPage/YearSelectionPage";
 
-/* const routes = [
-  {
-    path: "/",
-    component: Main,
-    routes: [
-      {
-        path: "/monthSelection",
-        component: MonthSelection
-      },
-      {
-        path: "/yearSelection",
-        component: YearSelection
-      }
-    ]
-  }
-]; */
+import NewTask from "./pages/NewTask/NewTask";
+
+import "./style.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -74,7 +66,6 @@ class App extends React.Component {
   }
 
   handleChangeStartYear(year) {
-    /* debugger; */
     if (year < this.state.startYear) {
       this.handleDecStartYear();
     } else if (year > this.endYear) {
@@ -100,7 +91,6 @@ class App extends React.Component {
     });
   }
   handleToNewTask() {
-    /*  console.log("click"); */
     this.props.history.push("newTask");
   }
   handleToCalendar() {
@@ -108,7 +98,6 @@ class App extends React.Component {
   }
 
   handleToMonthSelection() {
-    debugger;
     this.props.history.push("/monthSelection");
   }
 
@@ -127,8 +116,40 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Route path="/">
-          <Calendar
+        <Route exact path="/">
+          <Main
+            today={this.state.today}
+            month={this.state.month}
+            year={this.state.year}
+            onChangeSelectDay={this.hahdleChangeSelectDay}
+            onChangeMonth={this.handleChangeMonth}
+            onChangeYear={this.handleChangeYear}
+            /*  onChangeDate={this.handleChangeDate} */
+            onChangeStartYear={this.handleChangeStartYear}
+            onIncStartYear={this.handleIncStartYear}
+            onDecStartYear={this.handleDecStartYear}
+            startYear={this.state.startYear}
+            endYear={this.endYear}
+            onRouteToCalendar={this.handleToCalendar}
+            onRouteToMonth={this.handleToMonthSelection}
+            onRouteToYearh={this.handleToYearSelection}
+            selectDay={this.state.selectDay}
+          />
+
+          {/*     <Route path="/">
+            <TaskList
+              today={this.state.today}
+              month={this.state.month}
+              year={this.state.year}
+              selectDay={this.state.selectDay}
+              onClickNewTask={this.handleToNewTask}
+            />
+          </Route> */}
+
+          {/* <Route path="/newTask" component={NewTask}></Route> */}
+        </Route>
+        <Route path="/monthSelection">
+          <MonthSelectionPage
             today={this.state.today}
             month={this.state.month}
             year={this.state.year}
@@ -144,18 +165,29 @@ class App extends React.Component {
             onRouteToCalendar={this.handleToCalendar}
             onRouteToMonth={this.handleToMonthSelection}
             onRouteToYearh={this.handleToYearSelection}
+            selectDay={this.state.selectDay}
           />
-          <Route exact path="/">
-            <TaskList
-              today={this.state.today}
-              month={this.state.month}
-              year={this.state.year}
-              selectDay={this.state.selectDay}
-              onClickNewTask={this.handleToNewTask}
-            />
-          </Route>
         </Route>
-        <Route exact path="/newTask" component={NewTask}></Route>
+        <Route path="/yearSelection">
+          <YearSelectionPage
+            today={this.state.today}
+            month={this.state.month}
+            year={this.state.year}
+            onChangeSelectDay={this.hahdleChangeSelectDay}
+            onChangeMonth={this.handleChangeMonth}
+            onChangeYear={this.handleChangeYear}
+            onChangeDate={this.handleChangeDate}
+            onChangeStartYear={this.handleChangeStartYear}
+            onIncStartYear={this.handleIncStartYear}
+            onDecStartYear={this.handleDecStartYear}
+            startYear={this.state.startYear}
+            endYear={this.endYear}
+            onRouteToCalendar={this.handleToCalendar}
+            onRouteToMonth={this.handleToMonthSelection}
+            onRouteToYearh={this.handleToYearSelection}
+            selectDay={this.state.selectDay}
+          />
+        </Route>
       </>
     );
   }
@@ -169,3 +201,14 @@ ReactDOM.render(
   </Router>,
   document.querySelector("#root")
 );
+
+/* ReactDOM.render(
+  <Router>
+    <Main />
+    <MonthSelection />
+    <YearSelection />
+    <NewTask />
+  </Router>,
+  document.querySelector("#root")
+);
+ */

@@ -3,7 +3,8 @@
 }
 
 .calendar,
-.taskList {
+.taskList,
+.timer {
   border: 0.5px solid gray;
   width: 700px;
   max-height: 300px;
@@ -69,17 +70,17 @@
   padding: 16px 0;
 }
 
-.month {
+.title{
   width: 500px;
   text-align: center;
   justify-content: center;
   cursor: pointer;
   padding: 16px 0;
 }
-.month:hover {
+.title:hover {
   color: gray;
 }
-.month:active {
+.title:active {
   color: rgb(53, 48, 48);
 }
 
@@ -153,4 +154,8 @@
 
 .taskList {
   min-height: 200px;
+}
+
+.timer {
+  min-height: 100px;
 }

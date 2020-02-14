@@ -19,7 +19,18 @@ export default class TaskList extends React.Component {
           month={this.props.month}
           year={this.props.year}
         />
-        <div onClick={this.props.onClickNewTask}>+</div>
+        <Link
+          target="_blank"
+          to="newTask" /* to={this.props.href} */
+        >
+          +
+        </Link>
+        {/*    <a
+          target="_blank"
+          href="http://localhost:8080/newTask" onClick={this.props.onClickNewTask}
+        >
+          +
+        </a> */}
       </div>
     );
   }

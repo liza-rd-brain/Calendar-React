@@ -26,7 +26,7 @@ export default class Title extends React.Component {
 
     return (
       <div
-        className="month"
+        className="title"
         onClick={this.props.onTitleClick}
       >{`${currentMonthName || ""} ${this.props.year} `}</div>
     );
