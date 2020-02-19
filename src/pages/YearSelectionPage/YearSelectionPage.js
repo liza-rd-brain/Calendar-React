@@ -43,7 +43,8 @@ class YearSelectionPage extends React.Component {
             month={this.props.month}
             year={this.props.year}
             selectDay={this.props.selectDay}
-            onClickNewTask={this.props.onClickNewTask}
+            hrefNewTask={this.props.hrefNewTask}
+            taskList={this.props.taskList}
           />
         </Route>
       </>

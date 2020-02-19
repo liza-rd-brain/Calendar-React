@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import TaskTitle from "./TaskTitle/TaskTitle";
+import List from "./List/List";
 
 export default class TaskList extends React.Component {
   render() {
@@ -19,18 +20,10 @@ export default class TaskList extends React.Component {
           month={this.props.month}
           year={this.props.year}
         />
-        <Link
-          target="_blank"
-          to="newTask" /* to={this.props.href} */
-        >
+        <Link /* target="_blank" */ to={this.props.hrefNewTask}>
           +
         </Link>
-        {/*    <a
-          target="_blank"
-          href="http://localhost:8080/newTask" onClick={this.props.onClickNewTask}
-        >
-          +
-        </a> */}
+        <List taskList={this.props.taskList} />
       </div>
     );
   }

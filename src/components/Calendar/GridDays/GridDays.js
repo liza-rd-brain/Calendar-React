@@ -10,8 +10,8 @@ export default class GridDays extends React.Component {
     const currYear = this.props.year;
     const currMonth = this.props.month;
 
-    const firstDayCurrMonth = new Date(2019, currMonth, 1);
-    const lastDayCurrMonth = new Date(2019, currMonth + 1, 0).getDate();
+    const firstDayCurrMonth = new Date(currYear, currMonth, 1);
+    const lastDayCurrMonth = new Date(currYear, currMonth + 1, 0).getDate();
 
     let listCurrMonth = [];
     let dayNumber = 1;
@@ -63,6 +63,7 @@ export default class GridDays extends React.Component {
     }
 
     const listAllMonth = listPrevCurrentMonth.concat(listNextMonth);
+
     const arrayGrid = listAllMonth.map(item => {
       return (
         <Day

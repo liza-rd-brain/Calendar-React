@@ -10,7 +10,12 @@ import {
 
 class Timer extends React.Component {
   render() {
-    return <div className="timer">Timer</div>;
+    return (
+      <div className="timer">
+        <span>время</span>
+        <span>сегодняшняя дата</span>
+      </div>
+    );
   }
 }
 

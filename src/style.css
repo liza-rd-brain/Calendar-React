@@ -4,7 +4,8 @@
 
 .calendar,
 .taskList,
-.timer {
+.timer,
+.form {
   border: 0.5px solid gray;
   width: 700px;
   max-height: 300px;
@@ -70,7 +71,7 @@
   padding: 16px 0;
 }
 
-.title{
+.title {
   width: 500px;
   text-align: center;
   justify-content: center;
@@ -158,4 +159,21 @@
 
 .timer {
   min-height: 100px;
+  padding: 10px;
+}
+.form {
+  align-items: center;
+  width: 700px;
+  padding: 20px;
+}
+.form > * {
+  width: 90%;
+}
+.button {
+  /*   align-self: flex-end; */
+  width: 100px;
+}
+
+.list {
+  height: 150px;
 }

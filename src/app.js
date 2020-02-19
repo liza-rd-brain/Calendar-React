@@ -33,11 +33,21 @@ class App extends React.Component {
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
       selectDay: new Date().getDate(),
-      startYear: 2010
+      startYear: 2010,
+      newTaskName: "",
+      newTaskDesc: "",
+      /* newTask: { name: "", desc: "" }, */
+      taskList: [
+        /* {name:1,desc:"1"} */
+      ]
     };
 
     this.endYear = this.state.startYear + 15;
-    console.log(this.endYear);
+    this.hrefNewTask = "newTask";
+    /*  console.log(this.endYear); */
+
+    this.nameValue = "name";
+    this.descValue = "desc";
 
     this.handleChangeMonth = this.handleChangeMonth.bind(this);
     this.handleChangeYear = this.handleChangeYear.bind(this);
@@ -51,6 +61,8 @@ class App extends React.Component {
     this.handleToCalendar = this.handleToCalendar.bind(this);
     this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
     this.handleToYearSelection = this.handleToYearSelection.bind(this);
+    this.handleCreateNewTask = this.handleCreateNewTask.bind(this);
+    this.handleChangeTaskList = this.handleChangeTaskList.bind(this);
   }
 
   handleChangeMonth(month) {
@@ -90,8 +102,11 @@ class App extends React.Component {
       selectDay
     });
   }
+
   handleToNewTask() {
-    this.props.history.push("newTask");
+    /*не нужно менять адрес в текущем окне */
+    /*  this.props.history.push("newTask"); */
+    this.props.history;
   }
   handleToCalendar() {
     this.props.history.push("/");
@@ -111,6 +126,45 @@ class App extends React.Component {
     if (numberDayTomorrow !== numberDayToday) {
       this.setState({ today: new Date() });
     }
+  }
+
+  handleCreateNewTask(event) {
+    const name = event.target.name;
+
+    if (name == "name") {
+      console.log(name, event.target.value);
+      this.setState({
+        newTaskName: event.target.value
+      });
+    } else {
+      console.log(name, event.target.value);
+      this.setState({
+        newTaskDesc: event.target.value
+      });
+    }
+  }
+
+  handleChangeTaskList(event) {
+    event.preventDefault();
+    console.log("создалась задача");
+    console.log(this.state);
+    console.log(
+      "name:" + this.state.newTaskName,
+      "desc:" + this.state.newTaskDesc
+    );
+
+    let newTask = {
+      name: this.state.newTaskName,
+      desc: this.state.newTaskDesc
+    };
+
+    this.setState(
+      {
+        taskList: this.state.taskList.concat(newTask)
+      },
+      () => console.log(this.state)
+    );
+    this.handleToCalendar();
   }
 
   render() {
@@ -134,19 +188,9 @@ class App extends React.Component {
             onRouteToMonth={this.handleToMonthSelection}
             onRouteToYearh={this.handleToYearSelection}
             selectDay={this.state.selectDay}
+            hrefNewTask={this.hrefNewTask}
+            taskList={this.state.taskList}
           />
-
-          {/*     <Route path="/">
-            <TaskList
-              today={this.state.today}
-              month={this.state.month}
-              year={this.state.year}
-              selectDay={this.state.selectDay}
-              onClickNewTask={this.handleToNewTask}
-            />
-          </Route> */}
-
-          {/* <Route path="/newTask" component={NewTask}></Route> */}
         </Route>
         <Route path="/monthSelection">
           <MonthSelectionPage
@@ -166,6 +210,8 @@ class App extends React.Component {
             onRouteToMonth={this.handleToMonthSelection}
             onRouteToYearh={this.handleToYearSelection}
             selectDay={this.state.selectDay}
+            hrefNewTask={this.hrefNewTask}
+            taskList={this.state.taskList}
           />
         </Route>
         <Route path="/yearSelection">
@@ -186,6 +232,19 @@ class App extends React.Component {
             onRouteToMonth={this.handleToMonthSelection}
             onRouteToYearh={this.handleToYearSelection}
             selectDay={this.state.selectDay}
+            hrefNewTask={this.hrefNewTask}
+            taskList={this.state.taskList}
+          />
+        </Route>
+
+        <Route path="/newTask">
+          <NewTask
+            name={this.state.newTaskName}
+            desc={this.state.newTaskDesc}
+            nameValue={this.nameValue}
+            descValue={this.descValue}
+            onCreateNewTask={this.handleCreateNewTask}
+            onChangeTaskList={this.handleChangeTaskList}
           />
         </Route>
       </>
