@@ -39,7 +39,9 @@ class App extends React.Component {
       /* newTask: { name: "", desc: "" }, */
       taskList: [
         /* {name:1,desc:"1"} */
-      ]
+      ],
+      seconds: new Date().getSeconds(),
+      time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}`
     };
 
     this.endYear = this.state.startYear + 15;
@@ -55,9 +57,11 @@ class App extends React.Component {
     this.handleIncStartYear = this.handleIncStartYear.bind(this);
     this.handleDecStartYear = this.handleDecStartYear.bind(this);
     this.updateSystemDate = this.updateSystemDate.bind(this);
+    this.updateSystemTime = this.updateSystemTime.bind(this);
     this.hahdleChangeSelectDay = this.hahdleChangeSelectDay.bind(this);
     this.handleToNewTask = this.handleToNewTask.bind(this);
     this.update = setInterval(this.updateSystemDate, 1000);
+    this.updateTime = setInterval(this.updateSystemTime, 100);
     this.handleToCalendar = this.handleToCalendar.bind(this);
     this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
     this.handleToYearSelection = this.handleToYearSelection.bind(this);
@@ -127,6 +131,17 @@ class App extends React.Component {
       this.setState({ today: new Date() });
     }
   }
+  updateSystemTime() {
+    const newTime = new Date().getSeconds();
+    const currTime = this.state.seconds;
+    if (newTime !== currTime) {
+      this.setState({
+        seconds: new Date().getSeconds(),
+        time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}`
+      });
+    }
+    console.log(this.state.time);
+  }
 
   handleCreateNewTask(event) {
     const name = event.target.name;
@@ -190,6 +205,7 @@ class App extends React.Component {
             selectDay={this.state.selectDay}
             hrefNewTask={this.hrefNewTask}
             taskList={this.state.taskList}
+            time={this.state.time}
           />
         </Route>
         <Route path="/monthSelection">
@@ -212,6 +228,7 @@ class App extends React.Component {
             selectDay={this.state.selectDay}
             hrefNewTask={this.hrefNewTask}
             taskList={this.state.taskList}
+            time={this.state.time}
           />
         </Route>
         <Route path="/yearSelection">
@@ -234,6 +251,7 @@ class App extends React.Component {
             selectDay={this.state.selectDay}
             hrefNewTask={this.hrefNewTask}
             taskList={this.state.taskList}
+            time={this.state.time}
           />
         </Route>
 

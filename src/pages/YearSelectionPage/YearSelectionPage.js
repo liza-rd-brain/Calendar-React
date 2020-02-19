@@ -21,7 +21,7 @@ class YearSelectionPage extends React.Component {
     return (
       <>
         <Route path="/">
-          <Timer></Timer>
+          <Timer today={this.props.today} time={this.props.time}></Timer>
           <YearSelection
             today={this.props.today}
             month={this.props.month}

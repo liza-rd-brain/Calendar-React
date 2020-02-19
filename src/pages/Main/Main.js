@@ -21,7 +21,7 @@ class Main extends React.Component {
     return (
       <>
         <Route path="/">
-          <Timer></Timer>
+          <Timer today={this.props.today} time={this.props.time} />
           <Calendar
             today={this.props.today}
             month={this.props.month}
