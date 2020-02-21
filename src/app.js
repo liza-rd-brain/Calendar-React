@@ -16,6 +16,7 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
+import moment from "moment";
 
 import Main from "./pages/Main/Main";
 import MonthSelectionPage from "./pages/MonthSelectionPage/MonthSelectionPage";
@@ -41,7 +42,8 @@ class App extends React.Component {
         /* {name:1,desc:"1"} */
       ],
       seconds: new Date().getSeconds(),
-      time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}`
+      time: moment().format("LTS")
+      /*  time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}` */
     };
 
     this.endYear = this.state.startYear + 15;
@@ -137,10 +139,10 @@ class App extends React.Component {
     if (newTime !== currTime) {
       this.setState({
         seconds: new Date().getSeconds(),
-        time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}`
+        /* time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}` */
+        time: moment().format("LTS")
       });
     }
-    console.log(this.state.time);
   }
 
   handleCreateNewTask(event) {
