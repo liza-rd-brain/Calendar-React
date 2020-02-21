@@ -5,8 +5,11 @@ moment.locale("ru");
 
 export default class Title extends React.Component {
   render() {
-    const monthName = moment(this.props.month).format("MMMM");
-    const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
+    let currentMonthName = 0;
+    if (this.props.month) {
+      const monthName = moment(this.props.month).format("MMMM");
+      currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
+    }
 
     return (
       <div

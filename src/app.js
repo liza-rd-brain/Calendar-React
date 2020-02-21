@@ -41,7 +41,6 @@ class App extends React.Component {
       taskList: [
         /* {name:1,desc:"1"} */
       ],
-      seconds: new Date().getSeconds(),
       time: moment().format("LTS")
       /*  time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}` */
     };
@@ -62,8 +61,8 @@ class App extends React.Component {
     this.updateSystemTime = this.updateSystemTime.bind(this);
     this.hahdleChangeSelectDay = this.hahdleChangeSelectDay.bind(this);
     this.handleToNewTask = this.handleToNewTask.bind(this);
-    this.update = setInterval(this.updateSystemDate, 1000);
-    this.updateTime = setInterval(this.updateSystemTime, 100);
+    /*   this.update = setInterval(this.updateSystemDate, 1000);
+    this.updateTime = setInterval(this.updateSystemTime, 100); */
     this.handleToCalendar = this.handleToCalendar.bind(this);
     this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
     this.handleToYearSelection = this.handleToYearSelection.bind(this);
@@ -92,14 +91,18 @@ class App extends React.Component {
   }
 
   handleIncStartYear() {
-    this.setState({
-      startYear: this.state.startYear + 16
+    this.state(state => {
+      {
+        return { startYear: state.startYear + 16 };
+      }
     });
   }
 
   handleDecStartYear() {
-    this.setState({
-      startYear: this.state.startYear - 16
+    this.state(state => {
+      {
+        return { startYear: state.startYear - 16 };
+      }
     });
   }
 
@@ -124,25 +127,6 @@ class App extends React.Component {
 
   handleToYearSelection() {
     this.props.history.push("/yearSelection");
-  }
-
-  updateSystemDate() {
-    const numberDayTomorrow = new Date().getDate();
-    const numberDayToday = this.state.today.getDate();
-    if (numberDayTomorrow !== numberDayToday) {
-      this.setState({ today: new Date() });
-    }
-  }
-  updateSystemTime() {
-    const newTime = new Date().getSeconds();
-    const currTime = this.state.seconds;
-    if (newTime !== currTime) {
-      this.setState({
-        seconds: new Date().getSeconds(),
-        /* time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}` */
-        time: moment().format("LTS")
-      });
-    }
   }
 
   handleCreateNewTask(event) {
@@ -175,13 +159,29 @@ class App extends React.Component {
       desc: this.state.newTaskDesc
     };
 
-    this.setState(
-      {
-        taskList: this.state.taskList.concat(newTask)
-      },
-      () => console.log(this.state)
-    );
+    this.setState(state => {
+      return { taskList: this.state.taskList.concat(newTask) };
+    });
     this.handleToCalendar();
+  }
+
+  componentDidMount() {
+    this.updateID = setInterval(() => this.updateSystemDate(), 1000);
+    this.updateTimeID = setInterval(() => this.updateSystemTime(), 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.updateID);
+    clearInterval(this.updateTimeID);
+  }
+
+  updateSystemDate() {
+    this.setState({ today: new Date() });
+  }
+
+  updateSystemTime() {
+    this.setState({
+      time: moment().format("LTS")
+    });
   }
 
   render() {
