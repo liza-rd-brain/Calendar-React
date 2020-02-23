@@ -33,7 +33,8 @@ class App extends React.Component {
       today: new Date(),
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
-      selectDay: new Date().getDate(),
+      /* selectDay: new Date().getDate(), */
+      selectDay: new Date(),
       startYear: 2010,
       newTaskName: "",
       newTaskDesc: "",
@@ -77,6 +78,7 @@ class App extends React.Component {
   }
 
   handleChangeMonth(month) {
+    debugger;
     this.setState({
       month
     });
@@ -97,18 +99,14 @@ class App extends React.Component {
   }
 
   handleIncStartYear() {
-    this.state(state => {
-      {
-        return { startYear: state.startYear + 16 };
-      }
+    this.setState(state => {
+      return { startYear: state.startYear + 16 };
     });
   }
 
   handleDecStartYear() {
-    this.state(state => {
-      {
-        return { startYear: state.startYear - 16 };
-      }
+    this.setState(state => {
+      return { startYear: state.startYear - 16 };
     });
   }
 
@@ -156,17 +154,17 @@ class App extends React.Component {
         break;
       case "startTime":
         this.setState({
-          newTaskStartDate: event.target.value
+          newTaskStartTime: event.target.value
         });
         break;
       case "endDate":
         this.setState({
-          newTaskStartDate: event.target.value
+          newTaskEndDate: event.target.value
         });
         break;
       case "endTime":
         this.setState({
-          newTaskStartDate: event.target.value
+          newTaskEndTime: event.target.value
         });
         break;
       default:
@@ -187,21 +185,22 @@ class App extends React.Component {
 
   handleChangeTaskList(event) {
     event.preventDefault();
-    console.log("создалась задача");
-    console.log(this.state);
-    console.log(
-      "name:" + this.state.newTaskName,
-      "desc:" + this.state.newTaskDesc
-    );
 
     let newTask = {
       name: this.state.newTaskName,
-      desc: this.state.newTaskDesc
+      desc: this.state.newTaskDesc,
+      startDate: this.state.newTaskStartDate,
+      startTime: this.state.newTaskStartTime,
+      endDate: this.state.newTaskEndDate,
+      endTime: this.state.newTaskEndTime
     };
 
-    this.setState(state => {
-      return { taskList: this.state.taskList.concat(newTask) };
-    });
+    this.setState(
+      state => {
+        return { taskList: this.state.taskList.concat(newTask) };
+      },
+      () => console.log(this.state)
+    );
 
     //очищаю строки для ввода
     this.setState(state => {

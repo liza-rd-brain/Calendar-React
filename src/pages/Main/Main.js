@@ -34,9 +34,8 @@ class Main extends React.Component {
             /*       onChangeDate={this.props.handleChangeDate} */
             onChangeStartYear={this.props.onChangeStartYear}
             onIncStartYear={this.props.onIncStartYear}
-            onDecStartYear={this.props.handleDecStartYear}
+            onDecStartYear={this.props.onDecStartYear}
             startYear={this.props.startYear}
-            onDecStartYear
             endYear={this.props.endYear}
             onRouteToCalendar={this.props.handleToCalendar}
             onTitleClick={this.props.onRouteToMonth}

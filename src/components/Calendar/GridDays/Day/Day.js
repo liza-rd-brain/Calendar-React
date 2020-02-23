@@ -5,7 +5,7 @@ export default class Day extends React.Component {
     return (
       <div
         className={this.props.class}
-        onClick={() => this.props.onItemClick(this.props.item)}
+        onClick={() => this.props.onItemClick(this.props.date)}
       >
         {this.props.item}
       </div>

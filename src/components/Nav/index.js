@@ -12,7 +12,12 @@ class Nav extends React.Component {
     return (
       <div className="nav">
         {this.renderArrow("left")}
-          <Title month={this.props.month} year={this.props.year} onTitleClick={ this.props.onTitleClick} />
+        <Title
+        /*   date={this.props.today} */
+          month={this.props.month}
+          year={this.props.year}
+          onTitleClick={this.props.onTitleClick}
+        />
         {this.renderArrow("right")}
       </div>
     );

@@ -15,15 +15,17 @@ export default class TaskTitle extends React.Component {
     const numberDay = new Date(
       this.props.year,
       this.props.month,
-      this.props.selectDay
+      this.props.selectDay.getDate()
     ).getDay();
 
     const nameDay = nameDayList.find((el, i) => numberDay === i);
-
+    debugger;
     const titleText =
-      this.props.selectDay === this.props.today.getDate()
+      this.props.selectDay.getDate() === this.props.today.getDate() &&
+      this.props.selectDay.getMonth() === this.props.today.getMonth() &&
+      this.props.selectDay.getFullYear() === this.props.today.getFullYear()
         ? "Сегодня"
-        : `${nameDay} ${this.props.selectDay} `;
+        : `${nameDay} ${this.props.selectDay.getDate()} `;
 
     return <div className="taskTitle">{titleText}</div>;
   }

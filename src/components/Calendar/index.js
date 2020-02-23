@@ -13,17 +13,18 @@ class Calendar extends React.Component {
 
   handleArrowClick(direction) {
     if (direction === "right") {
-      let month = new Date(this.props.year, this.props.month + 1).getMonth();
-      let year = new Date(this.props.year, this.props.month + 1).getFullYear();
-      this.props.onChangeMonth(month);
-      this.props.onChangeYear(year);
-      this.props.onChangeStartYear(year);
+      debugger;
+      let date = new Date(this.props.year, this.props.month + 1);
+      /* let year = new Date(this.props.year, this.props.month + 1).getFullYear(); */
+      this.props.onChangeMonth(date.getMonth());
+      this.props.onChangeYear(date.getFullYear());
+      this.props.onChangeStartYear(date.getFullYear());
     } else {
-      let month = new Date(this.props.year, this.props.month - 1).getMonth();
-      let year = new Date(this.props.year, this.props.month - 1).getFullYear();
-      this.props.onChangeMonth(month);
-      this.props.onChangeYear(year);
-      this.props.onChangeStartYear(year);
+      let date = new Date(this.props.year, this.props.month - 1);
+      /*    let year = new Date(this.props.year, this.props.month - 1).getFullYear(); */
+      this.props.onChangeMonth(date.getMonth());
+      this.props.onChangeYear(date.getFullYear());
+      this.props.onChangeStartYear(date.getFullYear());
     }
   }
 
@@ -32,6 +33,7 @@ class Calendar extends React.Component {
       <div className="daySelection calendar">
         <Nav
           className="nav"
+          today={this.props.today}
           month={this.props.month}
           year={this.props.year}
           onArrowClick={this.handleArrowClick}
