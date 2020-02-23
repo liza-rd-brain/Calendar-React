@@ -157,9 +157,11 @@
   min-height: 200px;
 }
 
+.taskList,
 .timer {
   min-height: 100px;
   padding: 10px;
+  box-sizing: border-box;
 }
 .form {
   align-items: center;
@@ -168,7 +170,9 @@
 }
 .form > * {
   width: 90%;
+  margin-bottom: 10px;
 }
+
 .button {
   /*   align-self: flex-end; */
   width: 100px;
@@ -176,4 +180,26 @@
 
 .list {
   height: 150px;
+}
+
+.task_link {
+  text-decoration: none;
+}
+
+.textarea {
+  min-height: 150px;
+}
+.dateTimeBlock {
+  display: flex;
+  justify-content: space-between;
+}
+.dateTimeInput {
+  width: 70%;
+  display: flex;
+ /*  justify-content: space-around; */
+}
+.dateInput,
+.timeInput {
+  width: 30%;
+  justify-content: center;
 }

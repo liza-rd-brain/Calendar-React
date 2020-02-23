@@ -2,7 +2,6 @@ import React from "react";
 
 export default class TaskTitle extends React.Component {
   render() {
-    /*  debugger; */
     const nameDayList = [
       "воскресение",
       "понедельник",
@@ -12,7 +11,7 @@ export default class TaskTitle extends React.Component {
       "пятница",
       "суббота"
     ];
-   /*  debugger; */
+
     const numberDay = new Date(
       this.props.year,
       this.props.month,

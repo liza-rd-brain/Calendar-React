@@ -37,12 +37,12 @@ class App extends React.Component {
       startYear: 2010,
       newTaskName: "",
       newTaskDesc: "",
-      /* newTask: { name: "", desc: "" }, */
-      taskList: [
-        /* {name:1,desc:"1"} */
-      ],
+      newTaskStartTime: "",
+      newTaskStartDate: "",
+      newTaskEndTime: "",
+      newTaskEndDate: "",
+      taskList: [],
       time: moment().format("LTS")
-      /*  time: `${new Date().getHours()}: ${new Date().getMinutes()}: ${new Date().getSeconds()}` */
     };
 
     this.endYear = this.state.startYear + 15;
@@ -51,6 +51,12 @@ class App extends React.Component {
 
     this.nameValue = "name";
     this.descValue = "desc";
+    this.startDateValue = "startDate";
+    this.startTimeValue = "startTime";
+    this.endDateValue = "endDate";
+    this.endTimeValue = "endTime";
+    this.startInputTitle = "Дата начала";
+    this.endInputTitle = "Дата окончания";
 
     this.handleChangeMonth = this.handleChangeMonth.bind(this);
     this.handleChangeYear = this.handleChangeYear.bind(this);
@@ -131,8 +137,42 @@ class App extends React.Component {
 
   handleCreateNewTask(event) {
     const name = event.target.name;
-
-    if (name == "name") {
+    debugger;
+    switch (name) {
+      case "name":
+        this.setState({
+          newTaskName: event.target.value
+        });
+        break;
+      case "desc":
+        this.setState({
+          newTaskDesc: event.target.value
+        });
+        break;
+      case "startDate":
+        this.setState({
+          newTaskStartDate: event.target.value
+        });
+        break;
+      case "startTime":
+        this.setState({
+          newTaskStartDate: event.target.value
+        });
+        break;
+      case "endDate":
+        this.setState({
+          newTaskStartDate: event.target.value
+        });
+        break;
+      case "endTime":
+        this.setState({
+          newTaskStartDate: event.target.value
+        });
+        break;
+      default:
+        console.log("Error!");
+    }
+    /* if (name == "name") {
       console.log(name, event.target.value);
       this.setState({
         newTaskName: event.target.value
@@ -142,7 +182,7 @@ class App extends React.Component {
       this.setState({
         newTaskDesc: event.target.value
       });
-    }
+    } */
   }
 
   handleChangeTaskList(event) {
@@ -162,6 +202,15 @@ class App extends React.Component {
     this.setState(state => {
       return { taskList: this.state.taskList.concat(newTask) };
     });
+
+    //очищаю строки для ввода
+    this.setState(state => {
+      return {
+        newTaskName: "",
+        newTaskDesc: ""
+      };
+    });
+
     this.handleToCalendar();
   }
 
@@ -259,10 +308,14 @@ class App extends React.Component {
 
         <Route path="/newTask">
           <NewTask
-            name={this.state.newTaskName}
-            desc={this.state.newTaskDesc}
             nameValue={this.nameValue}
             descValue={this.descValue}
+            startInputTitle={this.startInputTitle}
+            startDateValue={this.startDateValue}
+            startTimeValue={this.startTimeValue}
+            endInputTitle={this.endInputTitle}
+            endDateValue={this.endDateValue}
+            endTimeValue={this.endTimeValue}
             onCreateNewTask={this.handleCreateNewTask}
             onChangeTaskList={this.handleChangeTaskList}
           />

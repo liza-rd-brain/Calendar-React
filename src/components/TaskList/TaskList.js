@@ -20,7 +20,7 @@ export default class TaskList extends React.Component {
           month={this.props.month}
           year={this.props.year}
         />
-        <Link /* target="_blank" */ to={this.props.hrefNewTask}>
+        <Link className="task_link" to={this.props.hrefNewTask}>
           +
         </Link>
         <List taskList={this.props.taskList} />
