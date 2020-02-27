@@ -19,7 +19,7 @@ export default class TaskTitle extends React.Component {
     ).getDay();
 
     const nameDay = nameDayList.find((el, i) => numberDay === i);
-    debugger;
+    /* debugger; */
     const titleText =
       this.props.selectDay.getDate() === this.props.today.getDate() &&
       this.props.selectDay.getMonth() === this.props.today.getMonth() &&

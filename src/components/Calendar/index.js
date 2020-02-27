@@ -13,15 +13,12 @@ class Calendar extends React.Component {
 
   handleArrowClick(direction) {
     if (direction === "right") {
-      debugger;
       let date = new Date(this.props.year, this.props.month + 1);
-      /* let year = new Date(this.props.year, this.props.month + 1).getFullYear(); */
       this.props.onChangeMonth(date.getMonth());
       this.props.onChangeYear(date.getFullYear());
       this.props.onChangeStartYear(date.getFullYear());
     } else {
       let date = new Date(this.props.year, this.props.month - 1);
-      /*    let year = new Date(this.props.year, this.props.month - 1).getFullYear(); */
       this.props.onChangeMonth(date.getMonth());
       this.props.onChangeYear(date.getFullYear());
       this.props.onChangeStartYear(date.getFullYear());

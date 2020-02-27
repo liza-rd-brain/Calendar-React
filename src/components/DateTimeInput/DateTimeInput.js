@@ -14,7 +14,7 @@ class DateTimeInput extends React.Component {
             onChange={this.props.onChange}
           />
           <input
-            required
+            /* required */
             type="time"
             name={this.props.timeValue}
             className="timeInput"

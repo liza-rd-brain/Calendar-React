@@ -42,7 +42,27 @@ class App extends React.Component {
       newTaskStartDate: "",
       newTaskEndTime: "",
       newTaskEndDate: "",
-      taskList: [],
+      taskList: [
+        {
+          name: "12:00",
+          startDate: "2020-02-28",
+          startTime: "12:00",
+          endDate: "2020-02-28"
+        },
+        {
+          name: "14:00",
+          startDate: "2020-02-28",
+          startTime: "14:00",
+          endDate: "2020-02-28"
+        },
+        {
+          name: "09:00",
+          startDate: "2020-02-28",
+          startTime: "09:00",
+          endDate: "2020-02-28"
+        }
+      ],
+      currtaskList: [],
       time: moment().format("LTS")
     };
 
@@ -67,18 +87,15 @@ class App extends React.Component {
     this.updateSystemDate = this.updateSystemDate.bind(this);
     this.updateSystemTime = this.updateSystemTime.bind(this);
     this.hahdleChangeSelectDay = this.hahdleChangeSelectDay.bind(this);
-    this.handleToNewTask = this.handleToNewTask.bind(this);
-    /*   this.update = setInterval(this.updateSystemDate, 1000);
-    this.updateTime = setInterval(this.updateSystemTime, 100); */
     this.handleToCalendar = this.handleToCalendar.bind(this);
     this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
     this.handleToYearSelection = this.handleToYearSelection.bind(this);
     this.handleCreateNewTask = this.handleCreateNewTask.bind(this);
     this.handleChangeTaskList = this.handleChangeTaskList.bind(this);
+    this.selectCurrentTask = this.selectCurrentTask.bind(this);
   }
 
   handleChangeMonth(month) {
-    debugger;
     this.setState({
       month
     });
@@ -111,16 +128,15 @@ class App extends React.Component {
   }
 
   hahdleChangeSelectDay(selectDay) {
-    this.setState({
-      selectDay
-    });
+    this.setState(
+      {
+        selectDay
+      },
+      () => this.selectCurrentTask(),
+      console.log(this.state)
+    );
   }
 
-  handleToNewTask() {
-    /*не нужно менять адрес в текущем окне */
-    /*  this.props.history.push("newTask"); */
-    this.props.history;
-  }
   handleToCalendar() {
     this.props.history.push("/");
   }
@@ -135,7 +151,7 @@ class App extends React.Component {
 
   handleCreateNewTask(event) {
     const name = event.target.name;
-    debugger;
+
     switch (name) {
       case "name":
         this.setState({
@@ -170,17 +186,6 @@ class App extends React.Component {
       default:
         console.log("Error!");
     }
-    /* if (name == "name") {
-      console.log(name, event.target.value);
-      this.setState({
-        newTaskName: event.target.value
-      });
-    } else {
-      console.log(name, event.target.value);
-      this.setState({
-        newTaskDesc: event.target.value
-      });
-    } */
   }
 
   handleChangeTaskList(event) {
@@ -199,7 +204,8 @@ class App extends React.Component {
       state => {
         return { taskList: this.state.taskList.concat(newTask) };
       },
-      () => console.log(this.state)
+      () => this.selectCurrentTask(),
+      console.log(this.state)
     );
 
     //очищаю строки для ввода
@@ -232,6 +238,36 @@ class App extends React.Component {
     });
   }
 
+  /*выдача сегодняшней задачи*/
+  selectCurrentTask() {
+    debugger;
+    let selectDate = moment(this.state.selectDay).format("YYYY-MM-DD");
+    let result = this.state.taskList.filter(
+      //находим item для которого выбранная дата лежит между начальной и конечной датой задачи
+      item =>
+        moment(selectDate).isBetween(item.startDate, item.endDate, null, "[]")
+    );
+
+    result.sort((firstItem, secondItem) => {
+      /* s */
+      if (
+        +firstItem.startTime.slice(0, 2) < +secondItem.startTime.slice(0, 2)
+      ) {
+        return -1;
+      }
+      if (
+        +firstItem.startTime.slice(0, 2) > +secondItem.startTime.slice(0, 2)
+      ) {
+        return +1;
+      }
+    });
+    this.setState({
+      currtaskList: result
+    });
+    console.log(result);
+    console.log(moment(this.state.selectDay).format("YYYY-MM-DD"));
+  }
+
   render() {
     return (
       <>
@@ -254,7 +290,7 @@ class App extends React.Component {
             onRouteToYearh={this.handleToYearSelection}
             selectDay={this.state.selectDay}
             hrefNewTask={this.hrefNewTask}
-            taskList={this.state.taskList}
+            taskList={this.state.currtaskList}
             time={this.state.time}
           />
         </Route>
