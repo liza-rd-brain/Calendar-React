@@ -21,7 +21,6 @@ class YearSelectionPage extends React.Component {
     return (
       <>
         <Route path="/">
-          <Timer today={this.props.today} time={this.props.time}></Timer>
           <YearSelection
             today={this.props.today}
             month={this.props.month}
@@ -36,15 +35,6 @@ class YearSelectionPage extends React.Component {
             startYear={this.props.startYear}
             endYear={this.props.endYear}
             onChangeRoute={this.props.onRouteToMonth}
-          />
-
-          <TaskList
-            today={this.props.today}
-            month={this.props.month}
-            year={this.props.year}
-            selectDay={this.props.selectDay}
-            hrefNewTask={this.props.hrefNewTask}
-            taskList={this.props.taskList}
           />
         </Route>
       </>

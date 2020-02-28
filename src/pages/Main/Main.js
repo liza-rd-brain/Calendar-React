@@ -23,7 +23,7 @@ class Main extends React.Component {
     return (
       <>
         <Route path="/">
-          <Timer today={this.props.today} time={this.props.time} />
+          {/* <Timer today={this.props.today} time={this.props.time} /> */}
           <Calendar
             today={this.props.today}
             month={this.props.month}
@@ -41,17 +41,16 @@ class Main extends React.Component {
             onTitleClick={this.props.onRouteToMonth}
             onRouteToYearh={this.props.onRouteToYearh}
           />
-          {/*  <Route path="/"> */}
-          <TaskList
+          
+         {/*  <TaskList
             today={this.props.today}
             month={this.props.month}
             year={this.props.year}
             selectDay={this.props.selectDay}
             hrefNewTask={this.props.hrefNewTask}
             taskList={this.props.taskList}
-          />
-          {/*  </Route> */}
-          {/*   <Route path="/newTask" component={NewTask}></Route> */}
+          /> */}
+          
         </Route>
       </>
     );
