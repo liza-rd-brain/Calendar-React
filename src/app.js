@@ -28,18 +28,21 @@ class App extends React.Component {
       startYear: 2010,
       taskList: [
         {
+          id: 1,
           name: "12:00",
           startDate: "2020-02-28",
           startTime: "12:00",
           endDate: new Date()
         },
         {
+          id: 2,
           name: "14:00",
           startDate: "2020-02-28",
           startTime: "14:00",
           endDate: new Date()
         },
         {
+          id: 3,
           name: "09:00",
           startDate: "2020-02-28",
           startTime: "09:00",
@@ -47,6 +50,7 @@ class App extends React.Component {
         }
       ],
       currtaskList: [],
+      currTask: { name: 1 },
       time: moment().format("LTS")
     };
 
@@ -67,9 +71,10 @@ class App extends React.Component {
     this.handleToCalendar = this.handleToCalendar.bind(this);
     this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
     this.handleToYearSelection = this.handleToYearSelection.bind(this);
-  
+
     this.handleChangeTaskList = this.handleChangeTaskList.bind(this);
     this.selectCurrentTask = this.selectCurrentTask.bind(this);
+    this.onTaskClick = this.onTaskClick.bind(this);
   }
 
   handleChangeMonth(month) {
@@ -126,14 +131,48 @@ class App extends React.Component {
     this.props.history.push("/yearSelection");
   }
 
-  handleChangeTaskList(newTask) {
-    this.setState(
-      state => {
-        return { taskList: this.state.taskList.concat(newTask) };
-      },
-      () => this.selectCurrentTask(),
-      console.log(this.state)
-    );
+  handleChangeTaskList(newTask, action) {
+    debugger;
+    if (action == "create") {
+      /* находим максимальное id и увеличиваем на 1 */
+      let id =
+        Math.max.apply(
+          null,
+          this.state.taskList.map(item => item.id)
+        ) + 1;
+
+      newTask.id = id;
+      this.setState(
+        state => {
+          return { taskList: this.state.taskList.concat(newTask) };
+        },
+        () => this.selectCurrentTask(),
+        console.log(this.state)
+      );
+    } else {
+      /* находим по id элемент и перезаписываем */
+      debugger;
+      let changeTaskindex = this.state.taskList.findIndex(
+        item => (item.id = newTask.id)
+      );
+
+      this.setState(
+        state => {
+          return {
+            taskList: state.taskList.map((item, i) => {
+              if (i === changeTaskindex) {
+                return newTask;
+              } else {
+                return item;
+              }
+            })
+          };
+        },
+
+        () => this.selectCurrentTask(),
+        console.log(this.state)
+      );
+    }
 
     this.handleToCalendar();
   }
@@ -186,7 +225,19 @@ class App extends React.Component {
     console.log(result);
     console.log(moment(this.state.selectDay).format("YYYY-MM-DD"));
   }
-  onTaskClick() {}
+
+  onTaskClick(value) {
+    /* debugger; */
+    /* console.log(event.target.value); */
+    this.setState(
+      state => {
+        return { currTask: value };
+      },
+      () => this.props.history.push(`/tasks/${value.name}`)
+    );
+
+    /* this.props.location.state = { task: value }; */
+  }
 
   render() {
     return (
@@ -195,23 +246,16 @@ class App extends React.Component {
           <Route path="/newTask">
             <TaskCard
               startInputTitle={this.startInputTitle}
-              startDateValue={this.startDateValue}
-              onCreateNewTask={this.handleCreateNewTask}
+              endInputTitle={this.endInputTitle}
               onChangeTaskList={this.handleChangeTaskList}
             />
           </Route>
-          <Route path="/tasks/:name" /* component={TaskCard} */>
-            {/* прокинуть задачу! */}
+          <Route path="/tasks/:name">
+            {/*   прокинуть задачу! */}
             <TaskCard
-              nameValue={this.nameValue}
-              descValue={this.descValue}
               startInputTitle={this.startInputTitle}
-              startDateValue={this.startDateValue}
-              startTimeValue={this.startTimeValue}
               endInputTitle={this.endInputTitle}
-              endDateValue={this.endDateValue}
-              endTimeValue={this.endTimeValue}
-              onCreateNewTask={this.handleCreateNewTask}
+              сurrTask={this.state.currTask}
               onChangeTaskList={this.handleChangeTaskList}
             />
           </Route>
@@ -306,14 +350,3 @@ ReactDOM.render(
   </Router>,
   document.querySelector("#root")
 );
-
-/* ReactDOM.render(
-  <Router>
-    <Main />
-    <MonthSelection />
-    <YearSelection />
-    <TaskCard />
-  </Router>,
-  document.querySelector("#root")
-);
- */

@@ -4,7 +4,8 @@ import {
   Route,
   Link,
   Switch,
-  withRouter
+  withRouter,
+  Redirect
 } from "react-router-dom";
 
 import DateTimeInput from "../../components/DateTimeInput/DateTimeInput";
@@ -35,32 +36,32 @@ class TaskCard extends React.Component {
 
     /* debugger; */
     switch (name) {
-      case "name":
+      case this.nameValue:
         this.setState({
           newTaskName: event.target.value
         });
         break;
-      case "desc":
+      case this.descValue:
         this.setState({
           newTaskDesc: event.target.value
         });
         break;
-      case "startDate":
+      case this.startDateValue:
         this.setState({
           newTaskStartDate: event.target.value
         });
         break;
-      case "startTime":
+      case this.startTimeValue:
         this.setState({
           newTaskStartTime: event.target.value
         });
         break;
-      case "endDate":
+      case this.endDateValue:
         this.setState({
           newTaskEndDate: event.target.value
         });
         break;
-      case "endTime":
+      case this.endTimeValue:
         this.setState({
           newTaskEndTime: event.target.value
         });
@@ -73,7 +74,7 @@ class TaskCard extends React.Component {
   handleSaveNewTask(event) {
     event.preventDefault();
 
-    /* debugger; */
+    debugger;
     let newTask = {
       name: this.state.newTaskName,
       desc: this.state.newTaskDesc,
@@ -83,10 +84,34 @@ class TaskCard extends React.Component {
       endTime: this.state.newTaskEndTime
     };
 
-    this.props.onChangeTaskList(newTask);
+    this.props.onChangeTaskList(newTask, this.action);
+  }
+  componentDidMount() {
+  /*   debugger; */
+    /*пришел заполненный элемент!!
+    его обновлять или удалять */
+    if (this.props.сurrTask) {
+      this.fillForm();
+      this.action = "edit";
+    } else this.action = "create";
+  }
+
+  fillForm() {
+    console.log("заполнить форму!");
+    this.setState({
+      newTaskName: this.props.сurrTask.name,
+      newTaskDesc: this.props.сurrTask.desc,
+      newTaskStartTime: this.props.сurrTask.startTime,
+      newTaskStartDate: this.props.startDate,
+      newTaskEndTime: this.props.endDate,
+      newTaskEndDate: this.props.endTime
+    });
   }
 
   render() {
+    /*  console.log(this.props.сurrTask); */
+    /* let { name } = this.props.сurrTask; */
+
     return (
       <form className="form" onSubmit={this.handleSaveNewTask}>
         <input
@@ -94,6 +119,7 @@ class TaskCard extends React.Component {
           type="text"
           placeholder="Название задачи"
           onChange={this.handleChangeNewTask}
+          value={this.state.newTaskName}
         />
 
         <DateTimeInput
@@ -119,6 +145,7 @@ class TaskCard extends React.Component {
           row="20"
           placeholder="Описание задачи"
           onChange={this.handleChangeNewTask}
+          value={this.state.newTaskDesc}
         />
         <input className="button" type="submit" value="сохранить" />
       </form>

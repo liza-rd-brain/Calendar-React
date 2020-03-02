@@ -114,6 +114,7 @@
 .link {
   text-decoration: none;
   color: initial;
+  cursor: pointer;
 }
 .link:focus {
   color: initial;
