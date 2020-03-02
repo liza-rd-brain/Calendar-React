@@ -3,7 +3,14 @@ import Task from "../Task/Task";
 class List extends React.Component {
   render() {
     const taskList = this.props.taskList.map(item => {
-      return <Task key={item.name} name={item.name} desc={item.desc} />;
+      return (
+        <Task
+          key={item.name}
+          name={item.name}
+          desc={item.desc}
+          onTaskClick={this.props.onTaskClick}
+        />
+      );
     });
     return <div className="list">{taskList}</div>;
   }

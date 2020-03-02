@@ -118,6 +118,9 @@
 .link:focus {
   color: initial;
 }
+.link:hover {
+  color: red;
+}
 .currMonth {
   background-color: red;
 }
@@ -182,10 +185,6 @@
   height: 150px;
 }
 
-.task_link {
-  text-decoration: none;
-}
-
 .textarea {
   min-height: 150px;
 }
@@ -196,7 +195,7 @@
 .dateTimeInput {
   width: 70%;
   display: flex;
- /*  justify-content: space-around; */
+  /*  justify-content: space-around; */
 }
 .dateInput,
 .timeInput {

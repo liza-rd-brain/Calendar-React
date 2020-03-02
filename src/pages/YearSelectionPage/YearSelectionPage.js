@@ -12,9 +12,6 @@ import Timer from "../../components/Timer";
 import Calendar from "../../components/Calendar";
 import TaskList from "../../components/TaskList/TaskList";
 import YearSelection from "../../components/YearSelection";
-/* import MonthSelection from "../../components/MonthSelection"; */
-/* import NewTask from "../../components/TaskList/NewTask/NewTask"; */
-/* import "./../style.css"; */
 
 class YearSelectionPage extends React.Component {
   render() {

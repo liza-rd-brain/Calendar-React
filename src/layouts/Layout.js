@@ -14,6 +14,7 @@ class Layout extends React.Component {
           selectDay={this.props.selectDay}
           hrefNewTask={this.props.hrefNewTask}
           taskList={this.props.taskList}
+          onTaskClick={this.props.onTaskClick}
         />
       </>
     );

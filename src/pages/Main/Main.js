@@ -7,23 +7,17 @@ import {
   withRouter
 } from "react-router-dom";
 
-
-
 import Timer from "../../components/Timer";
 
 import Calendar from "../../components/Calendar";
 import MonthSelection from "../../components/MonthSelection";
 import TaskList from "../../components/TaskList/TaskList";
-/* import YearSelection from "../../components/YearSelection"; */
-/* import NewTask from "../../components/TaskList/NewTask/NewTask"; */
-/* import "./../style.css"; */
 
 class Main extends React.Component {
   render() {
     return (
       <>
         <Route path="/">
-          {/* <Timer today={this.props.today} time={this.props.time} /> */}
           <Calendar
             today={this.props.today}
             month={this.props.month}
@@ -41,23 +35,10 @@ class Main extends React.Component {
             onTitleClick={this.props.onRouteToMonth}
             onRouteToYearh={this.props.onRouteToYearh}
           />
-          
-         {/*  <TaskList
-            today={this.props.today}
-            month={this.props.month}
-            year={this.props.year}
-            selectDay={this.props.selectDay}
-            hrefNewTask={this.props.hrefNewTask}
-            taskList={this.props.taskList}
-          /> */}
-          
         </Route>
       </>
     );
   }
 }
-
-/* const MainWithRouter = withRouter(Main); */
-/* export default MainWithRouter; */
 
 export default Main;

@@ -20,10 +20,13 @@ export default class TaskList extends React.Component {
           month={this.props.month}
           year={this.props.year}
         />
-        <Link className="task_link" to={this.props.hrefNewTask}>
+        <Link className="link" to={this.props.hrefNewTask}>
           +
         </Link>
-        <List taskList={this.props.taskList} />
+        <List
+          taskList={this.props.taskList}
+          onTaskClick={this.props.onTaskClick}
+        />
       </div>
     );
   }

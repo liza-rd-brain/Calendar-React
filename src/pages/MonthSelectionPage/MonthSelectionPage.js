@@ -12,9 +12,7 @@ import Timer from "../../components/Timer";
 import Calendar from "../../components/Calendar";
 import MonthSelection from "../../components/MonthSelection";
 import TaskList from "../../components/TaskList/TaskList";
-/* import YearSelection from "../../components/YearSelection"; */
-/* import NewTask from "../../components/TaskList/NewTask/NewTask"; */
-/* import "./../style.css"; */
+
 
 class MonthSelectionPage extends React.Component {
   render() {
@@ -43,7 +41,5 @@ class MonthSelectionPage extends React.Component {
   }
 }
 
-/* const MainWithRouter = withRouter(Main); */
-/* export default MainWithRouter; */
 
 export default MonthSelectionPage;
