@@ -5,7 +5,8 @@ import {
   Route,
   Link,
   Switch,
-  withRouter
+  withRouter,
+  Redirect
 } from "react-router-dom";
 
 import moment from "moment";
@@ -27,27 +28,32 @@ class App extends React.Component {
       selectDay: new Date(),
       startYear: 2010,
       taskList: [
+        /* 
         {
           id: 1,
           name: "12:00",
           startDate: "2020-02-28",
           startTime: "12:00",
-          endDate: new Date()
+          endDate: moment(new Date()).format("YYYY-MM-DD"),
+          endTime: "",
+          desc: "12:00"
         },
         {
           id: 2,
           name: "14:00",
           startDate: "2020-02-28",
           startTime: "14:00",
-          endDate: new Date()
+          endDate: moment(new Date()).format("YYYY-MM-DD"),
+          endTime: ""
         },
         {
           id: 3,
           name: "09:00",
           startDate: "2020-02-28",
           startTime: "09:00",
-          endDate: new Date()
-        }
+          endDate: moment(new Date()).format("YYYY-MM-DD"),
+          endTime: ""
+        } */
       ],
       currtaskList: [],
       currTask: { name: 1 },
@@ -73,6 +79,7 @@ class App extends React.Component {
     this.handleToYearSelection = this.handleToYearSelection.bind(this);
 
     this.handleChangeTaskList = this.handleChangeTaskList.bind(this);
+    this.handleAddNewTask = this.handleAddNewTask.bind(this);
     this.selectCurrentTask = this.selectCurrentTask.bind(this);
     this.onTaskClick = this.onTaskClick.bind(this);
   }
@@ -131,10 +138,10 @@ class App extends React.Component {
     this.props.history.push("/yearSelection");
   }
 
-  handleChangeTaskList(newTask, action) {
+  handleAddNewTask(newTask) {
     debugger;
-    if (action == "create") {
-      /* находим максимальное id и увеличиваем на 1 */
+    /* находим максимальное id и увеличиваем на 1 */
+    if (this.state.taskList.length) {
       let id =
         Math.max.apply(
           null,
@@ -142,37 +149,51 @@ class App extends React.Component {
         ) + 1;
 
       newTask.id = id;
-      this.setState(
-        state => {
-          return { taskList: this.state.taskList.concat(newTask) };
-        },
-        () => this.selectCurrentTask(),
-        console.log(this.state)
-      );
     } else {
-      /* находим по id элемент и перезаписываем */
-      debugger;
-      let changeTaskindex = this.state.taskList.findIndex(
-        item => (item.id = newTask.id)
-      );
-
-      this.setState(
-        state => {
-          return {
-            taskList: state.taskList.map((item, i) => {
-              if (i === changeTaskindex) {
-                return newTask;
-              } else {
-                return item;
-              }
-            })
-          };
-        },
-
-        () => this.selectCurrentTask(),
-        console.log(this.state)
-      );
+      newTask.id = 1;
     }
+
+    this.setState(
+      state => {
+        return { taskList: this.state.taskList.concat(newTask) };
+      },
+      () => {
+        this.selectCurrentTask(), console.log(this.state.taskList);
+      }
+    );
+
+    this.handleToCalendar();
+  }
+
+  handleChangeTaskList(newTask) {
+    /* находим по id элемент и перезаписываем */
+    debugger;
+    let changeTaskindex = this.state.taskList.findIndex(
+      item => item.id == newTask.id
+    );
+
+    this.setState(
+      state => {
+        debugger;
+        return {
+          taskList: state.taskList.map((item, i) => {
+            if (i === changeTaskindex) {
+              return newTask;
+            } else {
+              return item;
+            }
+          })
+        };
+      },
+
+      () => {
+        this.selectCurrentTask();
+        console.log(this.state.taskList);
+      }
+
+      /*  console.log(this.state) */
+    );
+    console.log(this.state);
 
     this.handleToCalendar();
   }
@@ -247,9 +268,10 @@ class App extends React.Component {
             <TaskCard
               startInputTitle={this.startInputTitle}
               endInputTitle={this.endInputTitle}
-              onChangeTaskList={this.handleChangeTaskList}
+              onChangeTaskList={this.handleAddNewTask}
             />
           </Route>
+
           <Route path="/tasks/:name">
             {/*   прокинуть задачу! */}
             <TaskCard
@@ -257,8 +279,10 @@ class App extends React.Component {
               endInputTitle={this.endInputTitle}
               сurrTask={this.state.currTask}
               onChangeTaskList={this.handleChangeTaskList}
+              handleToCalendar={this.handleToCalendar}
             />
           </Route>
+
           {/* хочу видеть Layout на всех страницах кроме TaskCard */}
           <Route path="/">
             <Layout

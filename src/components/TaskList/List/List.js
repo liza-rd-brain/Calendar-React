@@ -5,7 +5,7 @@ class List extends React.Component {
     const taskList = this.props.taskList.map(item => {
       return (
         <Task
-          key={item.name + item.id}
+          key={item.id}
           name={item.name}
           desc={item.desc}
           onTaskClick={this.props.onTaskClick}
