@@ -203,3 +203,8 @@
   width: 30%;
   justify-content: center;
 }
+
+.button_wrap {
+  display: flex;
+  justify-content: center;
+}

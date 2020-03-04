@@ -39,8 +39,6 @@ class TaskCard extends React.Component {
   handleEditTask(event) {
     const name = event.target.name;
 
-    debugger;
-
     switch (name) {
       case this.nameValue:
         this.setState({
@@ -80,7 +78,6 @@ class TaskCard extends React.Component {
   handleSaveTask(event) {
     event.preventDefault();
 
-    debugger;
     let task = {
       name: this.state.taskName,
       desc: this.state.taskDesc,
@@ -110,12 +107,10 @@ class TaskCard extends React.Component {
       endTime: this.state.taskEndTime
     };
 
-    this.props.onChangeTaskList(task, this.props.action);
+    this.props.onChangeTaskList(task);
   }
 
   componentDidMount() {
-    debugger;
-
     /*пришел заполненный элемент!!
     его обновлять или удалять */
     if (this.props.сurrTask) {
@@ -154,6 +149,7 @@ class TaskCard extends React.Component {
         }
       >
         <input
+          required
           name={this.nameValue}
           type="text"
           placeholder="Название задачи"
@@ -191,7 +187,15 @@ class TaskCard extends React.Component {
           onChange={this.handleEditTask}
           value={this.state.taskDesc}
         />
+        <div className="button_wrap">
         <input className="button" type="submit" value="сохранить" />
+        <input
+          className="button"
+          type="button"
+          value="удалить"
+          onClick={() => this.props.handleDeleteTask(this.props.сurrTask)}
+        />
+        </div>
       </form>
     );
   }

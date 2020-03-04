@@ -12,7 +12,7 @@ export default class YearSelection extends React.Component {
     if (direction === "right") {
       this.props.onIncStartYear();
     } else {
-   /*    debugger; */
+   /*    ; */
       this.props.onDecStartYear();
     }
   }

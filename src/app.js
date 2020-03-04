@@ -80,6 +80,8 @@ class App extends React.Component {
 
     this.handleChangeTaskList = this.handleChangeTaskList.bind(this);
     this.handleAddNewTask = this.handleAddNewTask.bind(this);
+    this.handleDeleteTask = this.handleDeleteTask.bind(this);
+
     this.selectCurrentTask = this.selectCurrentTask.bind(this);
     this.onTaskClick = this.onTaskClick.bind(this);
   }
@@ -139,7 +141,6 @@ class App extends React.Component {
   }
 
   handleAddNewTask(newTask) {
-    debugger;
     /* находим максимальное id и увеличиваем на 1 */
     if (this.state.taskList.length) {
       let id =
@@ -159,22 +160,20 @@ class App extends React.Component {
       },
       () => {
         this.selectCurrentTask(), console.log(this.state.taskList);
+        this.handleToCalendar();
       }
     );
-
-    this.handleToCalendar();
   }
 
   handleChangeTaskList(newTask) {
     /* находим по id элемент и перезаписываем */
-    debugger;
+
     let changeTaskindex = this.state.taskList.findIndex(
       item => item.id == newTask.id
     );
 
     this.setState(
       state => {
-        debugger;
         return {
           taskList: state.taskList.map((item, i) => {
             if (i === changeTaskindex) {
@@ -189,13 +188,29 @@ class App extends React.Component {
       () => {
         this.selectCurrentTask();
         console.log(this.state.taskList);
+        this.handleToCalendar();
       }
-
-      /*  console.log(this.state) */
     );
-    console.log(this.state);
+  }
 
-    this.handleToCalendar();
+  handleDeleteTask(task) {
+    /*пришла таска
+    ищем ее id и удаляем!*/
+    this.setState(
+      state => {
+        return {
+          taskList: state.taskList.filter((item, i) => {
+            return item.id !== task.id;
+          })
+        };
+      },
+
+      () => {
+        this.selectCurrentTask();
+        console.log(this.state.taskList);
+        this.handleToCalendar();
+      }
+    );
   }
 
   componentDidMount() {
@@ -220,10 +235,11 @@ class App extends React.Component {
 
   /*выдача сегодняшней задачи*/
   selectCurrentTask() {
-    /*    debugger; */
+    /* debugger; */
     let selectDate = moment(this.state.selectDay).format("YYYY-MM-DD");
     let result = this.state.taskList.filter(
-      //находим item для которого выбранная дата лежит между начальной и конечной датой задачи
+      //находим item для которого выбранная дата лежит
+      //между начальной и конечной датой задачи
       item =>
         moment(selectDate).isBetween(item.startDate, item.endDate, null, "[]")
     );
@@ -248,7 +264,7 @@ class App extends React.Component {
   }
 
   onTaskClick(value) {
-    /* debugger; */
+    /*  */
     /* console.log(event.target.value); */
     this.setState(
       state => {
@@ -269,6 +285,7 @@ class App extends React.Component {
               startInputTitle={this.startInputTitle}
               endInputTitle={this.endInputTitle}
               onChangeTaskList={this.handleAddNewTask}
+              handleDeleteTask={this.handleDeleteTask}
             />
           </Route>
 
@@ -280,6 +297,7 @@ class App extends React.Component {
               сurrTask={this.state.currTask}
               onChangeTaskList={this.handleChangeTaskList}
               handleToCalendar={this.handleToCalendar}
+              handleDeleteTask={this.handleDeleteTask}
             />
           </Route>
 

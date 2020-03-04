@@ -49,7 +49,7 @@ export default class GridDays extends React.Component {
         break;
     }
 
-   /*  debugger; */
+   /*  ; */
     const lastDayPrevMonth = new Date(2019, currMonth, 0).getDate();
     const firstDayPrevMonth = lastDayPrevMonth - amountPrevMohthDays + 1;
     let dayNumberPrevMonth = firstDayPrevMonth;
@@ -88,7 +88,7 @@ export default class GridDays extends React.Component {
     }
 
     const listAllMonth = listPrevCurrentMonth.concat(listNextMonth);
- /*    debugger; */
+ /*    ; */
     const arrayGrid = listAllMonth.map(item => {
       return (
         <Day

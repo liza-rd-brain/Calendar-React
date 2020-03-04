@@ -27,7 +27,7 @@ class MonthSelection extends Component {
   }
 
   handleClickMonth(month) {
-    /*   debugger; */
+    /*   ; */
     this.props.onChangeMonth(month);
     this.props.onChangeRoute();
   }

@@ -7,7 +7,7 @@ class DateTimeInput extends React.Component {
         <p>{this.props.title}</p>
         <div className="dateTimeInput">
           <input
-            /*   required */
+            required
             type="date"
             name={this.props.dateName}
             className="dateInput"
@@ -16,7 +16,7 @@ class DateTimeInput extends React.Component {
             /*   value="2019-03-03" */
           />
           <input
-            /* required */
+            required
             type="time"
             name={this.props.timeName}
             className="timeInput"
