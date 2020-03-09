@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Nav from "../Nav";
+import Nav from "../../Nav/index";
 import GridMonths from "./GridMonth/GridMonth";
 
 class MonthSelection extends Component {
@@ -34,14 +34,15 @@ class MonthSelection extends Component {
 
   render() {
     return (
-      <div className="monthSelecion calendar">
-        <Nav
+      <>
+      {/* <div className="monthSelecion calendar"> */}
+        {/* <Nav
           className="nav"
           month={false}
           year={this.props.year}
           onArrowClick={this.handleArrowClick}
           onTitleClick={this.props.onTitleClick}
-        />
+        /> */}
 
         <GridMonths
           className="gridMonths "
@@ -50,7 +51,8 @@ class MonthSelection extends Component {
           year={this.props.year}
           onItemClick={this.handleClickMonth}
         />
-      </div>
+        </>
+     /*  </div> */
     );
   }
 }

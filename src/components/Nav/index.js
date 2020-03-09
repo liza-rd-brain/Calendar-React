@@ -16,6 +16,7 @@ class Nav extends React.Component {
           month={this.props.month}
           year={this.props.year}
           onTitleClick={this.props.onTitleClick}
+          title={this.props.title}
         />
         {this.renderArrow("right")}
       </div>

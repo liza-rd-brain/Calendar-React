@@ -10,8 +10,6 @@ import {
 import Timer from "../../components/Timer";
 
 import Calendar from "../../components/Calendar";
-import MonthSelection from "../../components/MonthSelection";
-import TaskList from "../../components/TaskList/TaskList";
 
 class Main extends React.Component {
   render() {

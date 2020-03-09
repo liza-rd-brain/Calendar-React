@@ -17,7 +17,7 @@ export default class Title extends React.Component {
       <div
         className="title"
         onClick={this.props.onTitleClick}
-      >{`${currentMonthName || ""} ${this.props.year} `}</div>
+      >{/* {`${currentMonthName || ""} ${this.props.year} `} */}{this.props.title}</div>
     );
   }
 }

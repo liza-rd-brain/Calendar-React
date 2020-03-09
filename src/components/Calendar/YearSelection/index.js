@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../Nav";
+import Nav from "../../Nav/index";
 import GridYears from "./GridYears/GridYears";
 
 export default class YearSelection extends React.Component {
@@ -12,7 +12,7 @@ export default class YearSelection extends React.Component {
     if (direction === "right") {
       this.props.onIncStartYear();
     } else {
-   /*    ; */
+      /*    ; */
       this.props.onDecStartYear();
     }
   }
@@ -26,13 +26,13 @@ export default class YearSelection extends React.Component {
   render() {
     let yearsString = `${this.props.startYear}-${this.props.startYear + 15}`;
     return (
-      <div className="yearSelection calendar">
-        <Nav
+      <>
+        {/*  <Nav
           className="nav"
           month={false}
           year={yearsString}
           onArrowClick={this.handleArrowClick}
-        />
+        /> */}
 
         <GridYears
           className="gridYears "
@@ -42,7 +42,7 @@ export default class YearSelection extends React.Component {
           startYear={this.props.startYear}
           onItemClick={this.handleClickYear}
         />
-      </div>
+      </>
     );
   }
 }
