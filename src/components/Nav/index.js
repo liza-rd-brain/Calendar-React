@@ -13,8 +13,8 @@ class Nav extends React.Component {
       <div className="nav">
         {this.renderArrow("left")}
         <Title
-          month={this.props.month}
-          year={this.props.year}
+         /*  month={this.props.month}
+          year={this.props.year} */
           onTitleClick={this.props.onTitleClick}
           title={this.props.title}
         />
