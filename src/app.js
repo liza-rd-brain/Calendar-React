@@ -11,15 +11,15 @@ import {
 
 import moment from "moment";
 
-import Calendar from "./components/Calendar";
+import Calendar from "./features/Calendar";
 /* import Main from "./pages/Main/Main";
 import MonthSelectionPage from "./pages/MonthSelectionPage/MonthSelectionPage";
 import YearSelectionPage from "./pages/YearSelectionPage/YearSelectionPage"; */
-import MonthSelection from "./components/Calendar/MonthSelection/index";
-import YearSelection from "./components/Calendar/YearSelection/index";
-import TaskCard from "./pages/TaskCard/TaskCard";
-import Timer from "./components/Timer";
-import TaskList from "./components/TaskList/TaskList";
+/* import MonthSelection from "./features/Calendar/MonthSelection/index";
+import YearSelection from "./features/Calendar/YearSelection/index"; */
+import TaskCard from "./pages/TaskCard";
+import Timer from "./features/Timer";
+import TaskList from "./features/TaskList/TaskList";
 import "./style.css";
 
 class App extends React.Component {
@@ -91,9 +91,13 @@ class App extends React.Component {
   }
 
   handleChangeMonth(month) {
-    this.setState({
-      month
-    });
+    debugger;
+    this.setState(
+      state => {
+        return { month };
+      },
+      () => this.handleToCalendar()
+    );
   }
 
   handleChangeYear(year) {
@@ -103,6 +107,7 @@ class App extends React.Component {
   }
 
   handleChangeStartYear(year) {
+    debugger;
     if (year < this.state.startYear) {
       this.handleDecStartYear();
     } else if (year > this.endYear) {
@@ -111,15 +116,23 @@ class App extends React.Component {
   }
 
   handleIncStartYear() {
-    this.setState(state => {
-      return { startYear: state.startYear + 16 };
-    });
+    debugger;
+    this.setState(
+      state => {
+        return { startYear: state.startYear + 16 };
+      }
+      /*   () => this.handleToMonthSelection() */
+    );
   }
 
   handleDecStartYear() {
-    this.setState(state => {
-      return { startYear: state.startYear - 16 };
-    });
+    debugger;
+    this.setState(
+      state => {
+        return { startYear: state.startYear - 16 };
+      }
+      /* () => this.handleToMonthSelection() */
+    );
   }
 
   hahdleChangeSelectDay(selectDay) {
@@ -268,16 +281,12 @@ class App extends React.Component {
   }
 
   onTaskClick(value) {
-    /*  */
-    /* console.log(event.target.value); */
     this.setState(
       state => {
         return { currTask: value };
       },
       () => this.props.history.push(`/tasks/${value.name}`)
     );
-
-    /* this.props.location.state = { task: value }; */
   }
 
   render() {
@@ -321,79 +330,13 @@ class App extends React.Component {
               startYear={this.state.startYear}
               endYear={this.endYear}
               startYear={this.state.startYear}
-              endYear={this.endYear}
               onRouteToCalendar={this.handleToCalendar}
               onRouteToMonth={this.handleToMonthSelection}
               onRouteToYearh={this.handleToYearSelection}
               selectDay={this.state.selectDay}
               hrefNewTask={this.hrefNewTask}
-            >
-             {/*  <Route path="/monthSelection" Component={MonthSelection} />
-              <Route path="/yearSelection" Component={YearSelection} /> */}
-            </Calendar>
-            {/*             <Route exact path="/">
-              <Main
-                today={this.state.today}
-                month={this.state.month}
-                year={this.state.year}
-                onChangeSelectDay={this.hahdleChangeSelectDay}
-                onChangeMonth={this.handleChangeMonth}
-                onChangeYear={this.handleChangeYear}
-                onChangeStartYear={this.handleChangeStartYear}
-                onIncStartYear={this.handleIncStartYear}
-                onDecStartYear={this.handleDecStartYear}
-                startYear={this.state.startYear}
-                endYear={this.endYear}
-                onRouteToCalendar={this.handleToCalendar}
-                onRouteToMonth={this.handleToMonthSelection}
-                onRouteToYearh={this.handleToYearSelection}
-                selectDay={this.state.selectDay}
-                hrefNewTask={this.hrefNewTask}
-              />
-            </Route>
-            <Route path="/monthSelection">
-              <MonthSelectionPage
-                today={this.state.today}
-                month={this.state.month}
-                year={this.state.year}
-                onChangeSelectDay={this.hahdleChangeSelectDay}
-                onChangeMonth={this.handleChangeMonth}
-                onChangeYear={this.handleChangeYear}
-                onChangeDate={this.handleChangeDate}
-                onChangeStartYear={this.handleChangeStartYear}
-                onIncStartYear={this.handleIncStartYear}
-                onDecStartYear={this.handleDecStartYear}
-                startYear={this.state.startYear}
-                endYear={this.endYear}
-                onRouteToCalendar={this.handleToCalendar}
-                onRouteToMonth={this.handleToMonthSelection}
-                onRouteToYearh={this.handleToYearSelection}
-                selectDay={this.state.selectDay}
-                hrefNewTask={this.hrefNewTask}
-              />
-            </Route>
-            <Route path="/yearSelection">
-              <YearSelectionPage
-                today={this.state.today}
-                month={this.state.month}
-                year={this.state.year}
-                onChangeSelectDay={this.hahdleChangeSelectDay}
-                onChangeMonth={this.handleChangeMonth}
-                onChangeYear={this.handleChangeYear}
-                onChangeDate={this.handleChangeDate}
-                onChangeStartYear={this.handleChangeStartYear}
-                onIncStartYear={this.handleIncStartYear}
-                onDecStartYear={this.handleDecStartYear}
-                startYear={this.state.startYear}
-                endYear={this.endYear}
-                onRouteToCalendar={this.handleToCalendar}
-                onRouteToMonth={this.handleToMonthSelection}
-                onRouteToYearh={this.handleToYearSelection}
-                selectDay={this.state.selectDay}
-                hrefNewTask={this.hrefNewTask}
-              />
-            </Route>
- */}
+            ></Calendar>
+
             <TaskList
               today={this.state.today}
               month={this.state.month}

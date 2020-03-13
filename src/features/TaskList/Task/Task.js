@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
-import TaskCard from "../../../pages/TaskCard/TaskCard";
 
 /*ссылка ведущая в окно newTask c пропсами, которые берет из steate
 адрес динамический?! :id...*/

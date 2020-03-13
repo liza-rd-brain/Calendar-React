@@ -7,9 +7,9 @@ import {
   withRouter
 } from "react-router-dom";
 
-import Timer from "../../components/Timer";
+import Timer from "../features/Timer";
 
-import Calendar from "../../components/Calendar";
+import Calendar from "../features/Calendar";
 
 class Main extends React.Component {
   render() {

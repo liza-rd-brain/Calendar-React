@@ -26,33 +26,24 @@ class MonthSelection extends Component {
     }
   }
 
-  handleClickMonth(month) {
+  handleClickMonth() {
     /*   ; */
-    this.props.onChangeMonth(month);
-    this.props.onChangeRoute();
+    this.props.onItemClick();
+    /* this.props.onChangeRoute(); */
   }
 
   render() {
     return (
       <>
-      {/* <div className="monthSelecion calendar"> */}
-        {/* <Nav
-          className="nav"
-          month={false}
-          year={this.props.year}
-          onArrowClick={this.handleArrowClick}
-          onTitleClick={this.props.onTitleClick}
-        /> */}
-
         <GridMonths
           className="gridMonths "
           today={this.props.today}
           month={this.props.month}
           year={this.props.year}
-          onItemClick={this.handleClickMonth}
+          onItemClick={this.props.onItemClick}
         />
-        </>
-     /*  </div> */
+      </>
+      /*  </div> */
     );
   }
 }

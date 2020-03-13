@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import moment from "moment";
-import DateTimeInput from "../../components/DateTimeInput/DateTimeInput";
+import DateTimeInput from "../features/DateTimeInput/DateTimeInput";
 
 class TaskCard extends React.Component {
   constructor(props) {

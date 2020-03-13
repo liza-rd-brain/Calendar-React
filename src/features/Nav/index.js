@@ -5,7 +5,11 @@ import Arrow from "./Arrow/Arrow";
 
 class Nav extends React.Component {
   renderArrow(direction) {
-    return <Arrow onArrowClick={() => this.props.onArrowClick(direction)} />;
+    return (
+      <Arrow
+        onArrowClick={() => this.props.onArrowClick(direction, this.props.name)}
+      />
+    );
   }
 
   render() {
@@ -13,7 +17,7 @@ class Nav extends React.Component {
       <div className="nav">
         {this.renderArrow("left")}
         <Title
-         /*  month={this.props.month}
+          /*  month={this.props.month}
           year={this.props.year} */
           onTitleClick={this.props.onTitleClick}
           title={this.props.title}

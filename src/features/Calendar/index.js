@@ -29,23 +29,39 @@ class Calendar extends React.Component {
   }
   /*  handleItemClick() {} */
 
-  handleArrowClick(direction) {
-    if (direction === "right") {
-      let date = new Date(this.props.year, this.props.month + 1);
-      this.props.onChangeMonth(date.getMonth());
-      this.props.onChangeYear(date.getFullYear());
-      this.props.onChangeStartYear(date.getFullYear());
-    } else {
-      let date = new Date(this.props.year, this.props.month - 1);
-      this.props.onChangeMonth(date.getMonth());
-      this.props.onChangeYear(date.getFullYear());
-      this.props.onChangeStartYear(date.getFullYear());
+  handleArrowClick(direction, name) {
+    let date;
+    switch (name) {
+      case "day":
+        date =
+          direction === "right"
+            ? new Date(this.props.year, this.props.month + 1)
+            : new Date(this.props.year, this.props.month - 1);
+        this.props.onChangeMonth(date.getMonth());
+        break;
+      case "month":
+        date =
+          direction === "right"
+            ? new Date(this.props.year + 1, this.props.month)
+            : new Date(this.props.year - 1, this.props.month);
+        this.props.onChangeYear(date.getFullYear());
+        break;
+      case "year":
+        date =
+          direction === "right"
+            ? new Date(this.props.year + 15, this.props.month)
+            : new Date(this.props.year - 15, this.props.month);
+        this.props.onChangeStartYear(date.getFullYear());
+        break;
+
+      default:
+        break;
     }
   }
 
   сreateNavTitle(name) {
-    /*   const date = new Date(this.props.year, this.props.month); */
-    const monthName = moment(this.props.today).format("MMMM");
+    const date = new Date(this.props.year, this.props.month);
+    const monthName = moment(date).format("MMMM");
     const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
     const yearsString = `${this.props.startYear}-${this.props.endYear}`;
 
@@ -72,14 +88,10 @@ class Calendar extends React.Component {
       <div className="calendar">
         <Route exact path="/">
           <Nav
-            /* 
-          className="nav"
-          today={this.props.today}
-          month={this.props.month}
-          year={this.props.year} */
             onArrowClick={this.handleArrowClick}
             onTitleClick={this.props.onRouteToMonth}
             title={this.сreateNavTitle("day")}
+            name={"day"}
           />
           <NameDays />
           <GridDays
@@ -92,28 +104,31 @@ class Calendar extends React.Component {
         <Route path="/monthSelection">
           <Nav
             onArrowClick={this.handleArrowClick}
-            onTitleClick={this.props.onRouteToMonth}
+            onTitleClick={this.props.onRouteToYearh}
             title={this.сreateNavTitle("month")}
+            name={"month"}
           />
           <MonthSelection
             today={this.props.today}
             month={this.props.month}
             year={this.props.year}
-            onItemClick={this.props.onChangeSelectDay}
+            onItemClick={this.props.onChangeMonth}
+            onChangeRoute={this.props.onRouteToCalendar}
           />
         </Route>
         <Route path="/yearSelection">
           <Nav
             onArrowClick={this.handleArrowClick}
-            onTitleClick={this.props.onRouteToMonth}
+            /*  onTitleClick={this.props.onRouteToMonth} */
             title={this.сreateNavTitle("year")}
+            name={"year"}
           />
           <YearSelection
             today={this.props.today}
             month={this.props.month}
             year={this.props.year}
             startYear={this.props.startYear}
-            onItemClick={this.props.onChangeSelectDay}
+            onItemClick={this.props.onChangeYear}
           />
         </Route>
       </div>

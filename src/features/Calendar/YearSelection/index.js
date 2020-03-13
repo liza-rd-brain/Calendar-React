@@ -27,20 +27,13 @@ export default class YearSelection extends React.Component {
     let yearsString = `${this.props.startYear}-${this.props.startYear + 15}`;
     return (
       <>
-        {/*  <Nav
-          className="nav"
-          month={false}
-          year={yearsString}
-          onArrowClick={this.handleArrowClick}
-        /> */}
-
         <GridYears
           className="gridYears "
           today={this.props.today}
           month={this.props.month}
           year={this.props.year}
           startYear={this.props.startYear}
-          onItemClick={this.handleClickYear}
+          onItemClick={this.onItemClick}
         />
       </>
     );
