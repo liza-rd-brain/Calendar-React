@@ -20,14 +20,10 @@ import YearSelection from "./YearSelection/index";
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
+
     this.handleArrowClick = this.handleArrowClick.bind(this);
-    /* this.state = {
-      title: ""
-    }; */
-    /*    this.handleItemClick = this.handleItemClick.bind(this); */
     this.сreateNavTitle = this.сreateNavTitle.bind(this);
   }
-  /*  handleItemClick() {} */
 
   handleArrowClick(direction, name) {
     let date;
@@ -63,7 +59,8 @@ class Calendar extends React.Component {
     const date = new Date(this.props.year, this.props.month);
     const monthName = moment(date).format("MMMM");
     const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
-    const yearsString = `${this.props.startYear}-${this.props.endYear}`;
+    const yearsString = `${this.props.startYear}-${this.props.startYear +
+      this.props.yearInc}`;
 
     switch (name) {
       case "day":

@@ -1,5 +1,4 @@
 import React from "react";
-import Day from "./Day/Day";
 
 function getListAllMonth(props) {
   const todayDay = props.today.getDate();
@@ -93,13 +92,14 @@ export default class GridDays extends React.Component {
     return (
       <div className="grid">
         {listAllMonth.map(item => (
-          <Day
+          <div
             key={item.number + item.class}
             item={item.number}
-            class={item.class}
-            date={item.date}
-            onItemClick={this.props.onItemClick}
-          />
+            className={item.class}
+            onClick={() => this.props.onItemClick(item.date)}
+          >
+            {item.number}
+          </div>
         ))}
       </div>
     );
