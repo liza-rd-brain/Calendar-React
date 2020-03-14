@@ -1,25 +1,36 @@
 import React from "react";
 
 function getListAllMonth(props) {
-  const todayDay = props.today.getDate();
-  const todayMonth = props.today.getMonth();
-  const todayYear = props.today.getFullYear();
+  /*выясняем, рисуем текущий месяц или какой-то требуемый,
+  т.е. листнули календарь*/
+  /* debugger; */
 
-  const currYear = props.year;
-  const currMonth = props.month;
+  let currDate = props.date || props.today;
 
-  const firstDayCurrMonth = new Date(currYear, currMonth, 1);
-  const lastDayCurrMonth = new Date(currYear, currMonth + 1, 0).getDate();
+  const day = currDate.getDate();
+  const month = currDate.getMonth();
+  const year = currDate.getFullYear();
+
+  /*  const currYear = props.year;
+  const currMonth = props.month; */
+
+  /*текущий месяц*/
+  const currDayNumber = props.today.getDate();
+  const currYear = props.today.getFullYear();
+  const currMonth = props.today.getMonth();
+
+  const firstDayCurrMonth = new Date(year, month, 1);
+  const lastDayCurrMonth = new Date(year, month + 1, 0).getDate();
 
   let listCurrMonth = [];
   let dayNumber = 1;
 
-  let day = 1;
-  let variableDate = new Date(currYear, currMonth, day);
+  let dayByOrder = 1;
+  let variableDate = new Date(year, month, dayByOrder);
 
   while (dayNumber <= lastDayCurrMonth) {
     let className = "dayCurrentMonth day";
-    todayDay === dayNumber && todayMonth === currMonth && todayYear === currYear
+    currDayNumber === dayNumber && month === currMonth && year === currYear
       ? (className += " today")
       : "";
     listCurrMonth.push({
@@ -28,7 +39,7 @@ function getListAllMonth(props) {
       class: className
     });
     dayNumber++;
-    variableDate = new Date(currYear, currMonth, (day += 1));
+    variableDate = new Date(year, month, (dayByOrder += 1));
   }
 
   const firstDayCurrMonthOfWeek = firstDayCurrMonth.getDay();
@@ -46,13 +57,13 @@ function getListAllMonth(props) {
   }
 
   /*  ; */
-  const lastDayPrevMonth = new Date(2019, currMonth, 0).getDate();
+  const lastDayPrevMonth = new Date(2019, month, 0).getDate();
   const firstDayPrevMonth = lastDayPrevMonth - amountPrevMohthDays + 1;
   let dayNumberPrevMonth = firstDayPrevMonth;
   let listPrevMonth = [];
 
   let dayPrev = firstDayPrevMonth;
-  let variableDatePrev = new Date(currYear, currMonth - 1, dayPrev);
+  let variableDatePrev = new Date(year, month - 1, dayPrev);
 
   while (dayNumberPrevMonth <= lastDayPrevMonth) {
     listPrevMonth.push({
@@ -61,7 +72,7 @@ function getListAllMonth(props) {
       class: "another day"
     });
     dayNumberPrevMonth++;
-    variableDatePrev = new Date(currYear, currMonth - 1, (dayPrev += 1));
+    variableDatePrev = new Date(year, month - 1, (dayPrev += 1));
   }
 
   const listPrevCurrentMonth = listPrevMonth.concat(listCurrMonth);
@@ -71,7 +82,7 @@ function getListAllMonth(props) {
   let dayNumberNextMonth = 1;
 
   let dayNext = dayNumberNextMonth;
-  let variableDateNext = new Date(currYear, currMonth + 1, dayNext);
+  let variableDateNext = new Date(year, month + 1, dayNext);
 
   while (dayNumberNextMonth < amountNextMohthDays + 1) {
     listNextMonth.push({
@@ -80,7 +91,7 @@ function getListAllMonth(props) {
       class: "another day"
     });
     dayNumberNextMonth++;
-    variableDateNext = new Date(currYear, currMonth + 1, (dayNext += 1));
+    variableDateNext = new Date(year, month + 1, (dayNext += 1));
   }
 
   return listPrevCurrentMonth.concat(listNextMonth);

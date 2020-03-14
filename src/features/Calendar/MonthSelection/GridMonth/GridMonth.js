@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 
 class GridMonth extends Component {
+  /*  shouldComponentUpdate(nextProps) {
+    debugger;
+    if (nextProps.date) {
+      return nextProps.date === this.props.date;
+    } else {
+      return nextProps.today === this.props.today;
+    }
+  } */
   render() {
-    const todayYear = this.props.today.getFullYear();
-    const todayMonth = this.props.today.getMonth();
-    const currYear = this.props.year;
-    const currMonth = this.props.month;
+    let currDate = this.props.date || this.props.today;
+    const todayYear = currDate.getFullYear();
+    const todayMonth = currDate.getMonth();
+    const currYear = this.props.today.getFullYear();
+    const currMonth = this.props.today.getMonth();
     const monthsList = [
       "янв",
       "фев",

@@ -13,8 +13,8 @@ export default class TaskTitle extends React.Component {
     ];
 
     const numberDay = new Date(
-      this.props.year,
-      this.props.month,
+      this.props.today.getFullYear(),
+      this.props.today.getMonth(),
       this.props.selectDay.getDate()
     ).getDay();
 

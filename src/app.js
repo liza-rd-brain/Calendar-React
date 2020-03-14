@@ -24,11 +24,8 @@ class App extends React.Component {
       //день от которого начинаем рисовать календарь
       today: new Date(),
 
-      month: new Date().getMonth(),
-      year: new Date().getFullYear(),
-
       selectDay: new Date(),
-      startYear: 2010,
+
       taskList: [
         /* 
         {
@@ -63,22 +60,19 @@ class App extends React.Component {
     };
 
     /* this.endYear = this.state.startYear + 15; */
-    this.yearInc = 15;
+
     this.hrefNewTask = "newTask";
 
     this.startInputTitle = "Дата начала";
     this.endInputTitle = "Дата окончания";
 
-    this.handleChangeMonth = this.handleChangeMonth.bind(this);
-    this.handleChangeYear = this.handleChangeYear.bind(this);
-    this.handleChangeStartYear = this.handleChangeStartYear.bind(this);
-
     this.updateSystemDate = this.updateSystemDate.bind(this);
     this.updateSystemTime = this.updateSystemTime.bind(this);
     this.hahdleChangeSelectDay = this.hahdleChangeSelectDay.bind(this);
+    /*скорее заменить на переход на главную страницу,
+    а страница уже сама манажит свой роутер*/
+
     this.handleToCalendar = this.handleToCalendar.bind(this);
-    this.handleToMonthSelection = this.handleToMonthSelection.bind(this);
-    this.handleToYearSelection = this.handleToYearSelection.bind(this);
 
     this.handleChangeTaskList = this.handleChangeTaskList.bind(this);
     this.handleAddNewTask = this.handleAddNewTask.bind(this);
@@ -86,39 +80,6 @@ class App extends React.Component {
 
     this.selectCurrentTask = this.selectCurrentTask.bind(this);
     this.onTaskClick = this.onTaskClick.bind(this);
-  }
-
-  /*будет принимать дату, а не месяц!*/
-
-  handleChangeMonth(month) {
-    debugger;
-    this.setState(
-      state => {
-        return { month };
-      },
-      () => this.handleToCalendar()
-    );
-  }
-
-  /*будет принимать дату, а не год!*/
-
-  handleChangeYear(year) {
-    this.setState({
-      year
-    });
-  }
-
-  handleChangeStartYear(year) {
-    debugger;
-    if (year < this.state.startYear) {
-      this.setState(state => {
-        return { startYear: state.startYear - this.yearInc - 1 };
-      });
-    } else if (year > this.state.startYear + this.yearInc) {
-      this.setState(state => {
-        return { startYear: state.startYear + this.yearInc + 1 };
-      });
-    }
   }
 
   hahdleChangeSelectDay(selectDay) {
@@ -133,14 +94,6 @@ class App extends React.Component {
 
   handleToCalendar() {
     this.props.history.push("/");
-  }
-
-  handleToMonthSelection() {
-    this.props.history.push("/monthSelection");
-  }
-
-  handleToYearSelection() {
-    this.props.history.push("/yearSelection");
   }
 
   handleAddNewTask(newTask) {
@@ -304,12 +257,7 @@ class App extends React.Component {
             {this.props.children}
             <Calendar
               today={this.state.today}
-              /*__________*/
-              month={this.state.month}
-              year={this.state.year}
-              /*__________*/
               onChangeSelectDay={this.hahdleChangeSelectDay}
-              onChangeMonth={this.handleChangeMonth}
               onChangeYear={this.handleChangeYear}
               onChangeStartYear={this.handleChangeStartYear}
               onIncStartYear={this.handleIncStartYear}
@@ -326,11 +274,6 @@ class App extends React.Component {
 
             <TaskList
               today={this.state.today}
-              /*__________*/
-              month={this.state.month}
-              year={this.state.year}
-              /*__________*/
-
               selectDay={this.state.selectDay}
               hrefNewTask={this.hrefNewTask}
               taskList={this.state.currtaskList}

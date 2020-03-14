@@ -17,8 +17,8 @@ export default class TaskList extends React.Component {
         <TaskTitle
           selectDay={this.props.selectDay}
           today={this.props.today}
-          month={this.props.month}
-          year={this.props.year}
+          /* month={this.props.month}
+          year={this.props.year} */
         />
         <Link className="link" to={this.props.hrefNewTask}>
           +
