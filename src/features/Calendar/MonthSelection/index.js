@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Nav from "../../Nav/index";
 import GridMonths from "./GridMonth/GridMonth";
 
 class MonthSelection extends Component {

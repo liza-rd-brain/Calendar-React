@@ -2,16 +2,13 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch,
-  withRouter,
-  Redirect
+  withRouter
 } from "react-router-dom";
 
 import moment from "moment";
-moment.locale("ru");
 
-import Nav from "../Nav";
+import Nav from "./Nav";
 import NameDays from "./NameDays/NameDays";
 import GridDays from "./GridDays/GridDays";
 import MonthSelection from "./MonthSelection/index";
@@ -140,46 +137,48 @@ class Calendar extends React.Component {
   render() {
     return (
       <div className="calendar">
-        <Route exact path="/">
-          <Nav
-            onArrowClick={this.handleArrowClick}
-            onTitleClick={() => this.changeRouteToMonth()}
-            title={this.createNavTitle("day")}
-            name={"day"}
-          />
-          <NameDays />
-          <GridDays
-            today={this.props.today}
-            date={this.state.date}
-            onItemClick={this.props.onChangeSelectDay}
-          />
-        </Route>
-        <Route path="/monthSelection">
-          <Nav
-            onArrowClick={this.handleArrowClick}
-            onTitleClick={this.changeRouteToYear}
-            title={this.createNavTitle("month")}
-            name={"month"}
-          />
-          <MonthSelection
-            today={this.props.today}
-            date={this.state.date}
-            onItemClick={this.changeRouteToCalender}
-          />
-        </Route>
-        <Route path="/yearSelection">
-          <Nav
-            onArrowClick={this.handleArrowClick}
-            title={this.createNavTitle("year")}
-            name={"year"}
-          />
-          <YearSelection
-            today={this.props.today}
-            date={this.state.date}
-            startYear={this.state.startYear}
-            onItemClick={this.changeRouteToMonth}
-          />
-        </Route>
+        <Switch>
+          <Route exact path="/">
+            <Nav
+              onArrowClick={this.handleArrowClick}
+              onTitleClick={() => this.changeRouteToMonth()}
+              title={this.createNavTitle("day")}
+              name={"day"}
+            />
+            <NameDays />
+            <GridDays
+              today={this.props.today}
+              date={this.state.date}
+              onItemClick={this.props.onChangeSelectDay}
+            />
+          </Route>
+          <Route path="/monthSelection">
+            <Nav
+              onArrowClick={this.handleArrowClick}
+              onTitleClick={this.changeRouteToYear}
+              title={this.createNavTitle("month")}
+              name={"month"}
+            />
+            <MonthSelection
+              today={this.props.today}
+              date={this.state.date}
+              onItemClick={this.changeRouteToCalender}
+            />
+          </Route>
+          <Route path="/yearSelection">
+            <Nav
+              onArrowClick={this.handleArrowClick}
+              title={this.createNavTitle("year")}
+              name={"year"}
+            />
+            <YearSelection
+              today={this.props.today}
+              date={this.state.date}
+              startYear={this.state.startYear}
+              onItemClick={this.changeRouteToMonth}
+            />
+          </Route>
+        </Switch>
       </div>
     );
   }

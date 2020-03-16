@@ -15,6 +15,8 @@ import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
 import "./style.css";
 
+moment.locale("ru");
+
 class App extends React.Component {
   constructor(props) {
     super(props);
