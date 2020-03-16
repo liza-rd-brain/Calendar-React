@@ -11,10 +11,8 @@ import {
 
 import moment from "moment";
 
-import Calendar from "./features/Calendar";
+import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
-import Timer from "./features/Timer";
-import TaskList from "./features/TaskList/TaskList";
 import "./style.css";
 
 class App extends React.Component {
@@ -253,30 +251,20 @@ class App extends React.Component {
           </Route>
 
           <Route path="/">
-            <Timer today={this.props.today} time={this.state.time} />
-            {this.props.children}
-            <Calendar
-              today={this.state.today}
-              onChangeSelectDay={this.hahdleChangeSelectDay}
-              onChangeYear={this.handleChangeYear}
-              onChangeStartYear={this.handleChangeStartYear}
-              onIncStartYear={this.handleIncStartYear}
-              onDecStartYear={this.handleDecStartYear}
-              startYear={this.state.startYear}
+            <CalendarPage
+              today={this.props.today}
+              children={this.props.children}
+              state={this.state}
+              hahdleChangeSelectDay={this.hahdleChangeSelectDay}
+              handleChangeYear={this.handleChangeYear}
+              handleChangeStartYear={this.handleChangeStartYear}
+              handleIncStartYear={this.handleIncStartYear}
+              handleDecStartYear={this.handleDecStartYear}
               yearInc={this.yearInc}
-              startYear={this.state.startYear}
-              onRouteToCalendar={this.handleToCalendar}
-              onRouteToMonth={this.handleToMonthSelection}
-              onRouteToYearh={this.handleToYearSelection}
-              selectDay={this.state.selectDay}
+              handleToCalendar={this.handleToCalendar}
+              handleToMonthSelection={this.handleToMonthSelection}
+              handleToYearSelection={this.handleToYearSelection}
               hrefNewTask={this.hrefNewTask}
-            ></Calendar>
-
-            <TaskList
-              today={this.state.today}
-              selectDay={this.state.selectDay}
-              hrefNewTask={this.hrefNewTask}
-              taskList={this.state.currtaskList}
               onTaskClick={this.onTaskClick}
             />
           </Route>
