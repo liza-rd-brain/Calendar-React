@@ -227,30 +227,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <>
-        <Switch>
-          <Route path="/newTask">
-            <TaskCard
-              startInputTitle={this.startInputTitle}
-              endInputTitle={this.endInputTitle}
-              onChangeTaskList={this.handleAddNewTask}
-              handleDeleteTask={this.handleDeleteTask}
-            />
-          </Route>
-
-          <Route path="/tasks/:name">
-            {/*   прокинуть задачу! */}
-            <TaskCard
-              startInputTitle={this.startInputTitle}
-              endInputTitle={this.endInputTitle}
-              сurrTask={this.state.currTask}
-              onChangeTaskList={this.handleChangeTaskList}
-              handleToCalendar={this.handleToCalendar}
-              handleDeleteTask={this.handleDeleteTask}
-            />
-          </Route>
-
-          <Route path="/">
+      <Switch>
+          <Route path="/" exact>
             <CalendarPage
               today={this.props.today}
               children={this.props.children}
@@ -260,8 +238,25 @@ class App extends React.Component {
               onTaskClick={this.onTaskClick}
             />
           </Route>
+          <Route path="/newTask">
+            <TaskCard
+              startInputTitle={this.startInputTitle}
+              endInputTitle={this.endInputTitle}
+              onChangeTaskList={this.handleAddNewTask}
+              handleDeleteTask={this.handleDeleteTask}
+            />
+          </Route>
+          <Route path="/tasks/:name">
+            <TaskCard
+              startInputTitle={this.startInputTitle}
+              endInputTitle={this.endInputTitle}
+              сurrTask={this.state.currTask}
+              onChangeTaskList={this.handleChangeTaskList}
+              handleToCalendar={this.handleToCalendar}
+              handleDeleteTask={this.handleDeleteTask}
+            />
+          </Route>
         </Switch>
-      </>
     );
   }
 }
