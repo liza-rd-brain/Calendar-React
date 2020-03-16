@@ -38,7 +38,6 @@ class Calendar extends React.Component {
     /*сегодня или другие месяцы*/
     let currDay = this.state.date || this.props.today;
     let date;
-    debugger;
     switch (name) {
       case "day":
         date =
@@ -80,7 +79,6 @@ class Calendar extends React.Component {
   }
   onChangeStartYear(date) {
     let year = date.getFullYear();
-    debugger;
     if (year < this.state.startYear) {
       this.setState(state => {
         return { startYear: state.startYear - this.yearInc - 1, date };
@@ -105,20 +103,16 @@ class Calendar extends React.Component {
     if (year) {
       let currDay = this.state.date || this.props.today;
       let date = new Date(year, currDay.getMonth());
-      /* debugger; */
-
       this.onChangeDate(date);
     }
 
     this.props.history.push("/monthSelection");
   }
   changeRouteToYear() {
-    debugger;
     this.props.history.push("/yearSelection");
   }
 
   createNavTitle(name) {
-    /* debugger; */
     const date = this.state.date || this.props.today;
     const monthName = moment(date).format("MMMM");
     const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
@@ -140,7 +134,6 @@ class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
     this.createNavTitle();
   }
 

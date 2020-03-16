@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class GridMonth extends Component {
   /*  shouldComponentUpdate(nextProps) {
-    debugger;
     if (nextProps.date) {
       return nextProps.date === this.props.date;
     } else {

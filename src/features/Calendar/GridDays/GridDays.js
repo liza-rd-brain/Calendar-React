@@ -3,7 +3,6 @@ import React from "react";
 function getListAllMonth(props) {
   /*выясняем, рисуем текущий месяц или какой-то требуемый,
   т.е. листнули календарь*/
-  /* debugger; */
 
   let currDate = props.date || props.today;
 
