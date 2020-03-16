@@ -9,14 +9,6 @@ export default function Main({
   children,
   state,
   hahdleChangeSelectDay,
-  handleChangeYear,
-  handleChangeStartYear,
-  handleIncStartYear,
-  handleDecStartYear,
-  yearInc,
-  handleToCalendar,
-  handleToMonthSelection,
-  handleToYearSelection,
   hrefNewTask,
   onTaskClick
 }) {
@@ -27,16 +19,6 @@ export default function Main({
       <Calendar
         today={state.today}
         onChangeSelectDay={hahdleChangeSelectDay}
-        onChangeYear={handleChangeYear}
-        onChangeStartYear={handleChangeStartYear}
-        onIncStartYear={handleIncStartYear}
-        onDecStartYear={handleDecStartYear}
-        startYear={state.startYear}
-        yearInc={yearInc}
-        startYear={state.startYear}
-        onRouteToCalendar={handleToCalendar}
-        onRouteToMonth={handleToMonthSelection}
-        onRouteToYearh={handleToYearSelection}
         selectDay={state.selectDay}
         hrefNewTask={hrefNewTask}
       ></Calendar>

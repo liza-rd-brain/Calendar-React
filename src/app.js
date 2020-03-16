@@ -256,14 +256,6 @@ class App extends React.Component {
               children={this.props.children}
               state={this.state}
               hahdleChangeSelectDay={this.hahdleChangeSelectDay}
-              handleChangeYear={this.handleChangeYear}
-              handleChangeStartYear={this.handleChangeStartYear}
-              handleIncStartYear={this.handleIncStartYear}
-              handleDecStartYear={this.handleDecStartYear}
-              yearInc={this.yearInc}
-              handleToCalendar={this.handleToCalendar}
-              handleToMonthSelection={this.handleToMonthSelection}
-              handleToYearSelection={this.handleToYearSelection}
               hrefNewTask={this.hrefNewTask}
               onTaskClick={this.onTaskClick}
             />
