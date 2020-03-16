@@ -9,10 +9,11 @@ import {
 import moment from "moment";
 
 import Nav from "./Nav";
-import NameDays from "./NameDays/NameDays";
-import GridDays from "./GridDays/GridDays";
-import MonthSelection from "./MonthSelection/index";
-import YearSelection from "./YearSelection/index";
+import GridDays from "./GridDays";
+import MonthSelection from "./MonthSelection";
+import YearSelection from "./YearSelection";
+
+const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -145,7 +146,7 @@ class Calendar extends React.Component {
               title={this.createNavTitle("day")}
               name={"day"}
             />
-            <NameDays />
+            <NameDays/>
             <GridDays
               today={this.props.today}
               date={this.state.date}
@@ -182,6 +183,20 @@ class Calendar extends React.Component {
       </div>
     );
   }
+}
+
+function NameDays() {
+  return (
+    <div className="nameDaysList">
+      {NAME_DAYS.map(name => {
+        return (
+          <div key={name} className="nameDay">
+            {name}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export default withRouter(Calendar);

@@ -1,5 +1,5 @@
 import React from "react";
-import GridYears from "./GridYears/GridYears";
+import GridYears from "./GridYears";
 
 export default class YearSelection extends React.Component {
   constructor(props) {

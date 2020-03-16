@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GridMonths from "./GridMonth/GridMonth";
+import GridMonths from "./GridMonth";
 
 class MonthSelection extends Component {
   constructor(props) {
@@ -33,16 +33,13 @@ class MonthSelection extends Component {
 
   render() {
     return (
-      <>
-        <GridMonths
-          className="gridMonths "
-          today={this.props.today}
-          month={this.props.month}
-          year={this.props.year}
-          onItemClick={this.props.onItemClick}
-        />
-      </>
-      /*  </div> */
+      <GridMonths
+        className="gridMonths "
+        today={this.props.today}
+        month={this.props.month}
+        year={this.props.year}
+        onItemClick={this.props.onItemClick}
+      />
     );
   }
 }
