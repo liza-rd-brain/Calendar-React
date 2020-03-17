@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 
 import moment from "moment";
+moment.locale("ru");
+moment().format("ll");
 
 import Nav from "./Nav";
 import GridDays from "./GridDays";
@@ -20,7 +22,8 @@ class Calendar extends React.Component {
     super(props);
     this.state = {
       date: /* new Date(1990, 5, 5) */ "",
-      startYear: 2010
+      startYear: 2010,
+      mode: "day"
     };
     this.yearInc = 15;
     this.handleArrowClick = this.handleArrowClick.bind(this);
@@ -75,6 +78,7 @@ class Calendar extends React.Component {
       () => console.log(this.state.date)
     );
   }
+
   onChangeStartYear(date) {
     let year = date.getFullYear();
     if (year < this.state.startYear) {
@@ -94,20 +98,31 @@ class Calendar extends React.Component {
     let currDay = this.state.date || this.props.today;
     let date = new Date(currDay.getFullYear(), month);
     this.onChangeDate(date);
-    this.props.history.push("/");
+
+    this.setState({
+      mode: "day"
+    });
   }
 
   changeRouteToMonth(year) {
+    debugger;
     if (year) {
       let currDay = this.state.date || this.props.today;
       let date = new Date(year, currDay.getMonth());
       this.onChangeDate(date);
     }
-
-    this.props.history.push("/monthSelection");
+    this.setState(
+      {
+        mode: "month"
+      },
+      console.log(this.state.mode)
+    );
   }
+
   changeRouteToYear() {
-    this.props.history.push("/yearSelection");
+    this.setState({
+      mode: "year"
+    });
   }
 
   createNavTitle(name) {
@@ -136,24 +151,28 @@ class Calendar extends React.Component {
   }
 
   render() {
-    return (
-      <div className="calendar">
-        <Switch>
-          <Route exact path="/">
+    switch (this.state.mode) {
+      case "day":
+        return (
+          <div className="calendar">
             <Nav
               onArrowClick={this.handleArrowClick}
               onTitleClick={() => this.changeRouteToMonth()}
               title={this.createNavTitle("day")}
               name={"day"}
             />
-            <NameDays/>
+            <NameDays />
             <GridDays
               today={this.props.today}
               date={this.state.date}
               onItemClick={this.props.onChangeSelectDay}
             />
-          </Route>
-          <Route path="/monthSelection">
+          </div>
+        );
+
+      case "month":
+        return (
+          <div className="calendar">
             <Nav
               onArrowClick={this.handleArrowClick}
               onTitleClick={this.changeRouteToYear}
@@ -165,8 +184,12 @@ class Calendar extends React.Component {
               date={this.state.date}
               onItemClick={this.changeRouteToCalender}
             />
-          </Route>
-          <Route path="/yearSelection">
+          </div>
+        );
+
+      case "year":
+        return (
+          <div className="calendar">
             <Nav
               onArrowClick={this.handleArrowClick}
               title={this.createNavTitle("year")}
@@ -178,10 +201,12 @@ class Calendar extends React.Component {
               startYear={this.state.startYear}
               onItemClick={this.changeRouteToMonth}
             />
-          </Route>
-        </Switch>
-      </div>
-    );
+          </div>
+        );
+
+      default:
+        return null;
+    }
   }
 }
 
