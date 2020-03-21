@@ -13,7 +13,7 @@ moment().format("ll");
 import Nav from "./Nav";
 import GridDays from "./GridDays";
 import GridMonth from "./GridMonth";
-import YearSelection from "./YearSelection";
+import YearSelection from "./GridYears";
 
 const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
 
