@@ -116,11 +116,6 @@ class TaskCard extends React.Component {
     if (this.props.сurrTask) {
       this.editForm = this.fillForm();
     }
-
-    /* window.addEventListener("onunload", () => {
-      alert("перезагрузка");
-      console.log(перезагрузка);
-    }); */
   }
 
   componentWillUnmount() {}
@@ -188,13 +183,13 @@ class TaskCard extends React.Component {
           value={this.state.taskDesc}
         />
         <div className="button_wrap">
-        <input className="button" type="submit" value="сохранить" />
-        <input
-          className="button"
-          type="button"
-          value="удалить"
-          onClick={() => this.props.handleDeleteTask(this.props.сurrTask)}
-        />
+          <input className="button" type="submit" value="сохранить" />
+          <input
+            className="button"
+            type="button"
+            value="удалить"
+            onClick={() => this.props.handleDeleteTask(this.props.сurrTask)}
+          />
         </div>
       </form>
     );

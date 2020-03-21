@@ -59,8 +59,6 @@ class App extends React.Component {
       time: moment().format("LTS")
     };
 
-    /* this.endYear = this.state.startYear + 15; */
-
     this.hrefNewTask = "newTask";
 
     this.startInputTitle = "Дата начала";
@@ -69,8 +67,6 @@ class App extends React.Component {
     this.updateSystemDate = this.updateSystemDate.bind(this);
     this.updateSystemTime = this.updateSystemTime.bind(this);
     this.hahdleChangeSelectDay = this.hahdleChangeSelectDay.bind(this);
-    /*скорее заменить на переход на главную страницу,
-    а страница уже сама манажит свой роутер*/
 
     this.handleToCalendar = this.handleToCalendar.bind(this);
 
@@ -230,35 +226,34 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
-          <Route path="/" exact>
-            <CalendarPage
-              today={this.props.today}
-              children={this.props.children}
-              state={this.state}
-              hahdleChangeSelectDay={this.hahdleChangeSelectDay}
-              hrefNewTask={this.hrefNewTask}
-              onTaskClick={this.onTaskClick}
-            />
-          </Route>
-          <Route path="/newTask">
-            <TaskCard
-              startInputTitle={this.startInputTitle}
-              endInputTitle={this.endInputTitle}
-              onChangeTaskList={this.handleAddNewTask}
-              handleDeleteTask={this.handleDeleteTask}
-            />
-          </Route>
-          <Route path="/tasks/:name">
-            <TaskCard
-              startInputTitle={this.startInputTitle}
-              endInputTitle={this.endInputTitle}
-              сurrTask={this.state.currTask}
-              onChangeTaskList={this.handleChangeTaskList}
-              handleToCalendar={this.handleToCalendar}
-              handleDeleteTask={this.handleDeleteTask}
-            />
-          </Route>
-        </Switch>
+        <Route path="/" exact>
+          <CalendarPage
+            today={this.props.today}
+            state={this.state}
+            hahdleChangeSelectDay={this.hahdleChangeSelectDay}
+            hrefNewTask={this.hrefNewTask}
+            onTaskClick={this.onTaskClick}
+          />
+        </Route>
+        <Route path="/newTask">
+          <TaskCard
+            startInputTitle={this.startInputTitle}
+            endInputTitle={this.endInputTitle}
+            onChangeTaskList={this.handleAddNewTask}
+            handleDeleteTask={this.handleDeleteTask}
+          />
+        </Route>
+        <Route path="/tasks/:name">
+          <TaskCard
+            startInputTitle={this.startInputTitle}
+            endInputTitle={this.endInputTitle}
+            сurrTask={this.state.currTask}
+            onChangeTaskList={this.handleChangeTaskList}
+            handleToCalendar={this.handleToCalendar}
+            handleDeleteTask={this.handleDeleteTask}
+          />
+        </Route>
+      </Switch>
     );
   }
 }

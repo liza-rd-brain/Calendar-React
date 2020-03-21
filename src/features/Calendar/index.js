@@ -12,7 +12,7 @@ moment().format("ll");
 
 import Nav from "./Nav";
 import GridDays from "./GridDays";
-import MonthSelection from "./MonthSelection";
+import GridMonth from "./GridMonth";
 import YearSelection from "./YearSelection";
 
 const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
@@ -36,6 +36,7 @@ class Calendar extends React.Component {
   }
 
   handleArrowClick(direction, name) {
+    debugger;
     /*сегодня или другие месяцы*/
     let currDay = this.state.date || this.props.today;
     let date;
@@ -93,6 +94,7 @@ class Calendar extends React.Component {
   }
 
   changeRouteToCalender(month) {
+    debugger;
     /*проще принять месяц*/
 
     let currDay = this.state.date || this.props.today;
@@ -105,7 +107,7 @@ class Calendar extends React.Component {
   }
 
   changeRouteToMonth(year) {
-    debugger;
+    /* debugger; */
     if (year) {
       let currDay = this.state.date || this.props.today;
       let date = new Date(year, currDay.getMonth());
@@ -179,7 +181,7 @@ class Calendar extends React.Component {
               title={this.createNavTitle("month")}
               name={"month"}
             />
-            <MonthSelection
+            <GridMonth
               today={this.props.today}
               date={this.state.date}
               onItemClick={this.changeRouteToCalender}

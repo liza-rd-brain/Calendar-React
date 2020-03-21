@@ -6,7 +6,6 @@ import Calendar from "../features/Calendar";
 
 export default function Main({
   today,
-  children,
   state,
   hahdleChangeSelectDay,
   hrefNewTask,
@@ -15,7 +14,6 @@ export default function Main({
   return (
     <>
       <Timer today={today} time={state.time} />
-      {children}
       <Calendar
         today={state.today}
         onChangeSelectDay={hahdleChangeSelectDay}
