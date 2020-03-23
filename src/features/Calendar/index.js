@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -16,29 +16,17 @@ import GridMonth from "./GridMonth";
 import YearSelection from "./GridYears";
 
 const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
+const yearInc = 15;
 
-class Calendar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: /* new Date(1990, 5, 5) */ "",
-      startYear: 2010,
-      mode: "day"
-    };
-    this.yearInc = 15;
-    this.handleArrowClick = this.handleArrowClick.bind(this);
-    this.createNavTitle = this.createNavTitle.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
-    this.changeRouteToCalender = this.changeRouteToCalender.bind(this);
-    this.changeRouteToMonth = this.changeRouteToMonth.bind(this);
-    this.changeRouteToYear = this.changeRouteToYear.bind(this);
-    this.onChangeStartYear = this.onChangeStartYear.bind(this);
-  }
+function Calendar(props) {
+  const [date, setDate] = useState("");
+  const [startYear, setStartYear] = useState(2010);
+  const [mode, setMode] = useState("day");
 
-  handleArrowClick(direction, name) {
-    debugger;
+  const handleArrowClick = (direction, name) => {
+    
     /*сегодня или другие месяцы*/
-    let currDay = this.state.date || this.props.today;
+    let currDay = date || props.today;
     let date;
     switch (name) {
       case "day":
@@ -46,94 +34,75 @@ class Calendar extends React.Component {
           direction === "right"
             ? new Date(currDay.getFullYear(), currDay.getMonth() + 1)
             : new Date(currDay.getFullYear(), currDay.getMonth() - 1);
-        this.onChangeDate(date);
+        onChangeDate(date);
         break;
       case "month":
         date =
           direction === "right"
             ? new Date(currDay.getFullYear() + 1, currDay.getMonth())
             : new Date(currDay.getFullYear() - 1, currDay.getMonth());
-        this.onChangeDate(date);
+        onChangeDate(date);
         break;
       case "year":
         date =
           direction === "right"
-            ? new Date(currDay.getFullYear() + this.yearInc, currDay.getMonth())
-            : new Date(
-                currDay.getFullYear() - this.yearInc,
-                currDay.getMonth()
-              );
-        this.onChangeStartYear(date);
+            ? new Date(currDay.getFullYear() + yearInc, currDay.getMonth())
+            : new Date(currDay.getFullYear() - yearInc, currDay.getMonth());
+        onChangeStartYear(date);
         break;
 
       default:
         break;
     }
-  }
+  };
 
-  onChangeDate(date) {
-    this.setState(
-      state => {
-        return { date };
-      },
-      () => console.log(this.state.date)
-    );
-  }
+  const onChangeDate = date => {
+    setDate(date);
+  };
 
-  onChangeStartYear(date) {
+  const onChangeStartYear = date => {
     let year = date.getFullYear();
-    if (year < this.state.startYear) {
-      this.setState(state => {
-        return { startYear: state.startYear - this.yearInc - 1, date };
-      });
-    } else if (year > this.state.startYear + this.yearInc) {
-      this.setState(state => {
-        return { startYear: state.startYear + this.yearInc + 1, date };
-      });
+    if (year < startYear) {
+      setStartYear(startYear => startYear - yearInc - 1);
+      /*
+       * todo: почему else if?
+       */
+    } else if (year > startYear + yearInc) {
+      setStartYear(startYear => startYear + yearInc + 1);
     }
-  }
+    setDate(date);
+  };
 
-  changeRouteToCalender(month) {
-    debugger;
+  const changeRouteToCalender = month => {
+   
     /*проще принять месяц*/
 
-    let currDay = this.state.date || this.props.today;
+    let currDay = date || props.today;
     let date = new Date(currDay.getFullYear(), month);
-    this.onChangeDate(date);
+    onChangeDate(date);
+    setMode("day");
+  };
 
-    this.setState({
-      mode: "day"
-    });
-  }
-
-  changeRouteToMonth(year) {
-    /* debugger; */
+  const changeRouteToMonth = year => {
+  
     if (year) {
-      let currDay = this.state.date || this.props.today;
+      let currDay = date || props.today;
       let date = new Date(year, currDay.getMonth());
-      this.onChangeDate(date);
+      onChangeDate(date);
     }
-    this.setState(
-      {
-        mode: "month"
-      },
-      console.log(this.state.mode)
-    );
-  }
+    setMode("month");
+  };
 
-  changeRouteToYear() {
-    this.setState({
-      mode: "year"
-    });
-  }
+  const changeRouteToYear = () => {
+    setMode("year");
+  };
 
-  createNavTitle(name) {
-    const date = this.state.date || this.props.today;
-    const monthName = moment(date).format("MMMM");
+  const createNavTitle = name => {
+    const currDate = date || props.today;
+    const monthName = moment(currDate).format("MMMM");
     const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
-    const currYear = date.getFullYear();
-    const yearsString = `${this.state.startYear}-${this.state.startYear +
-      this.yearInc}`;
+    const currYear = currDate.getFullYear();
+    const yearsString = `${startYear}-${startYear + yearInc}`;
 
     switch (name) {
       case "day":
@@ -146,69 +115,63 @@ class Calendar extends React.Component {
       default:
         break;
     }
-  }
+  };
 
-  componentDidMount() {
-    this.createNavTitle();
-  }
+  switch (mode) {
+    case "day":
+      return (
+        <div className="calendar">
+          <Nav
+            onArrowClick={handleArrowClick}
+            onTitleClick={() => changeRouteToMonth()}
+            title={createNavTitle("day")}
+            name={"day"}
+          />
+          <NameDays />
+          <GridDays
+            today={props.today}
+            date={date}
+            onItemClick={props.onChangeSelectDay}
+          />
+        </div>
+      );
 
-  render() {
-    switch (this.state.mode) {
-      case "day":
-        return (
-          <div className="calendar">
-            <Nav
-              onArrowClick={this.handleArrowClick}
-              onTitleClick={() => this.changeRouteToMonth()}
-              title={this.createNavTitle("day")}
-              name={"day"}
-            />
-            <NameDays />
-            <GridDays
-              today={this.props.today}
-              date={this.state.date}
-              onItemClick={this.props.onChangeSelectDay}
-            />
-          </div>
-        );
+    case "month":
+      return (
+        <div className="calendar">
+          <Nav
+            onArrowClick={handleArrowClick}
+            onTitleClick={changeRouteToYear}
+            title={createNavTitle("month")}
+            name={"month"}
+          />
+          <GridMonth
+            today={props.today}
+            date={date}
+            onItemClick={changeRouteToCalender}
+          />
+        </div>
+      );
 
-      case "month":
-        return (
-          <div className="calendar">
-            <Nav
-              onArrowClick={this.handleArrowClick}
-              onTitleClick={this.changeRouteToYear}
-              title={this.createNavTitle("month")}
-              name={"month"}
-            />
-            <GridMonth
-              today={this.props.today}
-              date={this.state.date}
-              onItemClick={this.changeRouteToCalender}
-            />
-          </div>
-        );
+    case "year":
+      return (
+        <div className="calendar">
+          <Nav
+            onArrowClick={handleArrowClick}
+            title={createNavTitle("year")}
+            name={"year"}
+          />
+          <YearSelection
+            today={props.today}
+            date={date}
+            startYear={startYear}
+            onItemClick={changeRouteToMonth}
+          />
+        </div>
+      );
 
-      case "year":
-        return (
-          <div className="calendar">
-            <Nav
-              onArrowClick={this.handleArrowClick}
-              title={this.createNavTitle("year")}
-              name={"year"}
-            />
-            <YearSelection
-              today={this.props.today}
-              date={this.state.date}
-              startYear={this.state.startYear}
-              onItemClick={this.changeRouteToMonth}
-            />
-          </div>
-        );
-
-      default:
-        return null;
-    }
+    default:
+      return null;
   }
 }
 
