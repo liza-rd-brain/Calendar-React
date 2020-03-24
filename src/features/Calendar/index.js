@@ -24,31 +24,30 @@ function Calendar(props) {
   const [mode, setMode] = useState("day");
 
   const handleArrowClick = (direction, name) => {
-    
     /*сегодня или другие месяцы*/
     let currDay = date || props.today;
-    let date;
+    let currDate;
     switch (name) {
       case "day":
-        date =
+        currDate =
           direction === "right"
             ? new Date(currDay.getFullYear(), currDay.getMonth() + 1)
             : new Date(currDay.getFullYear(), currDay.getMonth() - 1);
-        onChangeDate(date);
+        onChangeDate(currDate);
         break;
       case "month":
-        date =
+        currDate =
           direction === "right"
             ? new Date(currDay.getFullYear() + 1, currDay.getMonth())
             : new Date(currDay.getFullYear() - 1, currDay.getMonth());
-        onChangeDate(date);
+        onChangeDate(currDate);
         break;
       case "year":
-        date =
+        currDate =
           direction === "right"
             ? new Date(currDay.getFullYear() + yearInc, currDay.getMonth())
             : new Date(currDay.getFullYear() - yearInc, currDay.getMonth());
-        onChangeStartYear(date);
+        onChangeStartYear(currDate);
         break;
 
       default:
@@ -74,7 +73,6 @@ function Calendar(props) {
   };
 
   const changeRouteToCalender = month => {
-   
     /*проще принять месяц*/
 
     let currDay = date || props.today;
@@ -84,7 +82,6 @@ function Calendar(props) {
   };
 
   const changeRouteToMonth = year => {
-  
     if (year) {
       let currDay = date || props.today;
       let date = new Date(year, currDay.getMonth());
