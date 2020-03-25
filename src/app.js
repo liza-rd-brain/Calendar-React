@@ -13,6 +13,7 @@ import moment from "moment";
 
 import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
+
 import "./style.css";
 
 moment.locale("ru");
@@ -249,7 +250,6 @@ class App extends React.Component {
             endInputTitle={this.endInputTitle}
             сurrTask={this.state.currTask}
             onChangeTaskList={this.handleChangeTaskList}
-            handleToCalendar={this.handleToCalendar}
             handleDeleteTask={this.handleDeleteTask}
           />
         </Route>
