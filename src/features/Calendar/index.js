@@ -17,6 +17,7 @@ import YearSelection from "./GridYears";
 
 const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
 const yearInc = 15;
+/* let startYear = 2010; */
 
 function Calendar(props) {
   const [date, setDate] = useState("");
@@ -62,11 +63,13 @@ function Calendar(props) {
   const onChangeStartYear = date => {
     let year = date.getFullYear();
     if (year < startYear) {
+      /* startYear = startYear - yearInc - 1; */
       setStartYear(startYear => startYear - yearInc - 1);
       /*
        * todo: почему else if?
        */
     } else if (year > startYear + yearInc) {
+      /*  startYear = startYear + yearInc + 1; */
       setStartYear(startYear => startYear + yearInc + 1);
     }
     setDate(date);

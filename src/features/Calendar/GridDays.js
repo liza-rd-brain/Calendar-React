@@ -56,13 +56,14 @@ function getListAllMonth(props) {
   }
 
   /*  ; */
-  const lastDayPrevMonth = new Date(2019, month, 0).getDate();
+  const lastDayPrevMonth = new Date(currYear, month, 0).getDate();
   const firstDayPrevMonth = lastDayPrevMonth - amountPrevMohthDays + 1;
   let dayNumberPrevMonth = firstDayPrevMonth;
   let listPrevMonth = [];
 
   let dayPrev = firstDayPrevMonth;
   let variableDatePrev = new Date(year, month - 1, dayPrev);
+  /* debugger; */
 
   while (dayNumberPrevMonth <= lastDayPrevMonth) {
     listPrevMonth.push({

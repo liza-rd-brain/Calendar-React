@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,189 +11,163 @@ import {
 import moment from "moment";
 import DateTimeInput from "../features/DateTimeInput/DateTimeInput";
 
-class TaskCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      taskName: "",
-      taskDesc: "",
-      taskStartTime: "",
-      taskStartDate: "",
-      taskEndTime: "",
-      taskEndDate: ""
-    };
-    this.nameValue = "name";
-    this.descValue = "desc";
+const nameValue = "name";
+const descValue = "desc";
+const startDateValue = "startDate";
+const startTimeValue = "startTime";
+const endDateValue = "endDate";
+const endTimeValue = "endTime";
 
-    this.startDateValue = "startDate";
-    this.startTimeValue = "startTime";
+function TaskCard(props) {
+  const [taskName, setTaskname] = useState("");
+  const [taskDesc, setTaskDesc] = useState("");
+  const [taskStartTime, setTaskStartTime] = useState("");
+  const [taskStartDate, setTaskStartDate] = useState("");
+  const [taskEndTime, setTaskEndTime] = useState("");
+  const [taskEndDate, setTaskEndDate] = useState("");
 
-    this.endDateValue = "endDate";
-
-    this.endTimeValue = "endTime";
-    this.handleEditTask = this.handleEditTask.bind(this);
-    this.handleSaveTask = this.handleSaveTask.bind(this);
-    this.handleChangeTask = this.handleChangeTask.bind(this);
-  }
-
-  handleEditTask(event) {
+  const handleEditTask = event => {
+    debugger;
     const name = event.target.name;
+    const currValue = event.target.value;
 
     switch (name) {
-      case this.nameValue:
-        this.setState({
-          taskName: event.target.value
-        });
+      case nameValue:
+        setTaskname(currValue);
         break;
-      case this.descValue:
-        this.setState({
-          taskDesc: event.target.value
-        });
+      case descValue:
+        setTaskDesc(currValue);
         break;
-      case this.startDateValue:
-        this.setState({
-          taskStartDate: event.target.value
-        });
+      case startDateValue:
+        setTaskStartDate(currValue);
         break;
-      case this.startTimeValue:
-        this.setState({
-          taskStartTime: event.target.value
-        });
+      case startTimeValue:
+        setTaskStartTime(currValue);
         break;
-      case this.endDateValue:
-        this.setState({
-          taskEndDate: event.target.value
-        });
+      case endDateValue:
+        setTaskEndDate(currValue);
         break;
-      case this.endTimeValue:
-        this.setState({
-          taskEndTime: event.target.value
-        });
+      case endTimeValue:
+        setTaskEndTime(currValue);
         break;
       default:
         console.log("Error!");
     }
-  }
+  };
 
-  handleSaveTask(event) {
+  const handleSaveTask = event => {
     event.preventDefault();
 
     let task = {
-      name: this.state.taskName,
-      desc: this.state.taskDesc,
-      startDate: this.state.taskStartDate,
-      startTime: this.state.taskStartTime,
-      endDate: this.state.taskEndDate,
-      endTime: this.state.taskEndTime
+      name: taskName,
+      desc: taskDesc,
+      startDate: taskStartDate,
+      startTime: taskStartTime,
+      endDate: taskEndDate,
+      endTime: taskEndTime
     };
 
-    this.props.onChangeTaskList(task, this.props.action);
-  }
+    props.onChangeTaskList(task, props.action);
+  };
 
-  handleChangeTask() {
+  const handleChangeTask = () => {
+    debugger;
     console.log("изменяем задачу");
     event.preventDefault();
 
     /*отличие =id*/
 
-    this.props.сurrTask;
     let task = {
-      id: this.props.сurrTask.id,
-      name: this.state.taskName,
-      desc: this.state.taskDesc,
-      startDate: this.state.taskStartDate,
-      startTime: this.state.taskStartTime,
-      endDate: this.state.taskEndDate,
-      endTime: this.state.taskEndTime
+      id: props.сurrTask.id,
+      name: taskName,
+      desc: taskDesc,
+      startDate: taskStartDate,
+      startTime: taskStartTime,
+      endDate: taskEndDate,
+      endTime: taskEndTime
     };
 
-    this.props.onChangeTaskList(task);
-  }
+    props.onChangeTaskList(task);
+  };
 
-  componentDidMount() {
-    /*пришел заполненный элемент!!
+  /*пришел заполненный элемент!!
     его обновлять или удалять */
-    if (this.props.сurrTask) {
-      this.editForm = this.fillForm();
+  /*  componentDidMount() {
+ 
+     if (props.сurrTask) {
+      editForm = fillForm();
     }
-  }
+  } */
 
-  componentWillUnmount() {}
+  const fillForm = () => {
+    /*   console.log("заполнить форму!"); */
 
-  fillForm() {
-    console.log("заполнить форму!");
-    this.setState(
-      {
-        taskName: this.props.сurrTask.name,
-        taskDesc: this.props.сurrTask.desc,
-        taskStartTime: this.props.сurrTask.startTime,
-        taskStartDate: this.props.сurrTask.startDate,
-        taskEndTime: this.props.сurrTask.endTime,
-        taskEndDate: this.props.сurrTask.endDate
-      },
-      () => console.log(this.state)
-    );
-  }
+    setTaskname(props.сurrTask.name);
+    setTaskDesc(props.сurrTask.desc);
+    setTaskStartTime(props.сurrTask.startTime);
+    setTaskStartDate(props.сurrTask.startDate);
+    setTaskEndTime(props.сurrTask.endTime);
+    setTaskEndDate(props.сurrTask.endDate);
+  };
 
-  render() {
-    return (
-      <form
-        className="form"
-        onSubmit={
-          this.props.сurrTask ? this.handleChangeTask : this.handleSaveTask
+  /*   fillForm(); */
+
+  return (
+    <form
+      className="form"
+      onSubmit={props.сurrTask ? handleChangeTask : handleSaveTask}
+    >
+      {/*  {props.сurrTask ? fillForm() : null} */}
+      <input
+        required
+        name={nameValue}
+        type="text"
+        placeholder="Название задачи"
+        onChange={handleEditTask}
+        value={/* props.сurrTask ? props.сurrTask.name :  */ taskName}
+      />
+      <DateTimeInput
+        class="start"
+        title={props.startInputTitle}
+        dateName={startDateValue}
+        timeName={startTimeValue}
+        dateValue={
+          /* props.сurrTask ? props.сurrTask.startDate : */ taskStartDate
         }
-      >
+        timeValue={
+          /* props.сurrTask ? props.сurrTask.startTime : */ taskStartTime
+        }
+        onChange={handleEditTask}
+      />
+      <DateTimeInput
+        class="end"
+        title={props.endInputTitle}
+        dateName={endDateValue}
+        timeName={endTimeValue}
+        dateValue={/* props.сurrTask ? props.сurrTask.endDate : */ taskEndDate}
+        timeValue={/* props.сurrTask ? props.сurrTask.endTime : */ taskEndTime}
+        onChange={handleEditTask}
+      />
+      <textarea
+        className="textarea"
+        name={descValue}
+        col="50"
+        row="20"
+        placeholder="Описание задачи"
+        onChange={handleEditTask}
+        value={/* props.сurrTask ? props.сurrTask.desc : */ taskDesc}
+      />
+      <div className="button_wrap">
+        <input className="button" type="submit" value="сохранить" />
         <input
-          required
-          name={this.nameValue}
-          type="text"
-          placeholder="Название задачи"
-          onChange={this.handleEditTask}
-          value={this.state.taskName}
+          className="button"
+          type="button"
+          value="удалить"
+          onClick={() => props.handleDeleteTask(props.сurrTask)}
         />
-
-        <DateTimeInput
-          class="start"
-          title={this.props.startInputTitle}
-          dateName={this.startDateValue}
-          timeName={this.startTimeValue}
-          dateValue={this.state.taskStartDate}
-          /* dateValue="2019-03-03"  */
-          timeValue={this.state.taskStartTime}
-          onChange={this.handleEditTask}
-        />
-
-        <DateTimeInput
-          class="end"
-          title={this.props.endInputTitle}
-          dateName={this.endDateValue}
-          timeName={this.endTimeValue}
-          dateValue={this.state.taskEndDate}
-          timeValue={this.state.taskEndTime}
-          onChange={this.handleEditTask}
-        />
-
-        <textarea
-          className="textarea"
-          name={this.descValue}
-          col="50"
-          row="20"
-          placeholder="Описание задачи"
-          onChange={this.handleEditTask}
-          value={this.state.taskDesc}
-        />
-        <div className="button_wrap">
-          <input className="button" type="submit" value="сохранить" />
-          <input
-            className="button"
-            type="button"
-            value="удалить"
-            onClick={() => this.props.handleDeleteTask(this.props.сurrTask)}
-          />
-        </div>
-      </form>
-    );
-  }
+      </div>
+    </form>
+  );
 }
 
 export default withRouter(TaskCard);
