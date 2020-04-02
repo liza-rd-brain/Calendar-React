@@ -13,6 +13,7 @@ import moment from "moment";
 
 import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
+import UndoRedo from "./test/UndoRedo";
 
 import "./style.css";
 
@@ -252,6 +253,9 @@ class App extends React.Component {
             onChangeTaskList={this.handleChangeTaskList}
             handleDeleteTask={this.handleDeleteTask}
           />
+        </Route>
+        <Route patch="/UndoRedo">
+          <UndoRedo />
         </Route>
       </Switch>
     );

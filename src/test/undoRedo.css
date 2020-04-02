@@ -1,0 +1,17 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+}
+
+input {
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+}
+
+.button_wrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
