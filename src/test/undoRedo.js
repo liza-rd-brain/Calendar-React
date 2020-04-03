@@ -7,21 +7,31 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "add":
       return {
-        text: [...state.text, action.payload],
-        history: [...state.history, state],
-        value: action.payload
+        ...state,
+        text: action.payload,
+        history: {
+          /* ...state.history, */
+          redo: [action.payload],
+          undo: /* state.history.undo.concat(state.text ) */ [
+            ...state.history.undo,
+            state.text
+          ]
+        }
       };
     case "undo":
-      const isEmpty = !state.history.length;
-      if (isEmpty) return { value: "" };
+      const isUndo = state.history.undo.length;
+      if (isUndo <= 0) return { ...state, text: "" };
+
       return {
-        ...state,
-        value: state.history[state.history.length - 1].text.pop()
+        text: state.history.undo.pop(),
+        history: { ...state.history, redo: [...state.history.redo, state.text] }
       };
     case "redo":
+      const isRedo = state.history.redo.length;
+      if (isRedo > 2) return { ...state};
       return {
-        ...state,
-        value: state.text[state.text.length - 1]
+        text: state.history.redo.pop(),
+        history: { ...state.history, undo: [...state.history.undo, state.text] }
       };
     default:
       console.error("Err");
@@ -30,8 +40,7 @@ const reducer = (state, action) => {
 
 const initialState = {
   text: [],
-  history: [],
-  value: []
+  history: { undo: [], redo: [] }
 };
 
 function UndoRedo() {
@@ -41,7 +50,7 @@ function UndoRedo() {
     <div className="main">
       <input
         type="text"
-        value={state.value}
+        value={state.text}
         onChange={() => dispatch({ type: "add", payload: event.target.value })}
       />
       <div className="button_wrap">

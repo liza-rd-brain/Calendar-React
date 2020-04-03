@@ -9,6 +9,7 @@
 input {
   flex-wrap: nowrap;
   margin-bottom: 20px;
+  width: 300px;
 }
 
 .button_wrap {
