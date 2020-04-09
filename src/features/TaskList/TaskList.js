@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import TaskTitle from "./TaskTitle/TaskTitle";
-import List from "./List/List";
+import List from "./List";
 
 export default function (props) {
   return (
