@@ -13,7 +13,6 @@ class DateTimeInput extends React.Component {
             className="dateInput"
             onChange={this.props.onChange}
             value={this.props.dateValue}
-            /*   value="2019-03-03" */
           />
           <input
             required
@@ -22,9 +21,7 @@ class DateTimeInput extends React.Component {
             className="timeInput"
             onChange={this.props.onChange}
             value={this.props.timeValue}
-            /*  value="11:00" */
           />
-          {/*   <input type="datetime-local" /> */}
         </div>
       </div>
     );

@@ -10,28 +10,25 @@ const reducer = (state, action) => {
         ...state,
         text: action.payload,
         history: {
-          /* ...state.history, */
-          redo: [action.payload],
-          undo: /* state.history.undo.concat(state.text ) */ [
-            ...state.history.undo,
-            state.text
-          ]
-        }
+          redo: [],
+          undo: [...state.history.undo, state.text],
+        },
       };
     case "undo":
-      const isUndo = state.history.undo.length;
-      if (isUndo <= 0) return { ...state, text: "" };
-
       return {
-        text: state.history.undo.pop(),
-        history: { ...state.history, redo: [...state.history.redo, state.text] }
+        text: state.history.undo.pop() || "",
+        history: {
+          ...state.history,
+          redo: [...state.history.redo, state.text],
+        },
       };
     case "redo":
-      const isRedo = state.history.redo.length;
-      if (isRedo > 2) return { ...state};
       return {
-        text: state.history.redo.pop(),
-        history: { ...state.history, undo: [...state.history.undo, state.text] }
+        text: state.history.redo.pop() || "",
+        history: {
+          ...state.history,
+          undo: [...state.history.undo, state.text],
+        },
       };
     default:
       console.error("Err");
@@ -40,7 +37,7 @@ const reducer = (state, action) => {
 
 const initialState = {
   text: [],
-  history: { undo: [], redo: [] }
+  history: { undo: [], redo: [] },
 };
 
 function UndoRedo() {

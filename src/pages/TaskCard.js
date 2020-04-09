@@ -18,8 +18,8 @@ function TaskCard(props) {
   const [taskEndTime, setTaskEndTime] = useState("");
   const [taskEndDate, setTaskEndDate] = useState("");
 
-  const handleEditTask = event => {
-    debugger;
+  const handleEditTask = (event) => {
+    /*     debugger; */
     const name = event.target.name;
     const currValue = event.target.value;
 
@@ -47,7 +47,7 @@ function TaskCard(props) {
     }
   };
 
-  const handleSaveTask = event => {
+  const handleSaveTask = (event) => {
     event.preventDefault();
 
     let task = {
@@ -56,7 +56,7 @@ function TaskCard(props) {
       startDate: taskStartDate,
       startTime: taskStartTime,
       endDate: taskEndDate,
-      endTime: taskEndTime
+      endTime: taskEndTime,
     };
 
     props.onChangeTaskList(task, props.action);
@@ -67,12 +67,12 @@ function TaskCard(props) {
 
     let task = {
       id: props.сurrTask.id,
-      name: taskName,
-      desc: taskDesc,
-      startDate: taskStartDate,
-      startTime: taskStartTime,
-      endDate: taskEndDate,
-      endTime: taskEndTime
+      name: taskName || props.сurrTask.name,
+      desc: taskDesc || props.сurrTask.desc,
+      startDate: taskStartDate || props.сurrTask.startDate,
+      startTime: taskStartTime || props.сurrTask.startTime,
+      endDate: taskEndDate || props.сurrTask.endDate,
+      endTime: taskEndTime || props.сurrTask.endTime,
     };
 
     props.onChangeTaskList(task);
