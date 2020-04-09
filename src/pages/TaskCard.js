@@ -19,7 +19,6 @@ function TaskCard(props) {
   const [taskEndDate, setTaskEndDate] = useState("");
 
   const handleEditTask = (event) => {
-    /*     debugger; */
     const name = event.target.name;
     const currValue = event.target.value;
 
