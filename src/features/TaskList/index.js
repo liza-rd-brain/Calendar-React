@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
-import TaskTitle from "./TaskTitle";
 
 export default function (props) {
   
@@ -15,9 +15,14 @@ export default function (props) {
     );
   });
 
+  const titleText =
+    moment(props.selectDay).format("LL") === moment(props.today).format("LL")
+      ? "Сегодня"
+      : `${moment(props.selectDay).format("dddd DD")} `;
+
   return (
     <div className="taskList">
-      <TaskTitle selectDay={props.selectDay} today={props.today} />
+      <div className="taskTitle">{titleText}</div>
       <Link className="link" to={props.hrefNewTask}>
         +
       </Link>
