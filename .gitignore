@@ -2,3 +2,4 @@ node_modules/
 *.ini
 .cache
 dist
+test

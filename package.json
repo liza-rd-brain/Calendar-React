@@ -1,20 +1,50 @@
 {
-  "name": "calendar",
+  "name": "calendar-react",
   "version": "1.0.0",
-  "description": "",
+  "description": "Calendar React",
   "main": "index.js",
+  "dependencies": {
+    "create-react-app": "^3.1.2",
+    "create-react-class": "^15.6.3",
+    "moment": "^2.24.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "autoprefixer": "^9.7.6",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.2",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
   "scripts": {
-    "start": "parcel src/index.html"
+    "dev": " webpack",
+    "start": "webpack-dev-server",
+    "build": "webpack --env production",
+    "serv": "static build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinakovaLisa/Calendar-React.git"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "moment": "^2.18.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.1.0"
+  "bugs": {
+    "url": "https://github.com/MinakovaLisa/Calendar-React/issues"
   },
-  "devDependencies": {
-    "parcel-bundler": "^1.12.4"
-  }
+  "homepage": "https://github.com/MinakovaLisa/Calendar-React#readme"
 }
