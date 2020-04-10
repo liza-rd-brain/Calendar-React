@@ -6,7 +6,7 @@ import {
   Link,
   Switch,
   withRouter,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import moment from "moment";
@@ -58,7 +58,7 @@ class App extends React.Component {
       ],
       currtaskList: [],
       currTask: { name: 1 },
-      time: moment().format("LTS")
+      time: moment().format("LTS"),
     };
 
     this.hrefNewTask = "newTask";
@@ -83,7 +83,7 @@ class App extends React.Component {
   hahdleChangeSelectDay(selectDay) {
     this.setState(
       {
-        selectDay
+        selectDay,
       },
       () => this.selectCurrentTask(),
       console.log(this.state)
@@ -100,7 +100,7 @@ class App extends React.Component {
       let id =
         Math.max.apply(
           null,
-          this.state.taskList.map(item => item.id)
+          this.state.taskList.map((item) => item.id)
         ) + 1;
 
       newTask.id = id;
@@ -109,7 +109,7 @@ class App extends React.Component {
     }
 
     this.setState(
-      state => {
+      (state) => {
         return { taskList: this.state.taskList.concat(newTask) };
       },
       () => {
@@ -123,11 +123,11 @@ class App extends React.Component {
     /* находим по id элемент и перезаписываем */
 
     let changeTaskindex = this.state.taskList.findIndex(
-      item => item.id == newTask.id
+      (item) => item.id == newTask.id
     );
 
     this.setState(
-      state => {
+      (state) => {
         return {
           taskList: state.taskList.map((item, i) => {
             if (i === changeTaskindex) {
@@ -135,7 +135,7 @@ class App extends React.Component {
             } else {
               return item;
             }
-          })
+          }),
         };
       },
 
@@ -151,11 +151,11 @@ class App extends React.Component {
     /*пришла таска
     ищем ее id и удаляем!*/
     this.setState(
-      state => {
+      (state) => {
         return {
           taskList: state.taskList.filter((item, i) => {
             return item.id !== task.id;
-          })
+          }),
         };
       },
 
@@ -183,7 +183,7 @@ class App extends React.Component {
 
   updateSystemTime() {
     this.setState({
-      time: moment().format("LTS")
+      time: moment().format("LTS"),
     });
   }
 
@@ -193,7 +193,7 @@ class App extends React.Component {
     let result = this.state.taskList.filter(
       //находим item для которого выбранная дата лежит
       //между начальной и конечной датой задачи
-      item =>
+      (item) =>
         moment(selectDate).isBetween(item.startDate, item.endDate, null, "[]")
     );
 
@@ -210,7 +210,7 @@ class App extends React.Component {
       }
     });
     this.setState({
-      currtaskList: result
+      currtaskList: result,
     });
     console.log(result);
     console.log(moment(this.state.selectDay).format("YYYY-MM-DD"));
@@ -218,7 +218,7 @@ class App extends React.Component {
 
   onTaskClick(value) {
     this.setState(
-      state => {
+      (state) => {
         return { currTask: value };
       },
       () => this.props.history.push(`/tasks/${value.name}`)
