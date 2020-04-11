@@ -35,7 +35,7 @@ function getListAllMonth(props) {
     listCurrMonth.push({
       number: dayNumber,
       date: variableDate,
-      class: className
+      class: className,
     });
     dayNumber++;
     variableDate = new Date(year, month, (dayByOrder += 1));
@@ -69,7 +69,7 @@ function getListAllMonth(props) {
     listPrevMonth.push({
       number: dayNumberPrevMonth,
       date: variableDatePrev,
-      class: "another day"
+      class: "another day",
     });
     dayNumberPrevMonth++;
     variableDatePrev = new Date(year, month - 1, (dayPrev += 1));
@@ -88,7 +88,7 @@ function getListAllMonth(props) {
     listNextMonth.push({
       number: dayNumberNextMonth,
       date: variableDateNext,
-      class: "another day"
+      class: "another day",
     });
     dayNumberNextMonth++;
     variableDateNext = new Date(year, month + 1, (dayNext += 1));
@@ -102,12 +102,19 @@ export default class GridDays extends React.Component {
     const listAllMonth = getListAllMonth(this.props);
     return (
       <div className="grid">
-        {listAllMonth.map(item => (
+        {listAllMonth.map((item) => (
           <div
             key={item.number + item.class}
             item={item.number}
             className={item.class}
-            onClick={() => this.props.onItemClick(item.date)}
+            onClick={() =>
+              this.props.onItemClick(
+                item.date /* {
+                type: "changeSelectDay",
+                payload: item.date,
+              } */
+              )
+            }
           >
             {item.number}
           </div>
