@@ -8,7 +8,6 @@ import moment from "moment";
 moment.locale("ru");
 
 export default function Main({
-  today,
   state,
   hahdleChangeSelectDay,
   hrefNewTask,
@@ -16,7 +15,7 @@ export default function Main({
 }) {
   return (
     <>
-      <Timer today={today} time={state.time} />
+      <Timer today={state.today} time={state.time} />
       <Calendar
         today={state.today}
         onChangeSelectDay={hahdleChangeSelectDay}

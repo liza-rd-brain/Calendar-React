@@ -108,12 +108,10 @@ export default class GridDays extends React.Component {
             item={item.number}
             className={item.class}
             onClick={() =>
-              this.props.onItemClick(
-                item.date /* {
+              this.props.onItemClick({
                 type: "changeSelectDay",
                 payload: item.date,
-              } */
-              )
+              })
             }
           >
             {item.number}

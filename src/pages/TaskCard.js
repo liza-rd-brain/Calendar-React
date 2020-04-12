@@ -74,6 +74,7 @@ function TaskCard(props) {
       endTime: taskEndTime || props.сurrTask.endTime,
     };
 
+    debugger;
     props.onChangeTaskList(task);
   };
 
