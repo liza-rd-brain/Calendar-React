@@ -20,38 +20,35 @@ import "./style.css";
 moment.locale("ru");
 
 const initialState = {
-  //день от которого начинаем рисовать календарь
   today: new Date(),
   selectDay: new Date(),
   taskList: [
-    /* 
-      {
-        id: 1,
-        name: "12:00",
-        startDate: "2020-02-28",
-        startTime: "12:00",
-        endDate: moment(new Date()).format("YYYY-MM-DD"),
-        endTime: "",
-        desc: "12:00"
-      },
-      {
-        id: 2,
-        name: "14:00",
-        startDate: "2020-02-28",
-        startTime: "14:00",
-        endDate: moment(new Date()).format("YYYY-MM-DD"),
-        endTime: ""
-      },
-      {
-        id: 3,
-        name: "09:00",
-        startDate: "2020-02-28",
-        startTime: "09:00",
-        endDate: moment(new Date()).format("YYYY-MM-DD"),
-        endTime: ""
-      } */
+    /* {
+      id: 1,
+      name: "12:00",
+      startDate: "2020-02-28",
+      startTime: "12:00",
+      endDate: moment(new Date()).format("YYYY-MM-DD"),
+      endTime: "",
+      desc: "12:00",
+    },
+    {
+      id: 2,
+      name: "14:00",
+      startDate: "2020-02-28",
+      startTime: "14:00",
+      endDate: moment(new Date()).format("YYYY-MM-DD"),
+      endTime: "",
+    },
+    {
+      id: 3,
+      name: "09:00",
+      startDate: "2020-02-28",
+      startTime: "09:00",
+      endDate: moment(new Date()).format("YYYY-MM-DD"),
+      endTime: "",
+    }, */
   ],
-  currtaskList: [],
   currTask: { name: 1 },
   time: moment().format("LTS"),
 };
@@ -61,22 +58,46 @@ function App(props) {
     /*  debugger; */
     switch (action.type) {
       case "changeSelectDay":
+        /*  selectCurrentTask(); */
         return {
           ...state,
           selectDay: action.payload,
         };
 
       case "addNewTask":
+        /*  selectCurrentTask(); */
         return {
           ...state,
-          taskList: [
-            ...state.taskList.concat(action.payload),
-          ] /* taskList.concat(action.payload), */,
+          taskList: [...state.taskList.concat(action.payload)],
         };
       case "setCurrTaskList":
         return {
           ...state,
           currtaskList: action.payload,
+        };
+      case "setCurrTask":
+        return {
+          ...state,
+          currTask: action.payload,
+        };
+      case "changeTask":
+        return {
+          ...state,
+          taskList: state.taskList.map((item, i) => {
+            if (i === action.index) {
+              return action.payload;
+            } else {
+              return item;
+            }
+          }),
+        };
+      case "deleteTask":
+        debugger;
+        return {
+          ...state,
+          taskList: state.taskList.filter((item, i) => {
+            return item.id !== action.payload.id;
+          }),
         };
       case "setDate":
         return {
@@ -94,9 +115,15 @@ function App(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const updateID = setInterval(() => updateSystemDate(), 1000);
-    const updateTimeID = setInterval(() => updateSystemTime(), 1000);
-   /*  selectCurrentTask(); */
+    const updateID = setInterval(
+      () => dispatch({ type: "setDate", payload: new Date() }),
+      1000
+    );
+    const updateTimeID = setInterval(
+      () => dispatch({ type: "setTime", payload: moment().format("LTS") }),
+      1000
+    );
+
     return () => {
       clearInterval(updateTimeID);
       clearInterval(updateID);
@@ -114,14 +141,14 @@ function App(props) {
   const handleAddNewTask = (newTask) => {
     debugger;
     /* находим максимальное id и увеличиваем на 1 */
-    if (initialState.taskList.length) {
-      let id =
+    if (state.taskList.length) {
+      let idMax =
         Math.max.apply(
           null,
           initialState.taskList.map((item) => item.id)
         ) + 1;
 
-      newTask.id = id;
+      newTask.id = idMax;
     } else {
       newTask.id = 1;
     }
@@ -132,46 +159,30 @@ function App(props) {
     });
 
     handleToCalendar();
-    /*   setState(
-      (state) => {
-        return { taskList: state.taskList.concat(newTask) };
-      },
-      () => {
-        selectCurrentTask(), console.log(state.taskList);
-        handleToCalendar();
-      }
-    ); */
   };
 
   const handleChangeTaskList = (newTask) => {
     /* находим по id элемент и перезаписываем */
 
-    let changeTaskindex = initialState.taskList.findIndex(
+    let changeTaskindex = state.taskList.findIndex(
       (item) => item.id == newTask.id
     );
 
-    /*   setState(
-      (state) => {
-        return {
-          taskList: state.taskList.map((item, i) => {
-            if (i === changeTaskindex) {
-              return newTask;
-            } else {
-              return item;
-            }
-          }),
-        };
-      },
-
-      () => {
-        selectCurrentTask();
-        console.log(state.taskList);
-        handleToCalendar();
-      }
-    ); */
+    dispatch({
+      type: "changeTask",
+      payload: newTask,
+      index: changeTaskindex,
+    });
+    handleToCalendar();
   };
 
   const handleDeleteTask = (task) => {
+    dispatch({
+      type: "deleteTask",
+      payload: task,
+    });
+
+    handleToCalendar();
     /*пришла таска
       ищем ее id и удаляем!*/
     /*   setState(
@@ -191,34 +202,9 @@ function App(props) {
     ); */
   };
 
-  /*жизненный цикл в классовом компоненте?!??! */
-  /* componentDidMount() {
-   updateID = setInterval(() =>updateSystemDate(), 1000);
-   updateTimeID = setInterval(() =>updateSystemTime(), 1000);
-   selectCurrentTask();
-  } */
-  /* componentWillUnmount() {
-    clearInterval(updateID);
-    clearInterval(updateTimeID);
-  }*/
-
-  const updateSystemDate = () => {
-    /* setState({ today: new Date() }); */
-    dispatch({ type: "setDate", payload: new Date() });
-  };
-
-  const updateSystemTime = () => {
-    /*  setState({
-      time: moment().format("LTS"),
-    }); */
-    dispatch({ type: "setTime", payload: moment().format("LTS") });
-  };
-
-  /*выдача сегодняшней задачи*/
   const selectCurrentTask = () => {
-    debugger;
-    let selectDate = moment(initialState.selectDay).format("YYYY-MM-DD");
-    let result = initialState.taskList.filter(
+    let selectDate = moment(state.selectDay).format("YYYY-MM-DD");
+    let result = state.taskList.filter(
       //находим item для которого выбранная дата лежит
       //между начальной и конечной датой задачи
       (item) =>
@@ -237,21 +223,18 @@ function App(props) {
         return +1;
       }
     });
-    dispatch({ type: "setCurrTaskList", payload: result });
-    /*  setState({
-      currtaskList: result,
-    }); */
-    /*     console.log(result);
-    console.log(moment(state.selectDay).format("YYYY-MM-DD")); */
+
+    return result;
   };
 
   const onTaskClick = (value) => {
-    /*  setState(
-      (state) => {
-        return { currTask: value };
-      },
-      () => props.history.push(`/tasks/${value.name}`)
-    );*/
+    dispatch({
+      type: "setCurrTask",
+      payload: value,
+    });
+    debugger;
+    props.history.push(`/tasks/${value.name}`);
+    return value;
   };
 
   return (
@@ -262,6 +245,7 @@ function App(props) {
           hahdleChangeSelectDay={dispatch}
           hrefNewTask={hrefNewTask}
           onTaskClick={onTaskClick}
+          currentTaskList={selectCurrentTask()}
         />
       </Route>
       <Route path="/newTask">

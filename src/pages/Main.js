@@ -12,6 +12,7 @@ export default function Main({
   hahdleChangeSelectDay,
   hrefNewTask,
   onTaskClick,
+  currentTaskList,
 }) {
   return (
     <>
@@ -26,7 +27,7 @@ export default function Main({
         today={state.today}
         selectDay={state.selectDay}
         hrefNewTask={hrefNewTask}
-        taskList={state.currtaskList}
+        taskList={currentTaskList}
         onTaskClick={onTaskClick}
       />
     </>
