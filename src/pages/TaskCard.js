@@ -63,6 +63,7 @@ function TaskCard(props) {
       type: "addNewTask",
       payload: task,
     });
+    props.handleToCalendar();
   };
 
   const handleChangeTask = () => {
@@ -78,14 +79,21 @@ function TaskCard(props) {
       endTime: taskEndTime || props.сurrTask.endTime,
     };
 
-    debugger;
     props.onChangeTaskList({
       type: "changeTask",
       payload: task,
     });
+    props.handleToCalendar();
   };
 
- 
+  const handleDeleteTask = () => {
+    props.handleDeleteTask({
+      type: "deleteTask",
+      payload: props.сurrTask,
+    });
+    props.handleToCalendar();
+  };
+
   return (
     <form
       className="form"
@@ -144,12 +152,7 @@ function TaskCard(props) {
           className="button"
           type="button"
           value="удалить"
-          onClick={() =>
-            props.handleDeleteTask({
-              type: "deleteTask",
-              payload: props.сurrTask,
-            })
-          }
+          onClick={handleDeleteTask}
         />
       </div>
     </form>

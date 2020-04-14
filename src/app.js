@@ -65,17 +65,12 @@ function App(props) {
   const reducer = (state, action) => {
     switch (action.type) {
       case "changeSelectDay":
+        debugger;
         return {
           ...state,
           selectDay: action.payload,
         };
 
-      case "addNewTask":
-        handleToCalendar();
-        return {
-          ...state,
-          taskList: [...state.taskList.concat(action.payload)],
-        };
       case "setCurrTaskList":
         return {
           ...state,
@@ -86,8 +81,12 @@ function App(props) {
           ...state,
           currTask: action.payload,
         };
+      case "addNewTask":
+        return {
+          ...state,
+          taskList: [...state.taskList.concat(action.payload)],
+        };
       case "changeTask":
-        handleToCalendar();
         debugger;
         return {
           ...state,
@@ -100,7 +99,6 @@ function App(props) {
           }),
         };
       case "deleteTask":
-        handleToCalendar();
         debugger;
         return {
           ...state,
@@ -153,7 +151,7 @@ function App(props) {
   };
 
   const selectCurrentTask = () => {
-    debugger;
+    /*  debugger; */
     let selectDate = moment(state.selectDay).format("YYYY-MM-DD");
     let result = state.taskList.filter(
       //находим item для которого выбранная дата лежит
@@ -179,6 +177,7 @@ function App(props) {
   };
 
   const onTaskClick = (value) => {
+    debugger;
     dispatch({
       type: "setCurrTask",
       payload: value,
@@ -206,6 +205,7 @@ function App(props) {
           onChangeTaskList={dispatch}
           handleDeleteTask={dispatch}
           newTaskId={newTaskId()}
+          handleToCalendar={handleToCalendar}
         />
       </Route>
       <Route path="/tasks/:name">
@@ -215,6 +215,7 @@ function App(props) {
           сurrTask={state.currTask}
           onChangeTaskList={dispatch}
           handleDeleteTask={dispatch}
+          handleToCalendar={handleToCalendar}
         />
       </Route>
       <Route patch="/UndoRedo">
