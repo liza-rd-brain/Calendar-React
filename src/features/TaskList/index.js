@@ -2,13 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-
 export default function (props) {
-  
   const getList = props.taskList.map((item) => {
     return (
       <div key={item.id} className="link">
-        <p className="link" onClick={() => props.onTaskClick(item)}>
+        <p className="link" onClick={() => props.onTaskClick(item.id)}>
           {item.name}
         </p>
       </div>

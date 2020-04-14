@@ -21,7 +21,7 @@ export default function Main({
         today={state.today}
         onChangeSelectDay={hahdleChangeSelectDay}
         selectDay={state.selectDay}
-        hrefNewTask={hrefNewTask}
+      
       ></Calendar>
       <TaskList
         today={state.today}

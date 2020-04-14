@@ -6,7 +6,6 @@ import {
   Link,
   Switch,
   withRouter,
-  Redirect,
 } from "react-router-dom";
 
 import moment from "moment";
@@ -53,15 +52,13 @@ const initialState = {
       endTime: "",
     },
   ],
-  currTask: { name: 1 },
+  currTaskId: {
+    /* name: 1 */
+  },
   time: moment().format("LTS"),
 };
 
 function App(props) {
-  const handleToCalendar = () => {
-    props.history.push("/");
-  };
-
   const reducer = (state, action) => {
     switch (action.type) {
       case "changeSelectDay":
@@ -76,10 +73,11 @@ function App(props) {
           ...state,
           currtaskList: action.payload,
         };
-      case "setCurrTask":
+      case "setCurrTaskId":
+        debugger;
         return {
           ...state,
-          currTask: action.payload,
+          currTaskId: action.payload,
         };
       case "addNewTask":
         return {
@@ -176,15 +174,27 @@ function App(props) {
     return result;
   };
 
-  const onTaskClick = (value) => {
-    debugger;
+  const onTaskClick = (id) => {
     dispatch({
-      type: "setCurrTask",
-      payload: value,
+      type: "setCurrTaskId",
+      payload: id,
     });
-    debugger;
-    props.history.push(`/tasks/${value.name}`);
-    return value;
+    handleToTask(id);
+  };
+
+  const getCurrTaskId = () => {
+    let task = state.taskList.find((item) => {
+      return item.id === state.currTaskId || "";
+    });
+    return task;
+  };
+
+  const handleToCalendar = () => {
+    props.history.push("/");
+  };
+
+  const handleToTask = (value) => {
+    props.history.push(`/tasks/${value}`);
   };
 
   return (
@@ -212,10 +222,11 @@ function App(props) {
         <TaskCard
           startInputTitle={startInputTitle}
           endInputTitle={endInputTitle}
-          сurrTask={state.currTask}
+          сurrTask={getCurrTaskId()}
           onChangeTaskList={dispatch}
           handleDeleteTask={dispatch}
           handleToCalendar={handleToCalendar}
+          /* handleToTask={handleToTask} */
         />
       </Route>
       <Route patch="/UndoRedo">

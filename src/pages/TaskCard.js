@@ -94,6 +94,8 @@ function TaskCard(props) {
     props.handleToCalendar();
   };
 
+  /* props.сurrTask ? props.handleToTask(props.сurrTask.value) : ""; */
+
   return (
     <form
       className="form"
