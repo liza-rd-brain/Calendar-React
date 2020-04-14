@@ -19,11 +19,15 @@ import "./style.css";
 
 moment.locale("ru");
 
+const hrefNewTask = "newTask";
+const startInputTitle = "Дата начала";
+const endInputTitle = "Дата окончания";
+
 const initialState = {
   today: new Date(),
   selectDay: new Date(),
   taskList: [
-    /* {
+    {
       id: 1,
       name: "12:00",
       startDate: "2020-02-28",
@@ -47,25 +51,27 @@ const initialState = {
       startTime: "09:00",
       endDate: moment(new Date()).format("YYYY-MM-DD"),
       endTime: "",
-    }, */
+    },
   ],
   currTask: { name: 1 },
   time: moment().format("LTS"),
 };
 
 function App(props) {
+  const handleToCalendar = () => {
+    props.history.push("/");
+  };
+
   const reducer = (state, action) => {
-    /*  debugger; */
     switch (action.type) {
       case "changeSelectDay":
-        /*  selectCurrentTask(); */
         return {
           ...state,
           selectDay: action.payload,
         };
 
       case "addNewTask":
-        /*  selectCurrentTask(); */
+        handleToCalendar();
         return {
           ...state,
           taskList: [...state.taskList.concat(action.payload)],
@@ -81,10 +87,12 @@ function App(props) {
           currTask: action.payload,
         };
       case "changeTask":
+        handleToCalendar();
+        debugger;
         return {
           ...state,
           taskList: state.taskList.map((item, i) => {
-            if (i === action.index) {
+            if (item.id === action.payload.id) {
               return action.payload;
             } else {
               return item;
@@ -92,6 +100,7 @@ function App(props) {
           }),
         };
       case "deleteTask":
+        handleToCalendar();
         debugger;
         return {
           ...state,
@@ -128,81 +137,23 @@ function App(props) {
       clearInterval(updateTimeID);
       clearInterval(updateID);
     };
-  }, [state.currtaskList]);
+  });
 
-  const hrefNewTask = "newTask";
-  const startInputTitle = "Дата начала";
-  const endInputTitle = "Дата окончания";
-
-  const handleToCalendar = () => {
-    props.history.push("/");
-  };
-
-  const handleAddNewTask = (newTask) => {
-    debugger;
-    /* находим максимальное id и увеличиваем на 1 */
+  const newTaskId = () => {
     if (state.taskList.length) {
       let idMax =
         Math.max.apply(
           null,
-          initialState.taskList.map((item) => item.id)
+          state.taskList.map((item) => item.id)
         ) + 1;
-
-      newTask.id = idMax;
+      return idMax;
     } else {
-      newTask.id = 1;
+      return 1;
     }
-
-    dispatch({
-      type: "addNewTask",
-      payload: newTask,
-    });
-
-    handleToCalendar();
-  };
-
-  const handleChangeTaskList = (newTask) => {
-    /* находим по id элемент и перезаписываем */
-
-    let changeTaskindex = state.taskList.findIndex(
-      (item) => item.id == newTask.id
-    );
-
-    dispatch({
-      type: "changeTask",
-      payload: newTask,
-      index: changeTaskindex,
-    });
-    handleToCalendar();
-  };
-
-  const handleDeleteTask = (task) => {
-    dispatch({
-      type: "deleteTask",
-      payload: task,
-    });
-
-    handleToCalendar();
-    /*пришла таска
-      ищем ее id и удаляем!*/
-    /*   setState(
-      (state) => {
-        return {
-          taskList: state.taskList.filter((item, i) => {
-            return item.id !== task.id;
-          }),
-        };
-      },
-
-      () => {
-        selectCurrentTask();
-        console.log(state.taskList);
-        handleToCalendar();
-      }
-    ); */
   };
 
   const selectCurrentTask = () => {
+    debugger;
     let selectDate = moment(state.selectDay).format("YYYY-MM-DD");
     let result = state.taskList.filter(
       //находим item для которого выбранная дата лежит
@@ -252,8 +203,9 @@ function App(props) {
         <TaskCard
           startInputTitle={startInputTitle}
           endInputTitle={endInputTitle}
-          onChangeTaskList={handleAddNewTask}
-          handleDeleteTask={handleDeleteTask}
+          onChangeTaskList={dispatch}
+          handleDeleteTask={dispatch}
+          newTaskId={newTaskId()}
         />
       </Route>
       <Route path="/tasks/:name">
@@ -261,8 +213,8 @@ function App(props) {
           startInputTitle={startInputTitle}
           endInputTitle={endInputTitle}
           сurrTask={state.currTask}
-          onChangeTaskList={handleChangeTaskList}
-          handleDeleteTask={handleDeleteTask}
+          onChangeTaskList={dispatch}
+          handleDeleteTask={dispatch}
         />
       </Route>
       <Route patch="/UndoRedo">
