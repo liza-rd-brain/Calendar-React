@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import ReactDOM from "react-dom";
+import styled, { ThemeProvider } from "styled-components";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,9 +15,23 @@ import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
 import UndoRedo from "./test/UndoRedo";
 
+import * as commonStyle from "./theme";
 import "./style.css";
 
 moment.locale("ru");
+
+const Container = styled.div`
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: 0px auto;
+  background-color: ${(props) => props.theme.commonStyle.background};
+  /*как тут передать пропс?!*/
+  & > * {
+    border: 1px solid;
+    border-color: ${(props) => props.theme.commonStyle.gray};
+  }
+`;
 
 const hrefNewTask = "newTask";
 const startInputTitle = "Дата начала";
@@ -198,41 +213,45 @@ function App(props) {
   };
 
   return (
-    <Switch>
-      <Route path="/" exact>
-        <CalendarPage
-          state={state}
-          hahdleChangeSelectDay={dispatch}
-          hrefNewTask={hrefNewTask}
-          onTaskClick={onTaskClick}
-          currentTaskList={selectCurrentTask()}
-        />
-      </Route>
-      <Route path="/newTask">
-        <TaskCard
-          startInputTitle={startInputTitle}
-          endInputTitle={endInputTitle}
-          onChangeTaskList={dispatch}
-          handleDeleteTask={dispatch}
-          newTaskId={newTaskId()}
-          handleToCalendar={handleToCalendar}
-        />
-      </Route>
-      <Route path="/tasks/:name">
-        <TaskCard
-          startInputTitle={startInputTitle}
-          endInputTitle={endInputTitle}
-          сurrTask={getCurrTaskId()}
-          onChangeTaskList={dispatch}
-          handleDeleteTask={dispatch}
-          handleToCalendar={handleToCalendar}
-          /* handleToTask={handleToTask} */
-        />
-      </Route>
-      <Route patch="/UndoRedo">
-        <UndoRedo />
-      </Route>
-    </Switch>
+    <ThemeProvider theme={commonStyle}>
+      <Container>
+        <Switch>
+          <Route path="/" exact>
+            <CalendarPage
+              state={state}
+              hahdleChangeSelectDay={dispatch}
+              hrefNewTask={hrefNewTask}
+              onTaskClick={onTaskClick}
+              currentTaskList={selectCurrentTask()}
+            />
+          </Route>
+          <Route path="/newTask">
+            <TaskCard
+              startInputTitle={startInputTitle}
+              endInputTitle={endInputTitle}
+              onChangeTaskList={dispatch}
+              handleDeleteTask={dispatch}
+              newTaskId={newTaskId()}
+              handleToCalendar={handleToCalendar}
+            />
+          </Route>
+          <Route path="/tasks/:name">
+            <TaskCard
+              startInputTitle={startInputTitle}
+              endInputTitle={endInputTitle}
+              сurrTask={getCurrTaskId()}
+              onChangeTaskList={dispatch}
+              handleDeleteTask={dispatch}
+              handleToCalendar={handleToCalendar}
+              /* handleToTask={handleToTask} */
+            />
+          </Route>
+          <Route patch="/UndoRedo">
+            <UndoRedo />
+          </Route>
+        </Switch>
+      </Container>
+    </ThemeProvider>
   );
 }
 

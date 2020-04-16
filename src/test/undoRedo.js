@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 
 import "./undoRedo.css";
+import styled, { css } from "styled-components";
 
 const reducer = (state, action) => {
   debugger;
@@ -40,6 +41,27 @@ const initialState = {
   history: { undo: [], redo: [] },
 };
 
+const Container = styled.div`
+  text-align: center;
+`;
+
+const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid palevioletred;
+  color: palevioletred;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+  margin-top: 20px;
+
+  ${(props) =>
+    props.primary &&
+    css`
+      background: palevioletred;
+      color: white;
+    `};
+`;
+
 function UndoRedo() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -54,6 +76,10 @@ function UndoRedo() {
         <button onClick={() => dispatch({ type: "undo" })}>Undo</button>
         <button onClick={() => dispatch({ type: "redo" })}>Redo</button>
       </div>
+      <Container>
+        <Button>button</Button>
+        <Button primary>primary button</Button>
+      </Container>
     </div>
   );
 }

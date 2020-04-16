@@ -4,12 +4,14 @@
   "description": "Calendar React",
   "main": "index.js",
   "dependencies": {
-    "create-react-app": "^3.1.2",
+    "create-react-app": "^3.4.1",
     "create-react-class": "^15.6.3",
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.0",
+    "styled-components": "^5.1.0",
+    "styled-theming": "^2.2.0",
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
@@ -22,9 +24,9 @@
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.2.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^7.3.1",
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.42.1",

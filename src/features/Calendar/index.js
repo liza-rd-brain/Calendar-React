@@ -3,9 +3,9 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  withRouter
+  withRouter,
 } from "react-router-dom";
-
+import styled, { ThemeProvider } from "styled-components";
 import moment from "moment";
 moment.locale("ru");
 moment().format("ll");
@@ -18,6 +18,11 @@ import YearSelection from "./GridYears";
 const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
 const yearInc = 15;
 /* let startYear = 2010; */
+
+const CalendarWrap = styled.div`
+  width: 100%;
+  
+`;
 
 function Calendar(props) {
   const [date, setDate] = useState("");
@@ -56,26 +61,26 @@ function Calendar(props) {
     }
   };
 
-  const onChangeDate = date => {
+  const onChangeDate = (date) => {
     setDate(date);
   };
 
-  const onChangeStartYear = date => {
+  const onChangeStartYear = (date) => {
     let year = date.getFullYear();
     if (year < startYear) {
       /* startYear = startYear - yearInc - 1; */
-      setStartYear(startYear => startYear - yearInc - 1);
+      setStartYear((startYear) => startYear - yearInc - 1);
       /*
        * todo: почему else if?
        */
     } else if (year > startYear + yearInc) {
       /*  startYear = startYear + yearInc + 1; */
-      setStartYear(startYear => startYear + yearInc + 1);
+      setStartYear((startYear) => startYear + yearInc + 1);
     }
     setDate(date);
   };
 
-  const changeRouteToCalender = month => {
+  const changeRouteToCalender = (month) => {
     /*проще принять месяц*/
 
     let currDay = date || props.today;
@@ -84,7 +89,7 @@ function Calendar(props) {
     setMode("day");
   };
 
-  const changeRouteToMonth = year => {
+  const changeRouteToMonth = (year) => {
     if (year) {
       let currDay = date || props.today;
       let date = new Date(year, currDay.getMonth());
@@ -97,7 +102,7 @@ function Calendar(props) {
     setMode("year");
   };
 
-  const createNavTitle = name => {
+  const createNavTitle = (name) => {
     const currDate = date || props.today;
     const monthName = moment(currDate).format("MMMM");
     const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
@@ -120,7 +125,7 @@ function Calendar(props) {
   switch (mode) {
     case "day":
       return (
-        <div className="calendar">
+        <CalendarWrap>
           <Nav
             onArrowClick={handleArrowClick}
             onTitleClick={() => changeRouteToMonth()}
@@ -133,12 +138,12 @@ function Calendar(props) {
             date={date}
             onItemClick={props.onChangeSelectDay}
           />
-        </div>
+        </CalendarWrap>
       );
 
     case "month":
       return (
-        <div className="calendar">
+        <CalendarWrap>
           <Nav
             onArrowClick={handleArrowClick}
             onTitleClick={changeRouteToYear}
@@ -150,12 +155,12 @@ function Calendar(props) {
             date={date}
             onItemClick={changeRouteToCalender}
           />
-        </div>
+        </CalendarWrap>
       );
 
     case "year":
       return (
-        <div className="calendar">
+        <CalendarWrap>
           <Nav
             onArrowClick={handleArrowClick}
             title={createNavTitle("year")}
@@ -167,7 +172,7 @@ function Calendar(props) {
             startYear={startYear}
             onItemClick={changeRouteToMonth}
           />
-        </div>
+        </CalendarWrap>
       );
 
     default:
@@ -178,7 +183,7 @@ function Calendar(props) {
 function NameDays() {
   return (
     <div className="nameDaysList">
-      {NAME_DAYS.map(name => {
+      {NAME_DAYS.map((name) => {
         return (
           <div key={name} className="nameDay">
             {name}
