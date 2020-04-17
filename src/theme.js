@@ -4,7 +4,8 @@ export const commonStyle = {
   navy: "rgb(0,120,215)",
   white: "rgb(244,244,244)",
   gray: "rgb(68,69,67)",
-  lightgray: "rgb(137,137,137)",
+  lightgray: "rgb(202,202,202)",
+  width: "400px"
 };
 
 /* export const blue = "rgb(134, 189, 191)"; */

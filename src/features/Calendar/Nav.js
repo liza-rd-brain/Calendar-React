@@ -8,6 +8,7 @@ const NavWrap = styled.div`
   /*  background-color: #fff; */
   display: flex;
   padding: 10px;
+  box-sizing: border-box;
 `;
 const NavTitle = styled.div`
   width: 80%;
@@ -21,38 +22,41 @@ const NavTitle = styled.div`
 const ArrowWrap = styled.div`
   width: 20%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  & :nth-child(1) {
-    transform: rotate(270deg);
+  & :first-child {
+    transform: rotate(180deg);
+    top: 4px;
   }
 `;
 const Arrow = styled.div`
-  width: 50%;
+  /*  width: 50%; */
   position: relative;
   cursor: pointer;
-  color: ${(props) => props.theme.commonStyle.lightgray};
+  /* color: ${(props) => props.theme.commonStyle.lightgray}; */
+  padding: 10px;
   &:hover {
-    color: ${(props) => props.theme.commonStyle.white};
+    &:after {border-color: ${(props) => props.theme.commonStyle.white};}
+ 
   }
   &:before {
     content: "";
-    border: 4px solid white;
+    border: 6px solid;
+    border-color: ${(props) => props.theme.commonStyle.background};
     position: absolute;
     top: 1px;
-    right: -15px;
-    pointer-events: none;
     transform: rotate(45deg);
-    z-index: 2;
+    z-index: 2;  
+
   }
   &:after {
     content: "";
-    border: 4px solid rgba(31, 32, 65, 0.5);
+    border: 6px solid rgba(31, 32, 65, 0.5);
+    border-color: ${(props) => props.theme.commonStyle.lightgray};
     position: absolute;
-    top: 4px;
-    right: -15px;
-    pointer-events: none;
+    top: 3px;
     transform: rotate(45deg);
+
   }
 `;
 

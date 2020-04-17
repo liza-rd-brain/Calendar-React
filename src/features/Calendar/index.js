@@ -21,7 +21,21 @@ const yearInc = 15;
 
 const CalendarWrap = styled.div`
   width: 100%;
-  
+`;
+
+const NameDaysList = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+`;
+
+const NameDayWap = styled.div`
+  width: 15%;
+  text-align: center;
+  color: ${(props) => props.theme.commonStyle.lightgray};
 `;
 
 function Calendar(props) {
@@ -182,15 +196,11 @@ function Calendar(props) {
 
 function NameDays() {
   return (
-    <div className="nameDaysList">
+    <NameDaysList>
       {NAME_DAYS.map((name) => {
-        return (
-          <div key={name} className="nameDay">
-            {name}
-          </div>
-        );
+        return <NameDayWap key={name}>{name}</NameDayWap>;
       })}
-    </div>
+    </NameDaysList>
   );
 }
 
