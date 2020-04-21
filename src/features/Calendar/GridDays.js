@@ -11,13 +11,64 @@ const Grid = styled.div`
 
 const Day = styled.div`
   flex-grow: 1;
-
   text-align: center;
-
   padding: 10px 0;
+  width: 42px;
+  margin: 0 5px;
+  position: relative;
+  z-index: 2;
   cursor: pointer;
-  color: lightgrey;
-  width: 53px;
+  /* color: lightgrey; */
+  color: ${(props) => {
+    /*  debugger; */
+    switch (props.type) {
+      case "dayAnotherMonth":
+        return props.theme.commonStyle.gray;
+      case "dayCurrentMonth":
+        return props.theme.commonStyle.white;
+      default:
+        return props.theme.commonStyle.white;
+    }
+  }};
+  background-color: ${(props) => {
+    /*  debugger; */
+    switch (props.type) {
+      case "today":
+        return props.theme.commonStyle.brightblue;
+    }
+  }};
+
+  /*  props.inputColor || "palevioletred" */
+
+  &:before {
+    content: "";
+    border: 20px solid;
+    border-color: ${(props) =>
+      props.type === "today"
+        ? props.theme.commonStyle.background
+        : "transparent"};
+    position: absolute;
+    top: 0px;
+    /* transform: rotate(45deg); */
+    z-index: -1;
+    top: 1px;
+    left: 3px;
+  }
+  &:after {
+    content: "";
+    border: 18px solid;
+    border-color: ${(props) =>
+      props.type === "today"
+        ? props.theme.commonStyle.brightblue
+        : "transparent"};
+    position: absolute;
+    top: 0px;
+    /* transform: rotate(45deg); */
+    z-index: -1;
+    top: 3px;
+    left: 4px;
+    right: 4px;
+  }
 `;
 
 function getListAllMonth(props) {
@@ -48,9 +99,9 @@ function getListAllMonth(props) {
   let variableDate = new Date(year, month, dayByOrder);
 
   while (dayNumber <= lastDayCurrMonth) {
-    let className = "dayCurrentMonth day";
+    let className = "dayCurrentMonth";
     currDayNumber === dayNumber && month === currMonth && year === currYear
-      ? (className += " today")
+      ? (className = "today")
       : "";
     listCurrMonth.push({
       number: dayNumber,
@@ -89,7 +140,7 @@ function getListAllMonth(props) {
     listPrevMonth.push({
       number: dayNumberPrevMonth,
       date: variableDatePrev,
-      class: "another day",
+      class: "dayAnotherMonth",
     });
     dayNumberPrevMonth++;
     variableDatePrev = new Date(year, month - 1, (dayPrev += 1));
@@ -108,7 +159,7 @@ function getListAllMonth(props) {
     listNextMonth.push({
       number: dayNumberNextMonth,
       date: variableDateNext,
-      class: "another day",
+      class: "dayAnotherMonth",
     });
     dayNumberNextMonth++;
     variableDateNext = new Date(year, month + 1, (dayNext += 1));
@@ -126,6 +177,7 @@ export default class GridDays extends React.Component {
           {listAllMonth.map((item) => (
             <Day
               key={item.number + item.class}
+              type={item.class}
               item={item.number}
               onClick={() =>
                 this.props.onItemClick({

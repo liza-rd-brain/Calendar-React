@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, withRouter } from "react-router-dom";
 
-import DateTimeInput from "../features/DateTimeInput/DateTimeInput";
+/* import DateTimeInput from "../features/DateTimeInput/DateTimeInput"; */
 
 const nameValue = "name";
 const descValue = "desc";
@@ -158,6 +158,32 @@ function TaskCard(props) {
         />
       </div>
     </form>
+  );
+}
+
+function DateTimeInput(props) {
+  return (
+    <div className="dateTimeBlock">
+      <p>{props.title}</p>
+      <div className="dateTimeInput">
+        <input
+          required
+          type="date"
+          name={props.dateName}
+          className="dateInput"
+          onChange={props.onChange}
+          value={props.dateValue}
+        />
+        <input
+          required
+          type="time"
+          name={props.timeName}
+          className="timeInput"
+          onChange={props.onChange}
+          value={props.timeValue}
+        />
+      </div>
+    </div>
   );
 }
 

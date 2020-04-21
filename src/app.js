@@ -73,68 +73,65 @@ const initialState = {
   time: moment().format("LTS"),
 };
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "changeSelectDay":
+      return {
+        ...state,
+        selectDay: action.payload,
+      };
+
+    case "setCurrTaskList":
+      return {
+        ...state,
+        currtaskList: action.payload,
+      };
+    case "setCurrTaskId":
+      return {
+        ...state,
+        currTaskId: action.payload,
+      };
+    case "addNewTask":
+      return {
+        ...state,
+        taskList: [...state.taskList.concat(action.payload)],
+      };
+    case "changeTask":
+      return {
+        ...state,
+        taskList: state.taskList.map((item, i) => {
+          if (item.id === action.payload.id) {
+            return action.payload;
+          } else {
+            return item;
+          }
+        }),
+      };
+    case "deleteTask":
+      return {
+        ...state,
+        taskList: state.taskList.filter((item, i) => {
+          return item.id !== action.payload.id;
+        }),
+      };
+    case "setDate":
+      return {
+        ...state,
+        today: action.payload,
+      };
+    case "setTime":
+      return {
+        ...state,
+        time: action.payload,
+      };
+  }
+};
+
 function App(props) {
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "changeSelectDay":
-        debugger;
-        return {
-          ...state,
-          selectDay: action.payload,
-        };
-
-      case "setCurrTaskList":
-        return {
-          ...state,
-          currtaskList: action.payload,
-        };
-      case "setCurrTaskId":
-        debugger;
-        return {
-          ...state,
-          currTaskId: action.payload,
-        };
-      case "addNewTask":
-        return {
-          ...state,
-          taskList: [...state.taskList.concat(action.payload)],
-        };
-      case "changeTask":
-        debugger;
-        return {
-          ...state,
-          taskList: state.taskList.map((item, i) => {
-            if (item.id === action.payload.id) {
-              return action.payload;
-            } else {
-              return item;
-            }
-          }),
-        };
-      case "deleteTask":
-        debugger;
-        return {
-          ...state,
-          taskList: state.taskList.filter((item, i) => {
-            return item.id !== action.payload.id;
-          }),
-        };
-      case "setDate":
-        return {
-          ...state,
-          today: action.payload,
-        };
-      case "setTime":
-        return {
-          ...state,
-          time: action.payload,
-        };
-    }
-  };
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    
     const updateID = setInterval(
       () => dispatch({ type: "setDate", payload: new Date() }),
       1000
