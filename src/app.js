@@ -131,11 +131,6 @@ function App(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    
-    const updateID = setInterval(
-      () => dispatch({ type: "setDate", payload: new Date() }),
-      1000
-    );
     const updateTimeID = setInterval(
       () => dispatch({ type: "setTime", payload: moment().format("LTS") }),
       1000
@@ -143,9 +138,19 @@ function App(props) {
 
     return () => {
       clearInterval(updateTimeID);
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateID = setInterval(
+      () => dispatch({ type: "setDate", payload: new Date() }),
+      1000
+    );
+
+    return () => {
       clearInterval(updateID);
     };
-  });
+  }, [state.today.getDate()]);
 
   const newTaskId = () => {
     if (state.taskList.length) {

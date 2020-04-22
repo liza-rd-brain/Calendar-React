@@ -168,42 +168,28 @@ function getListAllMonth(props) {
   return listPrevCurrentMonth.concat(listNextMonth);
 }
 
-export default class GridDays extends React.Component {
-  render() {
-    const listAllMonth = getListAllMonth(this.props);
-    return (
-      <ThemeProvider theme={commonStyle}>
-        <Grid>
-          {listAllMonth.map((item) => (
-            <Day
-              key={item.number + item.class}
-              type={item.class}
-              item={item.number}
-              onClick={() =>
-                this.props.onItemClick({
-                  type: "changeSelectDay",
-                  payload: item.date,
-                })
-              }
-            >
-              {item.number}
-            </Day>
-            /*    <div
-              key={item.number + item.class}
-              item={item.number}
-              className={item.class}
-              onClick={() =>
-                this.props.onItemClick({
-                  type: "changeSelectDay",
-                  payload: item.date,
-                })
-              }
-            >
-              {item.number}
-            </div> */
-          ))}
-        </Grid>
-      </ThemeProvider>
-    );
-  }
+function GridDays(props) {
+  const listAllMonth = getListAllMonth(props);
+  return (
+    <ThemeProvider theme={commonStyle}>
+      <Grid>
+        {listAllMonth.map((item) => (
+          <Day
+            key={item.number + item.class}
+            type={item.class}
+            item={item.number}
+            onClick={() =>
+              this.props.onItemClick({
+                type: "changeSelectDay",
+                payload: item.date,
+              })
+            }
+          >
+            {item.number}
+          </Day>
+        ))}
+      </Grid>
+    </ThemeProvider>
+  );
 }
+export default GridDays;
