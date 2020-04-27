@@ -13,7 +13,7 @@ import moment from "moment";
 
 import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
-import UndoRedo from "./test/UndoRedo";
+/* import Memo from "./test/Memo"; */
 
 import * as commonStyle from "./theme";
 import "./style.css";
@@ -248,9 +248,9 @@ function App(props) {
               /* handleToTask={handleToTask} */
             />
           </Route>
-          <Route patch="/UndoRedo">
-            <UndoRedo />
-          </Route>
+          {/*  <Route patch="/Memo">
+            <Memo />
+          </Route> */}
         </Switch>
       </Container>
     </ThemeProvider>
