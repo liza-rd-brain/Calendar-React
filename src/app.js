@@ -4,32 +4,24 @@ import styled, { ThemeProvider } from "styled-components";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch,
-  withRouter,
+  useHistory,
 } from "react-router-dom";
 
 import moment from "moment";
 
 import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
-/* import Memo from "./test/Memo"; */
-
 import * as commonStyle from "./theme";
 import "./style.css";
 
 moment.locale("ru");
 
 const Container = styled.div`
-  width: 400px;
   display: flex;
-  flex-direction: column;
-  margin: 0px auto;
-  background-color: ${(props) => props.theme.commonStyle.background};
-  /*как тут передать пропс?!*/
   & > * {
-    border: 1px solid;
-    border-color: ${(props) => props.theme.commonStyle.gray};
+    background-color: ${(props) => props.theme.commonStyle.background};
+    margin: 0px auto;
   }
 `;
 
@@ -129,30 +121,26 @@ const reducer = (state, action) => {
 
 function App(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const history = useHistory();
 
-  useEffect(() => {
-    const updateTimeID = setInterval(
+  useEffect(function updateTime() {
+    const id = setInterval(
       () => dispatch({ type: "setTime", payload: moment().format("LTS") }),
       1000
     );
-
     return () => {
-      clearInterval(updateTimeID);
+      clearInterval(id);
     };
   }, []);
 
-  useEffect(() => {
-    const updateID = setInterval(
-      () => dispatch({ type: "setDate", payload: new Date() }),
-      1000
-    );
+  useEffect(
+    function updateCurrDate() {
+      dispatch({ type: "setDate", payload: new Date() });
+    },
+    [state.today.getDate()]
+  );
 
-    return () => {
-      clearInterval(updateID);
-    };
-  }, [state.today.getDate()]);
-
-  const newTaskId = () => {
+  const createNewTaskId = () => {
     if (state.taskList.length) {
       let idMax =
         Math.max.apply(
@@ -166,7 +154,7 @@ function App(props) {
   };
 
   const selectCurrentTask = () => {
-    /*  debugger; */
+
     let selectDate = moment(state.selectDay).format("YYYY-MM-DD");
     let result = state.taskList.filter(
       //находим item для которого выбранная дата лежит
@@ -207,11 +195,12 @@ function App(props) {
   };
 
   const handleToCalendar = () => {
-    props.history.push("/");
+    debugger;
+    history.push("/");
   };
 
   const handleToTask = (value) => {
-    props.history.push(`/tasks/${value}`);
+    history.push(`/tasks/${value}`);
   };
 
   return (
@@ -232,8 +221,9 @@ function App(props) {
               startInputTitle={startInputTitle}
               endInputTitle={endInputTitle}
               onChangeTaskList={dispatch}
-              handleDeleteTask={dispatch}
-              newTaskId={newTaskId()}
+              /*удаление не созданной задачи=просто переход на главную страницу-?!*/
+              handleDeleteTask={handleToCalendar}
+              createNewTaskId={createNewTaskId()}
               handleToCalendar={handleToCalendar}
             />
           </Route>
@@ -245,23 +235,17 @@ function App(props) {
               onChangeTaskList={dispatch}
               handleDeleteTask={dispatch}
               handleToCalendar={handleToCalendar}
-              /* handleToTask={handleToTask} */
             />
           </Route>
-          {/*  <Route patch="/Memo">
-            <Memo />
-          </Route> */}
         </Switch>
       </Container>
     </ThemeProvider>
   );
 }
 
-const AppWithRouter = withRouter(App);
-
 ReactDOM.render(
   <Router>
-    <AppWithRouter />
+    <App />
   </Router>,
   document.querySelector("#root")
 );

@@ -31,18 +31,15 @@ const Day = styled.div`
     }
   }};
   background-color: ${(props) => {
-    /*  debugger; */
     switch (props.type) {
       case "today":
         return props.theme.commonStyle.brightblue;
     }
   }};
 
-  /*  props.inputColor || "palevioletred" */
-
   &:before {
     content: "";
-    border: 20px solid;
+    border: 19px solid;
     border-color: ${(props) =>
       props.type === "today"
         ? props.theme.commonStyle.background
@@ -56,7 +53,7 @@ const Day = styled.div`
   }
   &:after {
     content: "";
-    border: 18px solid;
+    border: 16px solid;
     border-color: ${(props) =>
       props.type === "today"
         ? props.theme.commonStyle.brightblue
@@ -65,9 +62,13 @@ const Day = styled.div`
     top: 0px;
     /* transform: rotate(45deg); */
     z-index: -1;
-    top: 3px;
-    left: 4px;
-    right: 4px;
+    top: 4px;
+    left: 5px;
+    right: 5px;
+  }
+  &:hover {
+    outline: 2px solid;
+    outline-color: ${(props) => props.theme.commonStyle.lightgray};
   }
 `;
 

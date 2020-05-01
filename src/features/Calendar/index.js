@@ -21,6 +21,7 @@ const yearInc = 15;
 
 const CalendarWrap = styled.div`
   width: 100%;
+  height: 400px;
 `;
 
 const NameDaysList = styled.div`
@@ -96,7 +97,6 @@ function Calendar(props) {
 
   const changeRouteToCalender = (month) => {
     /*проще принять месяц*/
-
     let currDay = date || props.today;
     let date = new Date(currDay.getFullYear(), month);
     onChangeDate(date);
@@ -136,62 +136,54 @@ function Calendar(props) {
     }
   };
 
+  let grid;
   switch (mode) {
     case "day":
-      return (
-        <CalendarWrap>
-          <Nav
-            onArrowClick={handleArrowClick}
-            onTitleClick={() => changeRouteToMonth()}
-            title={createNavTitle("day")}
-            name={"day"}
-          />
-          <NameDays />
-          <GridDays
-            today={props.today}
-            date={date}
-            onItemClick={props.onChangeSelectDay}
-          />
-        </CalendarWrap>
+      grid = (
+        <GridDays
+          today={props.today}
+          date={date}
+          onItemClick={props.onChangeSelectDay}
+        />
       );
-
+      break;
     case "month":
-      return (
-        <CalendarWrap>
-          <Nav
-            onArrowClick={handleArrowClick}
-            onTitleClick={changeRouteToYear}
-            title={createNavTitle("month")}
-            name={"month"}
-          />
-          <GridMonth
-            today={props.today}
-            date={date}
-            onItemClick={changeRouteToCalender}
-          />
-        </CalendarWrap>
+      grid = (
+        <GridMonth
+          today={props.today}
+          date={date}
+          onItemClick={changeRouteToCalender}
+        />
       );
-
+      break;
     case "year":
-      return (
-        <CalendarWrap>
-          <Nav
-            onArrowClick={handleArrowClick}
-            title={createNavTitle("year")}
-            name={"year"}
-          />
-          <YearSelection
-            today={props.today}
-            date={date}
-            startYear={startYear}
-            onItemClick={changeRouteToMonth}
-          />
-        </CalendarWrap>
+      grid = (
+        <YearSelection
+          today={props.today}
+          date={date}
+          startYear={startYear}
+          onItemClick={changeRouteToMonth}
+        />
       );
-
+      break;
     default:
-      return null;
+      break;
   }
+
+  return (
+    <CalendarWrap>
+      <Nav
+        onArrowClick={handleArrowClick}
+        onTitleClick={
+          mode === "day" ? () => changeRouteToMonth() : changeRouteToYear
+        }
+        title={createNavTitle(mode)}
+        name={mode}
+      />
+      {mode === "day" ? <NameDays /> : ""}
+      {grid}
+    </CalendarWrap>
+  );
 }
 
 function NameDays() {

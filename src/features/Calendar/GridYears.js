@@ -1,5 +1,31 @@
 import React from "react";
+import styled, { ThemeProvider } from "styled-components";
+import * as commonStyle from "./../../theme";
 
+const Grid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  height: 250px;
+  padding: 10px;
+  align-items: center;
+`;
+
+const Year = styled.div`
+  width: 90px;
+  color: ${(props) => props.theme.commonStyle.white};
+  background-color: ${(props) => {
+    switch (props.type) {
+      case "currYear":
+        return props.theme.commonStyle.brightblue;
+    }
+  }};
+  &:hover {
+    outline: 2px solid;
+    outline-color: ${(props) => props.theme.commonStyle.lightgray};
+  }
+  text-align: center;
+  padding: 30px 0;
+`;
 
 function GridYears(props) {
   const startYear = props.startYear;
@@ -11,24 +37,24 @@ function GridYears(props) {
 
   for (let counter = 0; counter < lenghtYersList; counter++) {
     let className = "numberYear";
-    todayYear === yearStart ? (className += " currYear") : "";
+    todayYear === yearStart ? (className = "currYear") : "";
     yersList.push({ number: yearStart, class: className });
     yearStart++;
   }
 
   const years = yersList.map((item, i) => {
     return (
-      <div
+      <Year
         key={`${item.number}-${i}}`}
-        className={item.class}
+        type={item.class}
         onClick={() => props.onItemClick(item.number)}
       >
         {item.number}
-      </div>
+      </Year>
     );
   });
 
-  return <div className="grid">{years}</div>;
+  return <Grid>{years}</Grid>;
 }
 
 export default GridYears;

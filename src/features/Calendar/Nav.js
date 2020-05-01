@@ -24,10 +24,11 @@ const ArrowWrap = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  & :first-child {
+  /*без плагина для стилизации*/
+  /*  & :first-child {
     transform: rotate(180deg);
     top: 4px;
-  }
+  } */
 `;
 const Arrow = styled.div`
   /*  width: 50%; */
@@ -35,6 +36,11 @@ const Arrow = styled.div`
   cursor: pointer;
   /* color: ${(props) => props.theme.commonStyle.lightgray}; */
   padding: 10px;
+
+   & :first-child {
+    transform: rotate(180deg);
+    top: 4px;
+  }
   &:hover {
     &:after {border-color: ${(props) => props.theme.commonStyle.white};}
  

@@ -17,7 +17,7 @@ const App = () => {
   }, []);
 
   const increaseCounter2 = React.useCallback(() => {
-    setCount2((count2) => count2+ 1);
+    setCount2((count2) => count2 + 1);
   }, []);
 
   return (
@@ -36,7 +36,15 @@ const Counter = ({ value, children, onClick }) => {
   console.log("Render: ", children);
 
   return (
-    <button onClick={onClick}>
+    <button
+      onClick={onClick}
+      style={{
+        border: "none",
+        margin: 10,
+        outline: "none",
+        backgroundColor: "transparent",
+      }}
+    >
       {children}: {value}
     </button>
   );

@@ -1,4 +1,32 @@
 import React from "react";
+import styled, { ThemeProvider } from "styled-components";
+import * as commonStyle from "./../../theme";
+/*вынести Grid в Calendar*/
+
+const Grid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  height: 250px;
+  padding: 10px;
+  align-items: center;
+`;
+
+const Month = styled.div`
+  width: 90px;
+  color: ${(props) => props.theme.commonStyle.white};
+  text-align: center;
+  padding: 30px 0;
+  background-color: ${(props) => {
+    switch (props.type) {
+      case "currMonth":
+        return props.theme.commonStyle.brightblue;
+    }
+  }};
+  &:hover {
+    outline: 2px solid;
+    outline-color: ${(props) => props.theme.commonStyle.lightgray};
+  }
+`;
 
 function GridMonth(props) {
   const currDate = props.date || props.today;
@@ -18,27 +46,29 @@ function GridMonth(props) {
     "сен",
     "окт",
     "ноя",
-    "дек"
+    "дек",
   ];
 
   const months = monthsList.map((name, i) => {
     let nameMonth = "nameMonth";
-    todayMonth === i && todayYear === currYear
-      ? (nameMonth += " currMonth")
-      : "";
+    todayMonth === i && todayYear === currYear ? (nameMonth = "currMonth") : "";
     return (
-      <div
+      <Month
         key={name}
         id={name}
-        className={nameMonth}
+        type={nameMonth}
         onClick={() => props.onItemClick(i)}
       >
         {name}
-      </div>
+      </Month>
     );
   });
 
-  return <div className="grid">{months}</div>;
+  return (
+    <ThemeProvider theme={commonStyle}>
+      <Grid>{months}</Grid>
+    </ThemeProvider>
+  );
 }
 
 export default GridMonth;
