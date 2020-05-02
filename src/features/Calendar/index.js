@@ -23,6 +23,13 @@ const CalendarWrap = styled.div`
   width: 100%;
   height: 400px;
 `;
+const Grid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  height: 250px;
+  padding: 10px;
+  align-items: center;
+`;
 
 const NameDaysList = styled.div`
   width: 100%;
@@ -181,7 +188,7 @@ function Calendar(props) {
         name={mode}
       />
       {mode === "day" ? <NameDays /> : ""}
-      {grid}
+      <Grid>{grid}</Grid>
     </CalendarWrap>
   );
 }

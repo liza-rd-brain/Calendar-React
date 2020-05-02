@@ -3,14 +3,6 @@ import styled, { ThemeProvider } from "styled-components";
 import * as commonStyle from "./../../theme";
 /*вынести Grid в Calendar*/
 
-const Grid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  height: 250px;
-  padding: 10px;
-  align-items: center;
-`;
-
 const Month = styled.div`
   width: 90px;
   color: ${(props) => props.theme.commonStyle.white};
@@ -64,11 +56,7 @@ function GridMonth(props) {
     );
   });
 
-  return (
-    <ThemeProvider theme={commonStyle}>
-      <Grid>{months}</Grid>
-    </ThemeProvider>
-  );
+  return <ThemeProvider theme={commonStyle}>{months}</ThemeProvider>;
 }
 
 export default GridMonth;

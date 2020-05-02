@@ -1,13 +1,8 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import * as commonStyle from "./../../theme";
-
-const Grid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  height: 250px;
-  padding: 10px;
-`;
+import moment from "moment";
+moment.locale("ru");
 
 const Day = styled.div`
   flex-grow: 1;
@@ -86,12 +81,13 @@ function getListAllMonth(props) {
   const currMonth = props.month; */
 
   /*текущий месяц*/
-  const currDayNumber = props.today.getDate();
+   const currDayNumber = props.today.getDate();
   const currYear = props.today.getFullYear();
   const currMonth = props.today.getMonth();
 
-  const firstDayCurrMonth = new Date(year, month, 1);
+   const firstDayCurrMonth = new Date(year, month, 1);
   const lastDayCurrMonth = new Date(year, month + 1, 0).getDate();
+
 
   let listCurrMonth = [];
   let dayNumber = 1;
@@ -173,23 +169,21 @@ function GridDays(props) {
   const listAllMonth = getListAllMonth(props);
   return (
     <ThemeProvider theme={commonStyle}>
-      <Grid>
-        {listAllMonth.map((item) => (
-          <Day
-            key={item.number + item.class}
-            type={item.class}
-            item={item.number}
-            onClick={() =>
-              this.props.onItemClick({
-                type: "changeSelectDay",
-                payload: item.date,
-              })
-            }
-          >
-            {item.number}
-          </Day>
-        ))}
-      </Grid>
+      {listAllMonth.map((item) => (
+        <Day
+          key={item.number + item.class}
+          type={item.class}
+          item={item.number}
+          onClick={() =>
+            this.props.onItemClick({
+              type: "changeSelectDay",
+              payload: item.date,
+            })
+          }
+        >
+          {item.number}
+        </Day>
+      ))}
     </ThemeProvider>
   );
 }
