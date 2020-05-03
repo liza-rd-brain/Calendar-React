@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import moment from "moment";
-moment.locale("ru");
 moment().format("ll");
 
 import Nav from "./Nav";
@@ -15,9 +14,15 @@ import GridDays from "./GridDays";
 import GridMonth from "./GridMonth";
 import YearSelection from "./GridYears";
 
-const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"];
+/* const NAME_DAYS = ["пн", "вт", "ср", "чт", "пт", "сбб", "вск"]; */
+const NAME_DAYS = new Array(7).fill(0).map((item, index) => {
+  return moment()
+    .locale("ru")
+    .day(index + 1)
+    .format("ddd");
+});
+
 const yearInc = 15;
-/* let startYear = 2010; */
 
 const CalendarWrap = styled.div`
   width: 100%;
@@ -54,27 +59,29 @@ function Calendar(props) {
   const handleArrowClick = (direction, name) => {
     /*сегодня или другие месяцы*/
     let currDay = date || props.today;
+    let momentCurrDay = moment(currDay);
     let currDate;
     switch (name) {
       case "day":
         currDate =
           direction === "right"
-            ? new Date(currDay.getFullYear(), currDay.getMonth() + 1)
-            : new Date(currDay.getFullYear(), currDay.getMonth() - 1);
+            ? momentCurrDay.add(1, "M").format()
+            : momentCurrDay.subtract(1, "M").format();
+
         onChangeDate(currDate);
         break;
       case "month":
         currDate =
           direction === "right"
-            ? new Date(currDay.getFullYear() + 1, currDay.getMonth())
-            : new Date(currDay.getFullYear() - 1, currDay.getMonth());
+            ? momentCurrDay.add(1, "y").format()
+            : momentCurrDay.subtract(1, "y").format();
         onChangeDate(currDate);
         break;
       case "year":
         currDate =
           direction === "right"
-            ? new Date(currDay.getFullYear() + yearInc, currDay.getMonth())
-            : new Date(currDay.getFullYear() - yearInc, currDay.getMonth());
+            ? momentCurrDay.add(yearInc, "y").format()
+            : momentCurrDay.subtract(yearInc, "y").format();
         onChangeStartYear(currDate);
         break;
 
@@ -88,15 +95,10 @@ function Calendar(props) {
   };
 
   const onChangeStartYear = (date) => {
-    let year = date.getFullYear();
+    let year = moment(date).format("YYYY");
     if (year < startYear) {
-      /* startYear = startYear - yearInc - 1; */
       setStartYear((startYear) => startYear - yearInc - 1);
-      /*
-       * todo: почему else if?
-       */
     } else if (year > startYear + yearInc) {
-      /*  startYear = startYear + yearInc + 1; */
       setStartYear((startYear) => startYear + yearInc + 1);
     }
     setDate(date);
@@ -105,7 +107,7 @@ function Calendar(props) {
   const changeRouteToCalender = (month) => {
     /*проще принять месяц*/
     let currDay = date || props.today;
-    let date = new Date(currDay.getFullYear(), month);
+    let date = new Date(moment(date).format("YYYY"), month);
     onChangeDate(date);
     setMode("day");
   };
@@ -113,7 +115,7 @@ function Calendar(props) {
   const changeRouteToMonth = (year) => {
     if (year) {
       let currDay = date || props.today;
-      let date = new Date(year, currDay.getMonth());
+      let date = new Date(year, moment(date).format("MM"));
       onChangeDate(date);
     }
     setMode("month");
@@ -127,7 +129,9 @@ function Calendar(props) {
     const currDate = date || props.today;
     const monthName = moment(currDate).format("MMMM");
     const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
-    const currYear = currDate.getFullYear();
+
+    const currYear = moment(currDate).format("YYYY");
+
     const yearsString = `${startYear}-${startYear + yearInc}`;
 
     switch (name) {

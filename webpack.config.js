@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
+const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 
 module.exports = {
   entry: "./src/app.js",
@@ -14,7 +15,9 @@ module.exports = {
       template: "./src/index.html",
     }),
     new webpack.SourceMapDevToolPlugin({}),
-    
+    new MomentLocalesPlugin({
+      localesToKeep: ["ru"],
+    }),
   ],
   mode: "development",
   module: {

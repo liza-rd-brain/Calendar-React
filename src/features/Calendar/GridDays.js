@@ -1,9 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import * as commonStyle from "./../../theme";
-
 import moment from "moment";
-moment.locale("ru");
 
 const Day = styled.div`
   flex-grow: 1;
@@ -71,6 +69,7 @@ const Day = styled.div`
 function getListAllMonth(props) {
   const amountDays = 42;
   const startWeekDay = 1;
+  const currDate = moment(props.today).format("YYYY-MM-DD");
   const firstDateCurrMonth =
     props.date || moment(props.today).format("YYYY-MM-01");
   const currMonth = moment(firstDateCurrMonth).month();
@@ -85,10 +84,9 @@ function getListAllMonth(props) {
     const dateItem = momentItem.format("YYYY-MM-DD");
     const monthItem = momentItem.month();
     const numberItem = momentItem.format("D");
-    const firstDayCurrMonth = moment(firstDateCurrMonth).format("YYYY-MM-DD");
 
     let className = monthItem == item ? "dayCurrentMonth" : "dayAnotherMonth";
-    firstDayCurrMonth == dateItem ? (className = "today") : "";
+    currDate == dateItem ? (className = "today") : "";
     return {
       number: numberItem,
       date: dateItem,

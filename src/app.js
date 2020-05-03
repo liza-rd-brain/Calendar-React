@@ -9,13 +9,12 @@ import {
 } from "react-router-dom";
 
 import moment from "moment";
+moment.locale("ru");
 
 import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
 import * as commonStyle from "./theme";
 import "./style.css";
-
-moment.locale("ru");
 
 const Container = styled.div`
   display: flex;
@@ -137,7 +136,7 @@ function App(props) {
     function updateCurrDate() {
       dispatch({ type: "setDate", payload: new Date() });
     },
-    [state.today.getDate()]
+    [moment(state.today).day()]
   );
 
   const createNewTaskId = () => {
@@ -154,7 +153,6 @@ function App(props) {
   };
 
   const selectCurrentTask = () => {
-
     let selectDate = moment(state.selectDay).format("YYYY-MM-DD");
     let result = state.taskList.filter(
       //находим item для которого выбранная дата лежит

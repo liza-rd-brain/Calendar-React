@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import * as commonStyle from "./../../theme";
+import moment from "moment";
 
 const Year = styled.div`
   width: 90px;
@@ -21,7 +22,7 @@ const Year = styled.div`
 
 function GridYears(props) {
   const startYear = props.startYear;
-  const todayYear = props.today.getFullYear();
+  const todayYear = moment(props.today).format("YYYY");
 
   let yersList = [];
   const lenghtYersList = 16;

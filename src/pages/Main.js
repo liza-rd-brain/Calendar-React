@@ -5,7 +5,7 @@ import TaskList from "../features/TaskList";
 import Calendar from "../features/Calendar";
 import styled, { ThemeProvider } from "styled-components";
 import moment from "moment";
-moment.locale("ru");
+
 import * as commonStyle from "./../theme";
 
 const ContainerCalendar = styled.div`

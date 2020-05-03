@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import * as commonStyle from "./../../theme";
-/*вынести Grid в Calendar*/
+import moment from "moment";
 
 const Month = styled.div`
   width: 90px;
@@ -22,26 +22,17 @@ const Month = styled.div`
 
 function GridMonth(props) {
   const currDate = props.date || props.today;
-  const todayYear = currDate.getFullYear();
-  const todayMonth = currDate.getMonth();
-  const currYear = props.today.getFullYear();
 
-  const monthsList = [
-    "янв",
-    "фев",
-    "мар",
-    "апр",
-    "май",
-    "июн",
-    "июл",
-    "авг",
-    "сен",
-    "окт",
-    "ноя",
-    "дек",
-  ];
+  const todayYear = moment(currDate).format("YYYY");
+  const todayMonth = moment(currDate).format("MMMM");
+  const currYear = moment(props.today).format("YYYY");
 
-  const months = monthsList.map((name, i) => {
+
+  const monthList = new Array(12).fill(0).map((item, index) => {
+    return moment().locale("ru").month(index).format("MMM");
+  });
+
+  const months = monthList.map((name, i) => {
     let nameMonth = "nameMonth";
     todayMonth === i && todayYear === currYear ? (nameMonth = "currMonth") : "";
     return (
