@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import * as commonStyle from "./../../theme";
+
 import moment from "moment";
 moment.locale("ru");
 
@@ -68,101 +69,32 @@ const Day = styled.div`
 `;
 
 function getListAllMonth(props) {
-  /*выясняем, рисуем текущий месяц или какой-то требуемый,
-  т.е. листнули календарь*/
+  const amountDays = 42;
+  const startWeekDay = 1;
+  const firstDateCurrMonth =
+    props.date || moment(props.today).format("YYYY-MM-01");
+  const currMonth = moment(firstDateCurrMonth).month();
 
-  let currDate = props.date || props.today;
+  const firstDayGrid =
+    moment(firstDateCurrMonth).format("e") == startWeekDay
+      ? firstDateCurrMonth
+      : moment(firstDateCurrMonth).day(startWeekDay).format("YYYY-MM-DD");
 
-  const day = currDate.getDate();
-  const month = currDate.getMonth();
-  const year = currDate.getFullYear();
+  return new Array(amountDays).fill(currMonth).map((item, index) => {
+    const momentItem = moment(firstDayGrid).add(index, "d");
+    const dateItem = momentItem.format("YYYY-MM-DD");
+    const monthItem = momentItem.month();
+    const numberItem = momentItem.format("D");
+    const firstDayCurrMonth = moment(firstDateCurrMonth).format("YYYY-MM-DD");
 
-  /*  const currYear = props.year;
-  const currMonth = props.month; */
-
-  /*текущий месяц*/
-   const currDayNumber = props.today.getDate();
-  const currYear = props.today.getFullYear();
-  const currMonth = props.today.getMonth();
-
-   const firstDayCurrMonth = new Date(year, month, 1);
-  const lastDayCurrMonth = new Date(year, month + 1, 0).getDate();
-
-
-  let listCurrMonth = [];
-  let dayNumber = 1;
-
-  let dayByOrder = 1;
-  let variableDate = new Date(year, month, dayByOrder);
-
-  while (dayNumber <= lastDayCurrMonth) {
-    let className = "dayCurrentMonth";
-    currDayNumber === dayNumber && month === currMonth && year === currYear
-      ? (className = "today")
-      : "";
-    listCurrMonth.push({
-      number: dayNumber,
-      date: variableDate,
+    let className = monthItem == item ? "dayCurrentMonth" : "dayAnotherMonth";
+    firstDayCurrMonth == dateItem ? (className = "today") : "";
+    return {
+      number: numberItem,
+      date: dateItem,
       class: className,
-    });
-    dayNumber++;
-    variableDate = new Date(year, month, (dayByOrder += 1));
-  }
-
-  const firstDayCurrMonthOfWeek = firstDayCurrMonth.getDay();
-
-  let amountPrevMohthDays;
-  switch (firstDayCurrMonthOfWeek) {
-    case 1:
-      break;
-    case 0:
-      amountPrevMohthDays = 6;
-      break;
-    default:
-      amountPrevMohthDays = firstDayCurrMonthOfWeek - 1;
-      break;
-  }
-
-  /*  ; */
-  const lastDayPrevMonth = new Date(currYear, month, 0).getDate();
-  const firstDayPrevMonth = lastDayPrevMonth - amountPrevMohthDays + 1;
-  let dayNumberPrevMonth = firstDayPrevMonth;
-  let listPrevMonth = [];
-
-  let dayPrev = firstDayPrevMonth;
-  let variableDatePrev = new Date(year, month - 1, dayPrev);
-  /* debugger; */
-
-  while (dayNumberPrevMonth <= lastDayPrevMonth) {
-    listPrevMonth.push({
-      number: dayNumberPrevMonth,
-      date: variableDatePrev,
-      class: "dayAnotherMonth",
-    });
-    dayNumberPrevMonth++;
-    variableDatePrev = new Date(year, month - 1, (dayPrev += 1));
-  }
-
-  const listPrevCurrentMonth = listPrevMonth.concat(listCurrMonth);
-  const amountNextMohthDays = 42 - listPrevCurrentMonth.length;
-
-  let listNextMonth = [];
-  let dayNumberNextMonth = 1;
-
-  let dayNext = dayNumberNextMonth;
-  let variableDateNext = new Date(year, month + 1, dayNext);
-
-  while (dayNumberNextMonth < amountNextMohthDays + 1) {
-    listNextMonth.push({
-      number: dayNumberNextMonth,
-      date: variableDateNext,
-      class: "dayAnotherMonth",
-    });
-    dayNumberNextMonth++;
-    variableDateNext = new Date(year, month + 1, (dayNext += 1));
-  }
-
-  return listPrevCurrentMonth.concat(listNextMonth);
+    };
+  });
 }
 
 function GridDays(props) {
@@ -171,7 +103,7 @@ function GridDays(props) {
     <ThemeProvider theme={commonStyle}>
       {listAllMonth.map((item) => (
         <Day
-          key={item.number + item.class}
+          key={item.date}
           type={item.class}
           item={item.number}
           onClick={() =>
