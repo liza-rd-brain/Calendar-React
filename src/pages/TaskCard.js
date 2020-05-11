@@ -1,7 +1,22 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, withRouter } from "react-router-dom";
-
+import styled, { ThemeProvider } from "styled-components";
 /* import DateTimeInput from "../features/DateTimeInput/DateTimeInput"; */
+
+const Form = styled.form`
+  align-items: center;
+  width: 700px;
+  padding: 20px;
+  & > * {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+`;
+
+const InputBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+  color: white;
+`;
 
 const nameValue = "name";
 const descValue = "desc";
@@ -97,10 +112,7 @@ function TaskCard(props) {
   /* props.сurrTask ? props.handleToTask(props.сurrTask.value) : ""; */
 
   return (
-    <form
-      className="form"
-      onSubmit={props.сurrTask ? handleChangeTask : handleSaveTask}
-    >
+    <Form onSubmit={props.сurrTask ? handleChangeTask : handleSaveTask}>
       <input
         required
         name={nameValue}
@@ -110,7 +122,7 @@ function TaskCard(props) {
         value={props.сurrTask ? taskName || props.сurrTask.name : taskName}
       />
       <DateTimeInput
-        class="start"
+        /*     class="start" */
         title={props.startInputTitle}
         dateName={startDateValue}
         timeName={startTimeValue}
@@ -127,7 +139,7 @@ function TaskCard(props) {
         onChange={handleEditTask}
       />
       <DateTimeInput
-        class="end"
+        /*  class="end" */
         title={props.endInputTitle}
         dateName={endDateValue}
         timeName={endTimeValue}
@@ -157,13 +169,13 @@ function TaskCard(props) {
           onClick={handleDeleteTask}
         />
       </div>
-    </form>
+    </Form>
   );
 }
 
 function DateTimeInput(props) {
   return (
-    <div className="dateTimeBlock">
+    <InputBlock>
       <p>{props.title}</p>
       <div className="dateTimeInput">
         <input
@@ -183,7 +195,7 @@ function DateTimeInput(props) {
           value={props.timeValue}
         />
       </div>
-    </div>
+    </InputBlock>
   );
 }
 

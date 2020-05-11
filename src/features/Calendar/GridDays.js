@@ -105,7 +105,7 @@ function GridDays(props) {
           type={item.class}
           item={item.number}
           onClick={() =>
-            this.props.onItemClick({
+            props.onItemClick({
               type: "changeSelectDay",
               payload: item.date,
             })

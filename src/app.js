@@ -8,6 +8,9 @@ import {
   useHistory,
 } from "react-router-dom";
 
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { createStore } from "redux";
+
 import moment from "moment";
 moment.locale("ru");
 
@@ -15,7 +18,7 @@ import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
 import * as commonStyle from "./theme";
 import "./style.css";
-
+import Example from "./fcc_example";
 const Container = styled.div`
   display: flex;
   & > * {
@@ -64,7 +67,7 @@ const initialState = {
   time: moment().format("LTS"),
 };
 
-const reducer = (state, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "changeSelectDay":
       return {
@@ -115,11 +118,16 @@ const reducer = (state, action) => {
         ...state,
         time: action.payload,
       };
+    default:
+      return state;
   }
 };
 
 function App(props) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  /*   const [state, dispatch] = useReducer(reducer, initialState); */
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  
   const history = useHistory();
 
   useEffect(function updateTime() {
@@ -213,6 +221,7 @@ function App(props) {
               onTaskClick={onTaskClick}
               currentTaskList={selectCurrentTask()}
             />
+            <Example />
           </Route>
           <Route path="/newTask">
             <TaskCard
@@ -241,9 +250,13 @@ function App(props) {
   );
 }
 
+const store = createStore(reducer);
+
 ReactDOM.render(
   <Router>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </Router>,
   document.querySelector("#root")
 );
