@@ -1,5 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
 import * as commonStyle from "./../../theme";
 import moment from "moment";
 
@@ -21,12 +23,12 @@ const Month = styled.div`
 `;
 
 function GridMonth(props) {
-  const currDate = props.date || props.today;
+  const [date, today] = useSelector((state) => [state.date, state, today]);
+  const currDate = date || today;
 
   const todayYear = moment(currDate).format("YYYY");
   const todayMonth = moment(currDate).format("MMMM");
-  const currYear = moment(props.today).format("YYYY");
-
+  const currYear = moment(today).format("YYYY");
 
   const monthList = new Array(12).fill(0).map((item, index) => {
     return moment().locale("ru").month(index).format("MMM");

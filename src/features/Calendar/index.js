@@ -150,31 +150,14 @@ function Calendar(props) {
   let grid;
   switch (mode) {
     case "day":
-      grid = (
-        <GridDays
-          today={props.today}
-          date={date}
-          onItemClick={props.onChangeSelectDay}
-        />
-      );
+      grid = <GridDays onItemClick={props.onChangeSelectDay} />;
       break;
     case "month":
-      grid = (
-        <GridMonth
-          today={props.today}
-          date={date}
-          onItemClick={changeRouteToCalender}
-        />
-      );
+      grid = <GridMonth onItemClick={changeRouteToCalender} />;
       break;
     case "year":
       grid = (
-        <YearSelection
-          today={props.today}
-          date={date}
-          startYear={startYear}
-          onItemClick={changeRouteToMonth}
-        />
+        <YearSelection startYear={startYear} onItemClick={changeRouteToMonth} />
       );
       break;
     default:

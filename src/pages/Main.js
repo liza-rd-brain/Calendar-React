@@ -22,8 +22,8 @@ export default function Main({
   state,
   hahdleChangeSelectDay,
   hrefNewTask,
-  onTaskClick,
-  currentTaskList,
+  onTaskClick /* ,
+  currentTaskList, */,
 }) {
   return (
     <ThemeProvider theme={commonStyle}>
@@ -35,13 +35,9 @@ export default function Main({
           selectDay={state.selectDay}
         ></Calendar>
 
-        <TaskList
-          today={state.today}
-          selectDay={state.selectDay}
-          hrefNewTask={hrefNewTask}
-          taskList={currentTaskList}
-          onTaskClick={onTaskClick}
-        />
+        <TaskList 
+        hrefNewTask={hrefNewTask}
+         onTaskClick={onTaskClick} />
       </ContainerCalendar>
     </ThemeProvider>
   );

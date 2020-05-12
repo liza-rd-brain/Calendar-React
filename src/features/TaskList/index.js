@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import styled, { ThemeProvider } from "styled-components";
@@ -43,11 +44,18 @@ const TaskLink = styled.p`
 `;
 
 export default function (props) {
-  const getList = props.taskList.map((item) => {
+  const dispatch = useDispatch();
+  const [taskList, selectDay, today] = useSelector((state) => [
+    state.taskList,
+    state.selectDay,
+    state.today,
+  ]);
+  const getList = taskList.map((item) => {
     return (
       <TaskLink
         className="link"
         key={item.id}
+        /*роутинг*/
         onClick={() => props.onTaskClick(item.id)}
       >
         {item.name}
@@ -56,9 +64,9 @@ export default function (props) {
   });
 
   const titleText =
-    moment(props.selectDay).format("LL") === moment(props.today).format("LL")
+    moment(selectDay).format("LL") === moment(today).format("LL")
       ? "Сегодня"
-      : `${moment(props.selectDay).format("dddd DD")} `;
+      : `${moment(selectDay).format("dddd DD")} `;
 
   return (
     <ThemeProvider theme={commonStyle}>

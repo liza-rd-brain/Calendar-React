@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import * as commonStyle from "./../../theme";
 import moment from "moment";
 
@@ -66,12 +67,11 @@ const Day = styled.div`
   }
 `;
 
-function getListAllMonth(props) {
+function getListAllMonth(today, date) {
   const amountDays = 42;
   const startWeekDay = 1;
-  const currDate = moment(props.today).format("YYYY-MM-DD");
-  const firstDateCurrMonth =
-    props.date || moment(props.today).format("YYYY-MM-01");
+  const currDate = moment(today).format("YYYY-MM-DD");
+  const firstDateCurrMonth = date || moment(today).format("YYYY-MM-01");
   const currMonth = moment(firstDateCurrMonth).month();
 
   const firstDayGrid =
@@ -96,7 +96,8 @@ function getListAllMonth(props) {
 }
 
 function GridDays(props) {
-  const listAllMonth = getListAllMonth(props);
+  const [today, date] = useSelector((state) => [state.today, state.date]);
+  const listAllMonth = getListAllMonth(today, date);
   return (
     <ThemeProvider theme={commonStyle}>
       {listAllMonth.map((item) => (

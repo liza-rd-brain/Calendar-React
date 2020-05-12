@@ -1,5 +1,7 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
 import * as commonStyle from "./../../theme";
 import moment from "moment";
 
@@ -21,8 +23,9 @@ const Year = styled.div`
 `;
 
 function GridYears(props) {
+  const today = useSelector((state) => state.today);
   const startYear = props.startYear;
-  const todayYear = moment(props.today).format("YYYY");
+  const todayYear = moment(today).format("YYYY");
 
   let yersList = [];
   const lenghtYersList = 16;

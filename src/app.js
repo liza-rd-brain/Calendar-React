@@ -124,10 +124,9 @@ const reducer = (state = initialState, action) => {
 };
 
 function App(props) {
-  /*   const [state, dispatch] = useReducer(reducer, initialState); */
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  
+
   const history = useHistory();
 
   useEffect(function updateTime() {
@@ -219,7 +218,6 @@ function App(props) {
               hahdleChangeSelectDay={dispatch}
               hrefNewTask={hrefNewTask}
               onTaskClick={onTaskClick}
-              currentTaskList={selectCurrentTask()}
             />
             <Example />
           </Route>
