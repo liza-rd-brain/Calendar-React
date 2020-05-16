@@ -11,17 +11,8 @@ const TimerWrapper = styled.div`
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
-  /*   margin: 30px auto; */
-  padding: 10px;
 
-  /*   border: 0.5px solid gray;
-  width: 700px;
-  margin: 30px auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 100px;
   padding: 10px;
-  box-sizing: border-box; */
 `;
 
 const Time = styled.div`

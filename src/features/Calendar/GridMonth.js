@@ -23,7 +23,8 @@ const Month = styled.div`
 `;
 
 function GridMonth(props) {
-  const [date, today] = useSelector((state) => [state.date, state, today]);
+  const [date, today] = useSelector((state) => [state.selectDay, state.today]);
+  const dispatch = useDispatch();
   const currDate = date || today;
 
   const todayYear = moment(currDate).format("YYYY");
@@ -42,7 +43,16 @@ function GridMonth(props) {
         key={name}
         id={name}
         type={nameMonth}
-        onClick={() => props.onItemClick(i)}
+        onClick={() => {
+          dispatch({
+            type: "changeSelectDay",
+            payload: new Date(moment(date).format("YYYY"), i),
+          }),
+            dispatch({
+              type: "setMode",
+              payload: "day",
+            });
+        }}
       >
         {name}
       </Month>

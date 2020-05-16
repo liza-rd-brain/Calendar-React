@@ -18,26 +18,14 @@ const ContainerCalendar = styled.div`
   flex-direction: column;
 `;
 
-export default function Main({
-  state,
-  hahdleChangeSelectDay,
-  hrefNewTask,
-  onTaskClick /* ,
-  currentTaskList, */,
-}) {
+export default function Main({ state, hrefNewTask, onTaskClick }) {
   return (
     <ThemeProvider theme={commonStyle}>
       <ContainerCalendar>
         <Timer today={state.today} time={state.time} />
-        <Calendar
-          today={state.today}
-          onChangeSelectDay={hahdleChangeSelectDay}
-          selectDay={state.selectDay}
-        ></Calendar>
+        <Calendar />
 
-        <TaskList 
-        hrefNewTask={hrefNewTask}
-         onTaskClick={onTaskClick} />
+        <TaskList hrefNewTask={hrefNewTask} onTaskClick={onTaskClick} />
       </ContainerCalendar>
     </ThemeProvider>
   );

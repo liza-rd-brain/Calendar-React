@@ -23,7 +23,8 @@ const Year = styled.div`
 `;
 
 function GridYears(props) {
-  const today = useSelector((state) => state.today);
+  const [today, date] = useSelector((state) => [state.today, state.selectDay]);
+  const dispatch = useDispatch();
   const startYear = props.startYear;
   const todayYear = moment(today).format("YYYY");
 
@@ -43,7 +44,17 @@ function GridYears(props) {
       <Year
         key={`${item.number}-${i}}`}
         type={item.class}
-        onClick={() => props.onItemClick(item.number)}
+        onClick={() => {
+          dispatch({
+            type: "changeSelectDay",
+            payload: new Date(item.number, moment(date).format("MM")),
+          }),
+            dispatch({
+              type: "setMode",
+              payload: "month",
+            });
+        }}
+        /*     onClick={() => props.onItemClick(item.number)} */
       >
         {item.number}
       </Year>

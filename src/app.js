@@ -34,6 +34,8 @@ const endInputTitle = "Дата окончания";
 const initialState = {
   today: new Date(),
   selectDay: new Date(),
+  dayInFocus: new Date(),
+  mode: "day",
   taskList: [
     {
       id: 1,
@@ -74,7 +76,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         selectDay: action.payload,
       };
-
+    case "changeFocusDay":
+      return {
+        ...state,
+        dayInFocus: action.payload,
+      };
     case "setCurrTaskList":
       return {
         ...state,
@@ -118,12 +124,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         time: action.payload,
       };
+    case "setMode":
+      return { ...state, mode: action.payload };
     default:
       return state;
   }
 };
 
-function App(props) {
+function App() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -159,31 +167,7 @@ function App(props) {
     }
   };
 
-  const selectCurrentTask = () => {
-    let selectDate = moment(state.selectDay).format("YYYY-MM-DD");
-    let result = state.taskList.filter(
-      //находим item для которого выбранная дата лежит
-      //между начальной и конечной датой задачи
-      (item) =>
-        moment(selectDate).isBetween(item.startDate, item.endDate, null, "[]")
-    );
-
-    result.sort((firstItem, secondItem) => {
-      if (
-        +firstItem.startTime.slice(0, 2) < +secondItem.startTime.slice(0, 2)
-      ) {
-        return -1;
-      }
-      if (
-        +firstItem.startTime.slice(0, 2) > +secondItem.startTime.slice(0, 2)
-      ) {
-        return +1;
-      }
-    });
-
-    return result;
-  };
-
+  /*____________перенести в taskList-?!_______________*/
   const onTaskClick = (id) => {
     dispatch({
       type: "setCurrTaskId",
@@ -198,6 +182,7 @@ function App(props) {
     });
     return task;
   };
+  /*______________________*/
 
   const handleToCalendar = () => {
     debugger;
@@ -215,18 +200,15 @@ function App(props) {
           <Route path="/" exact>
             <CalendarPage
               state={state}
-              hahdleChangeSelectDay={dispatch}
               hrefNewTask={hrefNewTask}
               onTaskClick={onTaskClick}
             />
-            <Example />
           </Route>
           <Route path="/newTask">
             <TaskCard
               startInputTitle={startInputTitle}
               endInputTitle={endInputTitle}
               onChangeTaskList={dispatch}
-              /*удаление не созданной задачи=просто переход на главную страницу-?!*/
               handleDeleteTask={handleToCalendar}
               createNewTaskId={createNewTaskId()}
               handleToCalendar={handleToCalendar}

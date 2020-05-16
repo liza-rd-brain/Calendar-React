@@ -1,17 +1,18 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import * as commonStyle from "./../../theme";
 
+import moment from "moment";
 const NavWrap = styled.div`
   width: 100%;
   height: 50px;
-  /*  background-color: #fff; */
   display: flex;
+  justify-content: space-between;
   padding: 10px;
   box-sizing: border-box;
 `;
 const NavTitle = styled.div`
-  width: 80%;
   font-size: 20px;
   cursor: pointer;
   color: ${(props) => props.theme.commonStyle.lightgray};
@@ -24,11 +25,6 @@ const ArrowWrap = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /*без плагина для стилизации*/
-  /*  & :first-child {
-    transform: rotate(180deg);
-    top: 4px;
-  } */
 `;
 const Arrow = styled.div`
   /*  width: 50%; */
@@ -67,16 +63,64 @@ const Arrow = styled.div`
 `;
 
 function Nav(props) {
+  const [mode, today, date] = useSelector((state) => [
+    state.mode,
+    state.today,
+    state.selectDay,
+  ]);
+  const dispatch = useDispatch();
+
+  const createNavTitle = () => {
+    const currDate = date || today;
+    const monthName = moment(currDate).format("MMMM");
+    const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
+
+    const currYear = moment(currDate).format("YYYY");
+    /*   let index = Math.round((currYear - props.startYear) / props.yearInc)-1; */
+    /*   let currStartYear = props.startYear + props.yearInc * index; */
+    const yearsString = `${props.startYear}-${
+      props.startYear + props.yearInc - 1
+    }`;
+
+    switch (mode) {
+      case "day":
+        return `${currentMonthName} ${currYear}`;
+      case "month":
+        return currYear;
+      case "year":
+        return yearsString;
+      default:
+        break;
+    }
+  };
+
   const renderArrow = (direction) => {
-    return (
-      <Arrow onClick={() => props.onArrowClick(direction, props.name)}></Arrow>
-    );
+    return <Arrow onClick={() => props.onArrowClick(direction, mode)}></Arrow>;
+  };
+
+  const changeMode = () => {
+    switch (mode) {
+      case "day":
+        return "month";
+      case "month":
+        return "year";
+      case "year":
+        return "year";
+      default:
+        break;
+    }
   };
 
   return (
     <ThemeProvider theme={commonStyle}>
       <NavWrap>
-        <NavTitle onClick={props.onTitleClick}>{props.title}</NavTitle>
+        <NavTitle
+          onClick={() => {
+            dispatch({ type: "setMode", payload: changeMode() });
+          }}
+        >
+          {createNavTitle()}
+        </NavTitle>
         <ArrowWrap>
           {renderArrow("left")}
           {renderArrow("right")}

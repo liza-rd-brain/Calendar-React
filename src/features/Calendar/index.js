@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   withRouter,
 } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import moment from "moment";
 moment().format("ll");
@@ -22,7 +23,11 @@ const NAME_DAYS = new Array(7).fill(0).map((item, index) => {
     .format("ddd");
 });
 
-const yearInc = 15;
+const yearInc = 16;
+
+/*мутирую startYear
+не нравится неявная мутаця!!!!*/
+let startYear = 2010;
 
 const CalendarWrap = styled.div`
   width: 100%;
@@ -51,16 +56,37 @@ const NameDayWap = styled.div`
   color: ${(props) => props.theme.commonStyle.lightgray};
 `;
 
-function Calendar(props) {
-  const [date, setDate] = useState("");
-  const [startYear, setStartYear] = useState(2010);
-  const [mode, setMode] = useState("day");
+function Calendar() {
+  const dispatch = useDispatch();
+  const [today, date, mode] = useSelector((state) => [
+    state.today,
+    state.selectDay,
+    state.mode,
+  ]);
+
+  useEffect(
+    function updateStartYear() {
+      changeStartYear();
+    },
+    [date]
+  );
+
+  const changeStartYear = () => {
+    const currDate = date || today;
+    const currYear = moment(currDate).year();
+
+    if (currYear < startYear) {
+      startYear = startYear - yearInc;
+    } else if (currYear > startYear + yearInc) {
+      startYear = startYear + yearInc;
+    }
+  };
 
   const handleArrowClick = (direction, name) => {
-    /*сегодня или другие месяцы*/
-    let currDay = date || props.today;
+    let currDay = date || today;
     let momentCurrDay = moment(currDay);
     let currDate;
+
     switch (name) {
       case "day":
         currDate =
@@ -76,106 +102,48 @@ function Calendar(props) {
             ? momentCurrDay.add(1, "y").format()
             : momentCurrDay.subtract(1, "y").format();
         onChangeDate(currDate);
+
         break;
       case "year":
-        currDate =
-          direction === "right"
-            ? momentCurrDay.add(yearInc, "y").format()
-            : momentCurrDay.subtract(yearInc, "y").format();
-        onChangeStartYear(currDate);
+        startYear =
+          direction === "right" ? startYear + yearInc : startYear - yearInc;
+        currDate = moment(momentCurrDay).format(`${startYear}-MM-DD`);
+        onChangeDate(currDate);
         break;
-
       default:
         break;
     }
   };
 
   const onChangeDate = (date) => {
-    setDate(date);
+    dispatch({
+      type: "changeSelectDay",
+      payload: date,
+    });
   };
 
-  const onChangeStartYear = (date) => {
-    let year = moment(date).format("YYYY");
-    if (year < startYear) {
-      setStartYear((startYear) => startYear - yearInc - 1);
-    } else if (year > startYear + yearInc) {
-      setStartYear((startYear) => startYear + yearInc + 1);
-    }
-    setDate(date);
-  };
-
-  const changeRouteToCalender = (month) => {
-    /*проще принять месяц*/
-    let currDay = date || props.today;
-    let date = new Date(moment(date).format("YYYY"), month);
-    onChangeDate(date);
-    setMode("day");
-  };
-
-  const changeRouteToMonth = (year) => {
-    if (year) {
-      let currDay = date || props.today;
-      let date = new Date(year, moment(date).format("MM"));
-      onChangeDate(date);
-    }
-    setMode("month");
-  };
-
-  const changeRouteToYear = () => {
-    setMode("year");
-  };
-
-  const createNavTitle = (name) => {
-    const currDate = date || props.today;
-    const monthName = moment(currDate).format("MMMM");
-    const currentMonthName = monthName[0].toUpperCase() + monthName.slice(1);
-
-    const currYear = moment(currDate).format("YYYY");
-
-    const yearsString = `${startYear}-${startYear + yearInc}`;
-
-    switch (name) {
+  let grid = () => {
+    switch (mode) {
       case "day":
-        return `${currentMonthName} ${currYear}`;
+        return <GridDays />;
       case "month":
-        return currYear;
+        return <GridMonth />;
       case "year":
-        return yearsString;
-
+        return <YearSelection startYear={startYear} />;
       default:
         break;
     }
   };
 
-  let grid;
-  switch (mode) {
-    case "day":
-      grid = <GridDays onItemClick={props.onChangeSelectDay} />;
-      break;
-    case "month":
-      grid = <GridMonth onItemClick={changeRouteToCalender} />;
-      break;
-    case "year":
-      grid = (
-        <YearSelection startYear={startYear} onItemClick={changeRouteToMonth} />
-      );
-      break;
-    default:
-      break;
-  }
-
   return (
     <CalendarWrap>
       <Nav
         onArrowClick={handleArrowClick}
-        onTitleClick={
-          mode === "day" ? () => changeRouteToMonth() : changeRouteToYear
-        }
-        title={createNavTitle(mode)}
-        name={mode}
+        startYear={startYear}
+        yearInc={yearInc}
       />
       {mode === "day" ? <NameDays /> : ""}
-      <Grid>{grid}</Grid>
+      <Grid>{grid()}</Grid>
     </CalendarWrap>
   );
 }

@@ -1,6 +1,9 @@
 .test {
   background-color: gold;
 }
+html {
+  font-size: 16px;
+}
 
 .calendar,
 .taskList,

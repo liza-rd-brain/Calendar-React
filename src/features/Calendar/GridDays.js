@@ -12,6 +12,7 @@ const Day = styled.div`
   margin: 0 5px;
   position: relative;
   z-index: 2;
+  /* outline-color: ${(props) => props.theme.commonStyle.lightgray}; */
   cursor: pointer;
   /* color: lightgrey; */
   color: ${(props) => {
@@ -34,44 +35,51 @@ const Day = styled.div`
 
   &:before {
     content: "";
-    border: 19px solid;
+    border: 1.1rem solid;
     border-color: ${(props) =>
       props.type === "today"
         ? props.theme.commonStyle.background
         : "transparent"};
     position: absolute;
-    top: 0px;
-    /* transform: rotate(45deg); */
+
     z-index: -1;
-    top: 1px;
-    left: 3px;
+    top: 0.1rem;
+    left: 0.15rem;
+    border-left-width: 1.4rem;
   }
   &:after {
     content: "";
-    border: 16px solid;
+    border: 0.9rem solid;
     border-color: ${(props) =>
       props.type === "today"
         ? props.theme.commonStyle.brightblue
         : "transparent"};
     position: absolute;
-    top: 0px;
-    /* transform: rotate(45deg); */
+
     z-index: -1;
-    top: 4px;
-    left: 5px;
-    right: 5px;
+    top: 0.29rem;
+    left: 0.3rem;
+    border-left-width: 1.3rem;
   }
+
   &:hover {
     outline: 2px solid;
     outline-color: ${(props) => props.theme.commonStyle.lightgray};
   }
+ /*  outline: 2px solid; */
+  outline:${(props) => {
+    if (props.type === "focus") {
+      return props.theme.commonStyle.brightblue + "2px solid";
+    }
+  }}
 `;
 
-function getListAllMonth(today, date) {
+function getListAllMonth(today, date, dayInFocus) {
   const amountDays = 42;
   const startWeekDay = 1;
   const currDate = moment(today).format("YYYY-MM-DD");
-  const firstDateCurrMonth = date || moment(today).format("YYYY-MM-01");
+  const firstDateCurrMonth =
+    moment(date).format("YYYY-MM-01") || moment(today).format("YYYY-MM-01");
   const currMonth = moment(firstDateCurrMonth).month();
 
   const firstDayGrid =
@@ -84,9 +92,13 @@ function getListAllMonth(today, date) {
     const dateItem = momentItem.format("YYYY-MM-DD");
     const monthItem = momentItem.month();
     const numberItem = momentItem.format("D");
+    const momentFocus = moment(dayInFocus).format("YYYY-MM-DD");
 
     let className = monthItem == item ? "dayCurrentMonth" : "dayAnotherMonth";
     currDate == dateItem ? (className = "today") : "";
+    momentFocus == dateItem && className != "today"
+      ? (className = "focus")
+      : "";
     return {
       number: numberItem,
       date: dateItem,
@@ -96,8 +108,13 @@ function getListAllMonth(today, date) {
 }
 
 function GridDays(props) {
-  const [today, date] = useSelector((state) => [state.today, state.date]);
-  const listAllMonth = getListAllMonth(today, date);
+  const [today, date, dayInFocus] = useSelector((state) => [
+    state.today,
+    state.selectDay,
+    state.dayInFocus,
+  ]);
+  const dispatch = useDispatch();
+  const listAllMonth = getListAllMonth(today, date, dayInFocus);
   return (
     <ThemeProvider theme={commonStyle}>
       {listAllMonth.map((item) => (
@@ -105,12 +122,16 @@ function GridDays(props) {
           key={item.date}
           type={item.class}
           item={item.number}
-          onClick={() =>
-            props.onItemClick({
-              type: "changeSelectDay",
+          onClick={() => {
+            dispatch({
+              type: "changeFocusDay",
               payload: item.date,
-            })
-          }
+            }),
+              dispatch({
+                type: "changeSelectDay",
+                payload: item.date,
+              });
+          }}
         >
           {item.number}
         </Day>

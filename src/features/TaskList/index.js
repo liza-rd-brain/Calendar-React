@@ -45,12 +45,39 @@ const TaskLink = styled.p`
 
 export default function (props) {
   const dispatch = useDispatch();
-  const [taskList, selectDay, today] = useSelector((state) => [
+  const [taskList, selectDay, today, dayInFocus] = useSelector((state) => [
     state.taskList,
     state.selectDay,
     state.today,
+    state.dayInFocus,
   ]);
-  const getList = taskList.map((item) => {
+
+  const selectCurrentTask = () => {
+    let selectDate = moment(dayInFocus).format("YYYY-MM-DD");
+    let result = taskList.filter(
+      //находим item для которого выбранная дата лежит
+      //между начальной и конечной датой задачи
+      (item) =>
+        moment(selectDate).isBetween(item.startDate, item.endDate, null, "[]")
+    );
+
+    result.sort((firstItem, secondItem) => {
+      if (
+        +firstItem.startTime.slice(0, 2) < +secondItem.startTime.slice(0, 2)
+      ) {
+        return -1;
+      }
+      if (
+        +firstItem.startTime.slice(0, 2) > +secondItem.startTime.slice(0, 2)
+      ) {
+        return +1;
+      }
+    });
+
+    return result;
+  };
+  
+  const getList = selectCurrentTask().map((item) => {
     return (
       <TaskLink
         className="link"
@@ -64,9 +91,9 @@ export default function (props) {
   });
 
   const titleText =
-    moment(selectDay).format("LL") === moment(today).format("LL")
+    moment(dayInFocus).format("LL") === moment(today).format("LL")
       ? "Сегодня"
-      : `${moment(selectDay).format("dddd DD")} `;
+      : `${moment(dayInFocus).format("dddd DD")} `;
 
   return (
     <ThemeProvider theme={commonStyle}>
