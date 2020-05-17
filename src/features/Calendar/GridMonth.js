@@ -28,7 +28,7 @@ function GridMonth(props) {
   const currDate = date || today;
 
   const todayYear = moment(currDate).format("YYYY");
-  const todayMonth = moment(currDate).format("MMMM");
+  const numberTodayMonth = moment(currDate).months();
   const currYear = moment(today).format("YYYY");
 
   const monthList = new Array(12).fill(0).map((item, index) => {
@@ -37,7 +37,9 @@ function GridMonth(props) {
 
   const months = monthList.map((name, i) => {
     let nameMonth = "nameMonth";
-    todayMonth === i && todayYear === currYear ? (nameMonth = "currMonth") : "";
+    numberTodayMonth === i && todayYear === currYear
+      ? (nameMonth = "currMonth")
+      : "";
     return (
       <Month
         key={name}
@@ -50,7 +52,7 @@ function GridMonth(props) {
           }),
             dispatch({
               type: "setMode",
-              payload: "day",
+              payload: "calendar",
             });
         }}
       >

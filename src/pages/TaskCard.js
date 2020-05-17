@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
-/* import DateTimeInput from "../features/DateTimeInput/DateTimeInput"; */
 
 const Form = styled.form`
   align-items: center;
@@ -24,14 +24,26 @@ const startDateValue = "startDate";
 const startTimeValue = "startTime";
 const endDateValue = "endDate";
 const endTimeValue = "endTime";
+const startInputTitle = "Дата начала";
+const endInputTitle = "Дата окончания";
 
-function TaskCard(props) {
+function TaskCard() {
+  const [taskList, currTaskId] = useSelector((state) => [
+    state.taskList,
+    state.currTaskId,
+  ]);
+  const dispatch = useDispatch();
+
   const [taskName, setTaskname] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
   const [taskStartTime, setTaskStartTime] = useState("");
   const [taskStartDate, setTaskStartDate] = useState("");
   const [taskEndTime, setTaskEndTime] = useState("");
   const [taskEndDate, setTaskEndDate] = useState("");
+
+  const currTask = taskList.find((item) => {
+    return item.id === currTaskId || "";
+  });
 
   const handleEditTask = (event) => {
     const name = event.target.name;
@@ -61,94 +73,87 @@ function TaskCard(props) {
     }
   };
 
+  const handleToCalendar = () => {
+    dispatch({
+      type: "setMode",
+      payload: "calendar",
+    });
+  };
+
+  const createNewTaskId = () => {
+    if (taskList.length) {
+      let idMax =
+        Math.max.apply(
+          null,
+          taskList.map((item) => item.id)
+        ) + 1;
+      return idMax;
+    } else {
+      return 1;
+    }
+  };
+
   const handleSaveTask = (event) => {
     event.preventDefault();
 
     let task = {
-      id: props.newTaskId,
-      name: taskName,
-      desc: taskDesc,
-      startDate: taskStartDate,
-      startTime: taskStartTime,
-      endDate: taskEndDate,
-      endTime: taskEndTime,
+      id: currTask ? currTask.id : createNewTaskId(),
+      name: taskName || currTask.name,
+      desc: taskDesc || currTask.desc,
+      startDate: taskStartDate || currTask.startDate,
+      startTime: taskStartTime || currTask.startTime,
+      endDate: taskEndDate || currTask.endDate,
+      endTime: taskEndTime || currTask.endTime,
     };
+    currTask
+      ? dispatch({
+          type: "changeTask",
+          payload: task,
+        })
+      : dispatch({
+          type: "addNewTask",
+          payload: task,
+        });
 
-    props.onChangeTaskList({
-      type: "addNewTask",
-      payload: task,
-    });
-    props.handleToCalendar();
-  };
-
-  const handleChangeTask = () => {
-    event.preventDefault();
-
-    let task = {
-      id: props.сurrTask.id,
-      name: taskName || props.сurrTask.name,
-      desc: taskDesc || props.сurrTask.desc,
-      startDate: taskStartDate || props.сurrTask.startDate,
-      startTime: taskStartTime || props.сurrTask.startTime,
-      endDate: taskEndDate || props.сurrTask.endDate,
-      endTime: taskEndTime || props.сurrTask.endTime,
-    };
-
-    props.onChangeTaskList({
-      type: "changeTask",
-      payload: task,
-    });
-    props.handleToCalendar();
+    handleToCalendar();
   };
 
   const handleDeleteTask = () => {
-    props.handleDeleteTask({
+    dispatch({
       type: "deleteTask",
-      payload: props.сurrTask,
+      payload: currTask,
     });
-    props.handleToCalendar();
+    handleToCalendar();
   };
 
-  /* props.сurrTask ? props.handleToTask(props.сurrTask.value) : ""; */
-
   return (
-    <Form onSubmit={props.сurrTask ? handleChangeTask : handleSaveTask}>
+    <Form onSubmit={handleSaveTask}>
       <input
         required
         name={nameValue}
         type="text"
         placeholder="Название задачи"
         onChange={handleEditTask}
-        value={props.сurrTask ? taskName || props.сurrTask.name : taskName}
+        value={currTask ? taskName || currTask.name : taskName}
       />
       <DateTimeInput
-        /*     class="start" */
-        title={props.startInputTitle}
+        title={startInputTitle}
         dateName={startDateValue}
         timeName={startTimeValue}
         dateValue={
-          props.сurrTask
-            ? taskStartDate || props.сurrTask.startDate
-            : taskStartDate
+          currTask ? taskStartDate || currTask.startDate : taskStartDate
         }
         timeValue={
-          props.сurrTask
-            ? taskStartTime || props.сurrTask.startTime
-            : taskStartTime
+          currTask ? taskStartTime || currTask.startTime : taskStartTime
         }
         onChange={handleEditTask}
       />
       <DateTimeInput
-        /*  class="end" */
-        title={props.endInputTitle}
+        title={endInputTitle}
         dateName={endDateValue}
         timeName={endTimeValue}
-        dateValue={
-          props.сurrTask ? taskEndDate || props.сurrTask.endDate : taskEndDate
-        }
-        timeValue={
-          props.сurrTask ? taskEndTime || props.сurrTask.endTime : taskEndTime
-        }
+        dateValue={currTask ? taskEndDate || currTask.endDate : taskEndDate}
+        timeValue={currTask ? taskEndTime || currTask.endTime : taskEndTime}
         onChange={handleEditTask}
       />
       <textarea
@@ -158,7 +163,7 @@ function TaskCard(props) {
         row="20"
         placeholder="Описание задачи"
         onChange={handleEditTask}
-        value={props.сurrTask ? taskDesc || props.сurrTask.desc : taskDesc}
+        value={currTask ? taskDesc || currTask.desc : taskDesc}
       />
       <div className="button_wrap">
         <input className="button" type="submit" value="сохранить" />
@@ -166,7 +171,7 @@ function TaskCard(props) {
           className="button"
           type="button"
           value="удалить"
-          onClick={handleDeleteTask}
+          onClick={currTask ? handleDeleteTask : handleToCalendar}
         />
       </div>
     </Form>

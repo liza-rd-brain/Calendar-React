@@ -7,7 +7,8 @@ import styled, { ThemeProvider } from "styled-components";
 import * as commonStyle from "./../../theme";
 
 const TaskList = styled.div`
-  min-height: 100px;
+  /* min-height: 100px; */
+  height: 250px;
   padding: 10px;
   box-sizing: border-box;
   display: flex;
@@ -23,11 +24,12 @@ const TaskTitle = styled.div`
   color: ${(props) => props.theme.commonStyle.lightgray};
 `;
 
-const NewTaskLink = styled(Link)`
+const NewTaskLink = styled.p`
   color: ${(props) => props.theme.commonStyle.lightgray};
   text-decoration: none;
   cursor: pointer;
   font-size: 25px;
+  margin: 0;
   &:hover {
     color: ${(props) => props.theme.commonStyle.white};
   }
@@ -76,14 +78,24 @@ export default function (props) {
 
     return result;
   };
-  
+
   const getList = selectCurrentTask().map((item) => {
     return (
       <TaskLink
         className="link"
         key={item.id}
         /*роутинг*/
-        onClick={() => props.onTaskClick(item.id)}
+        onClick={() => {
+          dispatch({
+            type: "setCurrTaskId",
+            payload: item.id,
+          }),
+            dispatch({
+              type: "setMode",
+              payload: "tasks",
+              number: item.id,
+            });
+        }}
       >
         {item.name}
       </TaskLink>
@@ -100,7 +112,13 @@ export default function (props) {
       <TaskList>
         <TaskHeader>
           <TaskTitle>{titleText}</TaskTitle>
-          <NewTaskLink to={props.hrefNewTask}>+</NewTaskLink>
+          <NewTaskLink
+            onClick={() => {
+              dispatch({ type: "setMode", payload: "newTask" });
+            }}
+          >
+            +
+          </NewTaskLink>
         </TaskHeader>
 
         <List>{getList}</List>

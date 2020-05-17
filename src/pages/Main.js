@@ -18,13 +18,12 @@ const ContainerCalendar = styled.div`
   flex-direction: column;
 `;
 
-export default function Main({ state, hrefNewTask, onTaskClick }) {
+export default function Main({ hrefNewTask, onTaskClick }) {
   return (
     <ThemeProvider theme={commonStyle}>
       <ContainerCalendar>
-        <Timer today={state.today} time={state.time} />
+        <Timer />
         <Calendar />
-
         <TaskList hrefNewTask={hrefNewTask} onTaskClick={onTaskClick} />
       </ContainerCalendar>
     </ThemeProvider>

@@ -83,7 +83,7 @@ function Nav(props) {
     }`;
 
     switch (mode) {
-      case "day":
+      case "calendar":
         return `${currentMonthName} ${currYear}`;
       case "month":
         return currYear;
@@ -100,7 +100,7 @@ function Nav(props) {
 
   const changeMode = () => {
     switch (mode) {
-      case "day":
+      case "calendar":
         return "month";
       case "month":
         return "year";

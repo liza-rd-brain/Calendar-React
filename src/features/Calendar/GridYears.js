@@ -26,7 +26,7 @@ function GridYears(props) {
   const [today, date] = useSelector((state) => [state.today, state.selectDay]);
   const dispatch = useDispatch();
   const startYear = props.startYear;
-  const todayYear = moment(today).format("YYYY");
+  const todayYear = moment(today).year();
 
   let yersList = [];
   const lenghtYersList = 16;

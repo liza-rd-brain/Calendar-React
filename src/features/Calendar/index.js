@@ -88,7 +88,7 @@ function Calendar() {
     let currDate;
 
     switch (name) {
-      case "day":
+      case "calendar":
         currDate =
           direction === "right"
             ? momentCurrDay.add(1, "M").format()
@@ -124,7 +124,7 @@ function Calendar() {
 
   let grid = () => {
     switch (mode) {
-      case "day":
+      case "calendar":
         return <GridDays />;
       case "month":
         return <GridMonth />;
@@ -142,7 +142,7 @@ function Calendar() {
         startYear={startYear}
         yearInc={yearInc}
       />
-      {mode === "day" ? <NameDays /> : ""}
+      {mode === "calendar" ? <NameDays /> : ""}
       <Grid>{grid()}</Grid>
     </CalendarWrap>
   );

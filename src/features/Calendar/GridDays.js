@@ -66,7 +66,7 @@ const Day = styled.div`
     outline: 2px solid;
     outline-color: ${(props) => props.theme.commonStyle.lightgray};
   }
- /*  outline: 2px solid; */
+  
   outline:${(props) => {
     if (props.type === "focus") {
       return props.theme.commonStyle.brightblue + "2px solid";

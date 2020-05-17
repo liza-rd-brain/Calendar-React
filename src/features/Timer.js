@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import styled, { ThemeProvider } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 import * as commonStyle from "../theme";
 
@@ -23,12 +24,13 @@ const Time = styled.div`
 const Date = styled.div`
   color: ${(props) => props.theme.commonStyle.blue};
 `;
-function Timer(props) {
+function Timer() {
+  const [time, today] = useSelector((state) => [state.time, state.today]);
   return (
     <ThemeProvider theme={commonStyle}>
       <TimerWrapper>
-        <Time>{props.time}</Time>
-        <Date>{moment(props.today).format("LL")}</Date>
+        <Time>{time}</Time>
+        <Date>{moment(today).format("LL")}</Date>
       </TimerWrapper>
     </ThemeProvider>
   );

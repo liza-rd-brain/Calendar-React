@@ -27,15 +27,11 @@ const Container = styled.div`
   }
 `;
 
-const hrefNewTask = "newTask";
-const startInputTitle = "Дата начала";
-const endInputTitle = "Дата окончания";
-
 const initialState = {
   today: new Date(),
   selectDay: new Date(),
   dayInFocus: new Date(),
-  mode: "day",
+  mode: "calendar",
   taskList: [
     {
       id: 1,
@@ -125,7 +121,7 @@ const reducer = (state = initialState, action) => {
         time: action.payload,
       };
     case "setMode":
-      return { ...state, mode: action.payload };
+      return { ...state, mode: action.payload, currTaskId: action.number };
     default:
       return state;
   }
@@ -134,7 +130,6 @@ const reducer = (state = initialState, action) => {
 function App() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-
   const history = useHistory();
 
   useEffect(function updateTime() {
@@ -154,43 +149,24 @@ function App() {
     [moment(state.today).day()]
   );
 
-  const createNewTaskId = () => {
-    if (state.taskList.length) {
-      let idMax =
-        Math.max.apply(
-          null,
-          state.taskList.map((item) => item.id)
-        ) + 1;
-      return idMax;
-    } else {
-      return 1;
+  useEffect(
+    function changeRoute() {
+      history.push(switchRoute());
+    },
+    [state.mode]
+  );
+
+  const switchRoute = () => {
+    switch (state.mode) {
+      case "tasks":
+        return `/tasks/${state.currTaskId}`;
+      case "newTask":
+        return "/newTask";
+      case "calendar":
+        return "/";
+      default:
+        return "/";
     }
-  };
-
-  /*____________перенести в taskList-?!_______________*/
-  const onTaskClick = (id) => {
-    dispatch({
-      type: "setCurrTaskId",
-      payload: id,
-    });
-    handleToTask(id);
-  };
-
-  const getCurrTaskId = () => {
-    let task = state.taskList.find((item) => {
-      return item.id === state.currTaskId || "";
-    });
-    return task;
-  };
-  /*______________________*/
-
-  const handleToCalendar = () => {
-    debugger;
-    history.push("/");
-  };
-
-  const handleToTask = (value) => {
-    history.push(`/tasks/${value}`);
   };
 
   return (
@@ -198,31 +174,13 @@ function App() {
       <Container>
         <Switch>
           <Route path="/" exact>
-            <CalendarPage
-              state={state}
-              hrefNewTask={hrefNewTask}
-              onTaskClick={onTaskClick}
-            />
+            <CalendarPage />
           </Route>
           <Route path="/newTask">
-            <TaskCard
-              startInputTitle={startInputTitle}
-              endInputTitle={endInputTitle}
-              onChangeTaskList={dispatch}
-              handleDeleteTask={handleToCalendar}
-              createNewTaskId={createNewTaskId()}
-              handleToCalendar={handleToCalendar}
-            />
+            <TaskCard />
           </Route>
           <Route path="/tasks/:name">
-            <TaskCard
-              startInputTitle={startInputTitle}
-              endInputTitle={endInputTitle}
-              сurrTask={getCurrTaskId()}
-              onChangeTaskList={dispatch}
-              handleDeleteTask={dispatch}
-              handleToCalendar={handleToCalendar}
-            />
+            <TaskCard />
           </Route>
         </Switch>
       </Container>
