@@ -16,13 +16,13 @@ moment.locale("ru");
 
 import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
-import * as commonStyle from "./theme";
+import { /* {commonStyle} as */ commonStyle } from "./theme";
 import "./style.css";
 
 const Container = styled.div`
   display: flex;
   & > * {
-    background-color: ${(props) => props.theme.commonStyle.background};
+    background-color: ${(props) => props.theme./* .commonStyle. */ background};
     margin: 0px auto;
   }
 `;
@@ -32,8 +32,8 @@ const initialState = {
   selectDay: new Date(),
   dayInFocus: new Date(),
   mode: "calendar",
-  taskList: [],
-  /*  taskList: [
+  /*   taskList: [], */
+  taskList: [
     {
       id: 1,
       name: "12:00",
@@ -59,7 +59,7 @@ const initialState = {
       endDate: moment(new Date()).format("YYYY-MM-DD"),
       endTime: "",
     },
-  ], */
+  ],
   currTaskId: {
     /* name: 1 */
   },

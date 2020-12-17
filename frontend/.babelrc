@@ -8,6 +8,8 @@
         [
           "babel-plugin-styled-components",
           {
+            "ssr": false,
+            "displayName": true,
             "fileName": false
           }
         ]

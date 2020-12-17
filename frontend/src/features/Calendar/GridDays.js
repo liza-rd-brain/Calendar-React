@@ -66,26 +66,36 @@ const Day = styled.div`
     outline: 2px solid;
     outline-color: ${(props) => props.theme.commonStyle.lightgray};
   }
-  
-  outline:${(props) => {
+
+  outline: ${(props) => {
     if (props.type === "focus") {
       return props.theme.commonStyle.brightblue + "2px solid";
     }
-  }}
+  }};
 `;
 
 function getListAllMonth(today, date, dayInFocus) {
   const amountDays = 42;
   const startWeekDay = 1;
   const currDate = moment(today).format("YYYY-MM-DD");
+
   const firstDateCurrMonth =
     moment(date).format("YYYY-MM-01") || moment(today).format("YYYY-MM-01");
+
   const currMonth = moment(firstDateCurrMonth).month();
 
-  const firstDayGrid =
-    moment(firstDateCurrMonth).format("e") == startWeekDay
+  const isFirstDateSunday = moment(firstDateCurrMonth).day() === 0;
+
+  const firstDayGrid = isFirstDateSunday
+    ? moment(firstDateCurrMonth)
+        .day(startWeekDay - 7)
+        .format("YYYY-MM-DD")
+    : moment(firstDateCurrMonth).day(startWeekDay).format("YYYY-MM-DD");
+
+  /*  const firstDayGrid =
+    moment(firstDateCurrMonth).format("E") == startWeekDay
       ? firstDateCurrMonth
-      : moment(firstDateCurrMonth).day(startWeekDay).format("YYYY-MM-DD");
+      : whatIt; */
 
   return new Array(amountDays).fill(currMonth).map((item, index) => {
     const momentItem = moment(firstDayGrid).add(index, "d");

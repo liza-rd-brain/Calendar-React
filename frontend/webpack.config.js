@@ -9,6 +9,13 @@ module.exports = {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
+  /*  externals: {
+    "styled-components": {
+      commonjs: "styled-components",
+      commonjs2: "styled-components",
+      amd: "styled-components",
+    },
+  }, */
   devtool: false,
   plugins: [
     new HtmlWebpackPlugin({
