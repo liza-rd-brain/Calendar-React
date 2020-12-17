@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "create-react-app": "^3.4.1",
-    "create-react-class": "^15.6.3",
+    "create-react-class": "^15.7.0",
     "moment": "2.24.0",
     "moment-locales-webpack-plugin": "^1.2.0",
     "react": "^16.13.1",
@@ -36,7 +36,7 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
     "dev": " webpack",

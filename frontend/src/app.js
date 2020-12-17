@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled, { ThemeProvider } from "styled-components";
 import {
@@ -18,7 +18,7 @@ import CalendarPage from "./pages/Main";
 import TaskCard from "./pages/TaskCard";
 import * as commonStyle from "./theme";
 import "./style.css";
-import Example from "./fcc_example";
+
 const Container = styled.div`
   display: flex;
   & > * {
@@ -32,7 +32,8 @@ const initialState = {
   selectDay: new Date(),
   dayInFocus: new Date(),
   mode: "calendar",
-  taskList: [
+  taskList: [],
+  /*  taskList: [
     {
       id: 1,
       name: "12:00",
@@ -58,7 +59,7 @@ const initialState = {
       endDate: moment(new Date()).format("YYYY-MM-DD"),
       endTime: "",
     },
-  ],
+  ], */
   currTaskId: {
     /* name: 1 */
   },
