@@ -67,11 +67,17 @@ const initialState = {
   currTaskId: {
     /* name: 1 */
   },
+  sendingTask: null,
   time: moment().format("LTS"),
 };
 
 const reducer = (state = initialState, action) => {
   const calendarState = state.calendarState;
+
+  switch (action.type) {
+    case "setMode":
+      return { ...state, mode: action.payload, currTaskId: action.number };
+  }
 
   switch (calendarState) {
     case "unactive": {
@@ -86,20 +92,28 @@ const reducer = (state = initialState, action) => {
           return state;
       }
     }
+
     case "waitingData": {
       switch (action.type) {
-        /* case "receivedData": {
-          return {
-            ...state,
-            taskList: action.payload,
-            calendarState: "calendarRendered",
-          };
-        } */
         case "addData": {
           return {
             ...state,
             taskList: action.payload,
             calendarState: "calendarRendered",
+          };
+        }
+        default:
+          return state;
+      }
+    }
+
+    case "sendingData": {
+      switch (action.type) {
+        case "addData": {
+          return {
+            ...state,
+            taskList: action.payload,
+            calendarState: "waitingData",
           };
         }
         default:
@@ -131,8 +145,13 @@ const reducer = (state = initialState, action) => {
         case "addNewTask":
           return {
             ...state,
-            taskList: [...state.taskList.concat(action.payload)],
+            calendarState: "sendingData",
+            sendingTask: action.payload,
           };
+        /*  return {
+            ...state,
+            taskList: [...state.taskList.concat(action.payload)],
+          }; */
         case "changeTask":
           return {
             ...state,
@@ -161,8 +180,6 @@ const reducer = (state = initialState, action) => {
             ...state,
             time: action.payload,
           };
-        case "setMode":
-          return { ...state, mode: action.payload, currTaskId: action.number };
 
         default:
           return state;
@@ -175,7 +192,7 @@ const reducer = (state = initialState, action) => {
 
 function App() {
   const dispatch = useDispatch();
-  const { calendarState, today, mode, currTaskId } = useSelector(
+  const { calendarState, today, mode, currTaskId, sendingTask } = useSelector(
     (state) => state
   );
   const history = useHistory();
@@ -206,9 +223,36 @@ function App() {
       switch (calendarState) {
         case "waitingData": {
           let promise = fetch("http://localhost:3000");
+
           promise
             .then((res) => res.json())
             .then((res) => dispatch({ type: "addData", payload: res.tasks }));
+          break;
+        }
+        case "sendingData": {
+          console.log(sendingTask);
+
+          let promise = fetch("http://localhost:3000", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sendingTask),
+          });
+          promise
+            .then((res) => res.json())
+            .then((res) => {
+              dispatch({ type: "addData", payload: res.tasks });
+            });
+
+          break;
+        }
+        case "calendarRendered": {
+          dispatch({
+            type: "setMode",
+            payload: "calendar",
+          });
+          break;
         }
         default:
           break;

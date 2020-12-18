@@ -105,6 +105,7 @@ function TaskCard() {
       endDate: taskEndDate || currTask.endDate,
       endTime: taskEndTime || currTask.endTime,
     };
+
     currTask
       ? dispatch({
           type: "changeTask",
@@ -115,7 +116,7 @@ function TaskCard() {
           payload: task,
         });
 
-    handleToCalendar();
+    /* handleToCalendar(); */
   };
 
   const handleDeleteTask = () => {
