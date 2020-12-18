@@ -45,7 +45,7 @@ const TaskLink = styled.p`
   }
 `;
 
-export default function (props) {
+export default function () {
   const dispatch = useDispatch();
   const [taskList, selectDay, today, dayInFocus] = useSelector((state) => [
     state.taskList,

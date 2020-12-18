@@ -1,6 +1,8 @@
 const express = require("express");
-/* const mongoose = require("mongoose"); */
+const list = require("./data");
+
 const app = express();
+const moment = require("moment");
 
 app.use(express.json());
 
@@ -13,22 +15,12 @@ app.use(function (req, res, next) {
 const responceTest = JSON.stringify({ test: "test" });
 
 app.get("/", (req, res) => {
-  console.log(responceTest);
-  res.send(JSON.stringify({ test: "test" }));
+  console.log(list);
+  res.send(list);
 });
 
 app.listen(3000, () => {
   console.log("server has been started");
 });
 
-/*__________________ MONGO */
-/* mongoose.set("useUnifiedTopology",~ true);
-const uri =
-  "mongodb+srv://test:test@cluster0.8wsef.mongodb.net/<dbname>?retryWrites=true&w=majority";
-
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
-
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("MDB success");
-}); */
+console.log(list);

@@ -26,14 +26,18 @@ const Container = styled.div`
     margin: 0px auto;
   }
 `;
+const WaitingText = styled.div`
+  color: white;
+`;
 
 const initialState = {
+  calendarState: "unactive",
   today: new Date(),
   selectDay: new Date(),
   dayInFocus: new Date(),
   mode: "calendar",
-  /*   taskList: [], */
-  taskList: [
+  taskList: [{ id: 1 }],
+  /*  taskList: [
     {
       id: 1,
       name: "12:00",
@@ -59,7 +63,7 @@ const initialState = {
       endDate: moment(new Date()).format("YYYY-MM-DD"),
       endTime: "",
     },
-  ],
+  ], */
   currTaskId: {
     /* name: 1 */
   },
@@ -67,62 +71,103 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "changeSelectDay":
-      return {
-        ...state,
-        selectDay: action.payload,
-      };
-    case "changeFocusDay":
-      return {
-        ...state,
-        dayInFocus: action.payload,
-      };
-    case "setCurrTaskList":
-      return {
-        ...state,
-        currtaskList: action.payload,
-      };
-    case "setCurrTaskId":
-      return {
-        ...state,
-        currTaskId: action.payload,
-      };
-    case "addNewTask":
-      return {
-        ...state,
-        taskList: [...state.taskList.concat(action.payload)],
-      };
-    case "changeTask":
-      return {
-        ...state,
-        taskList: state.taskList.map((item, i) => {
-          if (item.id === action.payload.id) {
-            return action.payload;
-          } else {
-            return item;
-          }
-        }),
-      };
-    case "deleteTask":
-      return {
-        ...state,
-        taskList: state.taskList.filter((item, i) => {
-          return item.id !== action.payload.id;
-        }),
-      };
-    case "setDate":
-      return {
-        ...state,
-        today: action.payload,
-      };
-    case "setTime":
-      return {
-        ...state,
-        time: action.payload,
-      };
-    case "setMode":
-      return { ...state, mode: action.payload, currTaskId: action.number };
+  const calendarState = state.calendarState;
+
+  switch (calendarState) {
+    case "unactive": {
+      switch (action.type) {
+        case "activated": {
+          return {
+            ...state,
+            calendarState: "waitingData",
+          };
+        }
+        default:
+          return state;
+      }
+    }
+    case "waitingData": {
+      switch (action.type) {
+        /* case "receivedData": {
+          return {
+            ...state,
+            taskList: action.payload,
+            calendarState: "calendarRendered",
+          };
+        } */
+        case "addData": {
+          return {
+            ...state,
+            taskList: action.payload,
+            calendarState: "calendarRendered",
+          };
+        }
+        default:
+          return state;
+      }
+    }
+    case "calendarRendered": {
+      switch (action.type) {
+        case "changeSelectDay":
+          return {
+            ...state,
+            selectDay: action.payload,
+          };
+        case "changeFocusDay":
+          return {
+            ...state,
+            dayInFocus: action.payload,
+          };
+        case "setCurrTaskList":
+          return {
+            ...state,
+            currtaskList: action.payload,
+          };
+        case "setCurrTaskId":
+          return {
+            ...state,
+            currTaskId: action.payload,
+          };
+        case "addNewTask":
+          return {
+            ...state,
+            taskList: [...state.taskList.concat(action.payload)],
+          };
+        case "changeTask":
+          return {
+            ...state,
+            taskList: state.taskList.map((item, i) => {
+              if (item.id === action.payload.id) {
+                return action.payload;
+              } else {
+                return item;
+              }
+            }),
+          };
+        case "deleteTask":
+          return {
+            ...state,
+            taskList: state.taskList.filter((item, i) => {
+              return item.id !== action.payload.id;
+            }),
+          };
+        case "setDate":
+          return {
+            ...state,
+            today: action.payload,
+          };
+        case "setTime":
+          return {
+            ...state,
+            time: action.payload,
+          };
+        case "setMode":
+          return { ...state, mode: action.payload, currTaskId: action.number };
+
+        default:
+          return state;
+      }
+    }
     default:
       return state;
   }
@@ -130,7 +175,9 @@ const reducer = (state = initialState, action) => {
 
 function App() {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
+  const { calendarState, today, mode, currTaskId } = useSelector(
+    (state) => state
+  );
   const history = useHistory();
 
   useEffect(function updateTime() {
@@ -143,24 +190,51 @@ function App() {
     };
   }, []);
 
+  //включение календаря
+  useEffect(function initiateData() {
+    switch (calendarState) {
+      case "unactive": {
+        dispatch({ type: "activated" });
+      }
+      default:
+        break;
+    }
+  });
+
+  useEffect(
+    function addData() {
+      switch (calendarState) {
+        case "waitingData": {
+          let promise = fetch("http://localhost:3000");
+          promise
+            .then((res) => res.json())
+            .then((res) => dispatch({ type: "addData", payload: res.tasks }));
+        }
+        default:
+          break;
+      }
+    },
+    [calendarState]
+  );
+
   useEffect(
     function updateCurrDate() {
-      dispatch({ type: "setDate", payload: new Date() });
+      dispatch({ type: "addDate", payload: new Date() });
     },
-    [moment(state.today).day()]
+    [moment(today).day()]
   );
 
   useEffect(
     function changeRoute() {
       history.push(switchRoute());
     },
-    [state.mode]
+    [mode]
   );
 
   const switchRoute = () => {
-    switch (state.mode) {
+    switch (mode) {
       case "tasks":
-        return `/tasks/${state.currTaskId}`;
+        return `/tasks/${currTaskId}`;
       case "newTask":
         return "/newTask";
       case "calendar":
@@ -170,25 +244,39 @@ function App() {
     }
   };
 
+  const getCalendarScreen = () => {
+    switch (calendarState) {
+      case "waitingData": {
+        return <WaitingScreen />;
+      }
+
+      case "calendarRendered": {
+        return (
+          <Switch>
+            <Route path="/" exact>
+              <CalendarPage />
+            </Route>
+            <Route path="/newTask">
+              <TaskCard />
+            </Route>
+            <Route path="/tasks/:name">
+              <TaskCard />
+            </Route>
+          </Switch>
+        );
+      }
+    }
+  };
   return (
     <ThemeProvider theme={commonStyle}>
-      <Container>
-        <Switch>
-          <Route path="/" exact>
-            <CalendarPage />
-          </Route>
-          <Route path="/newTask">
-            <TaskCard />
-          </Route>
-          <Route path="/tasks/:name">
-            <TaskCard />
-          </Route>
-        </Switch>
-      </Container>
+      <Container>{getCalendarScreen()}</Container>
     </ThemeProvider>
   );
 }
 
+function WaitingScreen() {
+  return <WaitingText>ждем данные</WaitingText>;
+}
 const store = createStore(reducer);
 
 ReactDOM.render(

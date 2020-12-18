@@ -80,7 +80,7 @@ function getListAllMonth(today, date, dayInFocus) {
   const currDate = moment(today).format("YYYY-MM-DD");
 
   const firstDateCurrMonth =
-    moment(date).format("YYYY-MM-01") || moment(today).format("YYYY-MM-01");
+    moment(date).format("YYYY-MM-01")/*  || moment(today).format("YYYY-MM-01"); */
 
   const currMonth = moment(firstDateCurrMonth).month();
 
