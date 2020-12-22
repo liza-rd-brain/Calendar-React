@@ -39,7 +39,10 @@ app.use(express.json());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -50,21 +53,50 @@ app.use(function (req, res, next) {
 const responceTest = JSON.stringify({ test: "test" });
 
 app.get("/", (req, res) => {
-  /*   console.log(list); */
   res.send(JSON.stringify(data));
 });
 
-/* app.options("/", (req, res) => {
-  console.log(req.body);
-  res.send("ok");
-}); */
-var responce = null;
-
-app.post("/", (req, res) => {
-  responce = req.body;
-  data.tasks.push(responce);
+app.get("/newTask", (req, res) => {
   res.send(JSON.stringify(data));
 });
+app.get("/tasks", (req, res) => {
+  res.send(JSON.stringify(data));
+});
+
+//newTask_?!
+app.post("/newTask", (req, res) => {
+  /*  responce = req.body; */
+  data.tasks.push(req.body);
+  res.send(JSON.stringify(data));
+});
+
+app.put("/", (req, res) => {
+  //мутация
+  data.tasks = changeData(req.body);
+  res.send(JSON.stringify(data));
+});
+
+app.delete("/", (req, res) => {
+  //мутация
+  data.tasks = deleteData(req.body);
+  res.send(JSON.stringify(data));
+});
+
+changeData = (task) => {
+  return data.tasks.map((item, i) => {
+    if (item.id === task.id) {
+      return task;
+    } else {
+      return item;
+    }
+  });
+};
+
+deleteData = (task) => {
+  return data.tasks.filter((item, index) => {
+    return item.id != task.id;
+  });
+};
 
 app.listen(3000, () => {
   console.log("server has been started");

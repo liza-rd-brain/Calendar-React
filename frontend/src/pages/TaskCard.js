@@ -107,23 +107,25 @@ function TaskCard() {
     };
 
     currTask
+    
       ? dispatch({
           type: "changeTask",
           payload: task,
         })
+
       : dispatch({
           type: "addNewTask",
           payload: task,
         });
-
-    /* handleToCalendar(); */
   };
 
   const handleDeleteTask = () => {
+
     dispatch({
       type: "deleteTask",
       payload: currTask,
     });
+
     handleToCalendar();
   };
 

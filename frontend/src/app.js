@@ -95,6 +95,7 @@ const reducer = (state = initialState, action) => {
 
     case "waitingData": {
       switch (action.type) {
+        // на самом деле: получение данных! получение данных с сервера
         case "addData": {
           return {
             ...state,
@@ -108,6 +109,32 @@ const reducer = (state = initialState, action) => {
     }
 
     case "sendingData": {
+      switch (action.type) {
+        case "addData": {
+          return {
+            ...state,
+            taskList: action.payload,
+            calendarState: "waitingData",
+          };
+        }
+        default:
+          return state;
+      }
+    }
+    case "updatingData": {
+      switch (action.type) {
+        case "addData": {
+          return {
+            ...state,
+            taskList: action.payload,
+            calendarState: "waitingData",
+          };
+        }
+        default:
+          return state;
+      }
+    }
+    case "deletingData": {
       switch (action.type) {
         case "addData": {
           return {
@@ -148,28 +175,21 @@ const reducer = (state = initialState, action) => {
             calendarState: "sendingData",
             sendingTask: action.payload,
           };
-        /*  return {
-            ...state,
-            taskList: [...state.taskList.concat(action.payload)],
-          }; */
+
         case "changeTask":
           return {
             ...state,
-            taskList: state.taskList.map((item, i) => {
-              if (item.id === action.payload.id) {
-                return action.payload;
-              } else {
-                return item;
-              }
-            }),
+            calendarState: "updatingData",
+            sendingTask: action.payload,
           };
+
         case "deleteTask":
           return {
             ...state,
-            taskList: state.taskList.filter((item, i) => {
-              return item.id !== action.payload.id;
-            }),
+            calendarState: "deletingData",
+            sendingTask: action.payload,
           };
+
         case "setDate":
           return {
             ...state,
@@ -230,10 +250,41 @@ function App() {
           break;
         }
         case "sendingData": {
-          console.log(sendingTask);
-
-          let promise = fetch("http://localhost:3000", {
+          let promise = fetch("http://localhost:3000/newTask", {
             method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sendingTask),
+          });
+          promise
+            .then((res) => res.json())
+            .then((res) => {
+              dispatch({ type: "addData", payload: res.tasks });
+            });
+
+          break;
+        }
+
+        case "updatingData": {
+          let promise = fetch("http://localhost:3000", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sendingTask),
+          });
+          promise
+            .then((res) => res.json())
+            .then((res) => {
+              dispatch({ type: "addData", payload: res.tasks });
+            });
+
+          break;
+        }
+        case "deletingData": {
+          let promise = fetch("http://localhost:3000", {
+            method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },
