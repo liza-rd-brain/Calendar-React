@@ -6,7 +6,7 @@
   "dependencies": {
     "create-react-app": "^3.4.1",
     "create-react-class": "^15.7.0",
-    "moment": "2.24.0",
+    "moment": "2.29.4",
     "moment-locales-webpack-plugin": "^1.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
